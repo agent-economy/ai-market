@@ -163,3 +163,4 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 Built with ❤️ and AI in Seoul 🇰🇷
 
 **Hashed Vibe Labs 2026 지원작**
+
