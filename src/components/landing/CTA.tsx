@@ -5,42 +5,33 @@ import Link from 'next/link';
 
 export default function CTA() {
   return (
-    <section className="relative py-24 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section className="py-20 px-6">
+      <div className="max-w-2xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative"
         >
-          <div className="gradient-border">
-            <div className="bg-surface rounded-2xl p-10 md:p-16 text-center">
-              {/* Glow */}
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-violet-600/10 blur-3xl" />
+          <div className="bg-gradient-to-br from-indigo-600 to-violet-600 rounded-3xl p-10 md:p-14 text-center text-white">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              지금 바로 시작하세요
+            </h2>
+            <p className="text-indigo-100 mb-8">
+              회원가입 없이 무료로 체험할 수 있어요.
+              <br />
+              AI가 당신의 시간을 아껴드립니다.
+            </p>
 
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 relative">
-                지금 바로 시작하세요
-              </h2>
-              <p className="text-zinc-400 text-lg mb-8 relative">
-                회원가입 없이 무료로 체험할 수 있습니다.
-                <br />
-                AI가 당신의 시간을 아껴드립니다.
-              </p>
+            <Link
+              href="/agents"
+              className="inline-flex px-8 py-3.5 rounded-xl bg-white text-indigo-600 font-semibold text-base hover:bg-indigo-50 transition-all active:scale-98"
+            >
+              무료로 시작하기 →
+            </Link>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center relative">
-                <Link
-                  href="/agents"
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold text-lg hover:from-violet-500 hover:to-purple-500 transition-all glow-purple active:scale-95"
-                >
-                  무료로 시작하기 →
-                </Link>
-              </div>
-
-              {/* Trust signal */}
-              <p className="mt-8 text-xs text-zinc-600 relative">
-                💳 카드 등록 불필요 · 🔒 데이터 안전 보장 · 🇰🇷 한국어 100% 지원
-              </p>
-            </div>
+            <p className="mt-6 text-xs text-indigo-200">
+              💳 카드 등록 불필요 · 🔒 데이터 안전 · 🇰🇷 한국어 100%
+            </p>
           </div>
         </motion.div>
       </div>

@@ -3,65 +3,63 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-const orbs = [
-  { size: 400, x: '10%', y: '20%', color: 'rgba(139,92,246,0.15)', delay: 0 },
-  { size: 300, x: '70%', y: '10%', color: 'rgba(236,72,153,0.12)', delay: 1 },
-  { size: 250, x: '80%', y: '60%', color: 'rgba(245,158,11,0.10)', delay: 2 },
-  { size: 350, x: '20%', y: '70%', color: 'rgba(6,182,212,0.08)', delay: 0.5 },
+const floatingAgents = [
+  { emoji: '✍️', label: '블로그', x: '8%', y: '25%', delay: 0 },
+  { emoji: '💜', label: 'AI친구', x: '85%', y: '20%', delay: 0.5 },
+  { emoji: '📄', label: '이력서', x: '75%', y: '65%', delay: 1 },
+  { emoji: '🛡️', label: '계약서', x: '12%', y: '68%', delay: 1.5 },
 ];
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden grid-pattern">
-      {/* Floating orbs */}
-      {orbs.map((orb, i) => (
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
+      {/* Subtle gradient bg */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/60 via-white to-teal-50/40" />
+      
+      {/* Floating agent badges */}
+      {floatingAgents.map((agent, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full blur-3xl pointer-events-none"
-          style={{
-            width: orb.size,
-            height: orb.size,
-            left: orb.x,
-            top: orb.y,
-            background: orb.color,
-          }}
-          animate={{
-            x: [0, 30, -20, 0],
-            y: [0, -20, 30, 0],
-            scale: [1, 1.1, 0.95, 1],
-          }}
-          transition={{
-            duration: 8,
-            delay: orb.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
+          className="absolute hidden md:flex items-center gap-2 px-4 py-2.5 bg-white rounded-2xl shadow-soft border border-gray-100"
+          style={{ left: agent.x, top: agent.y }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8 + agent.delay * 0.3, duration: 0.5 }}
+        >
+          <motion.span
+            className="text-xl"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 2, delay: agent.delay, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            {agent.emoji}
+          </motion.span>
+          <span className="text-sm font-medium text-gray-700">{agent.label}</span>
+        </motion.div>
       ))}
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
+          transition={{ duration: 0.5 }}
+          className="mb-6"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-2/80 border border-border text-sm backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="pulse-ring absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
+          <span className="badge badge-indigo gap-1.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-indigo-500" />
             </span>
             한국 최초 AI 에이전트 마켓
           </span>
         </motion.div>
 
-        {/* Main heading */}
+        {/* Heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-5 leading-[1.15] text-gray-900"
         >
           AI가 일하는 시대,
           <br />
@@ -70,59 +68,45 @@ export default function Hero() {
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-base md:text-lg text-gray-500 max-w-xl mx-auto mb-8 leading-relaxed"
         >
-          블로그 대필부터 카톡 AI 친구, 이력서 작성까지.
+          블로그 대필, 이력서 작성, 계약서 분석, AI 친구까지.
           <br className="hidden sm:block" />
-          검증된 AI 에이전트를 한 곳에서 만나보세요.
+          검증된 AI 에이전트를 무료로 체험하세요.
         </motion.p>
 
-        {/* CTA buttons */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-3 justify-center"
         >
-          <Link
-            href="/agents"
-            className="px-8 py-4 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold text-lg hover:from-violet-500 hover:to-purple-500 transition-all glow-purple active:scale-95"
-          >
+          <Link href="/agents" className="btn-primary px-7 py-3.5 text-base">
             에이전트 둘러보기 →
           </Link>
-          <Link
-            href="/agents/blog-master"
-            className="px-8 py-4 rounded-xl bg-surface-2/80 border border-border text-white font-semibold text-lg hover:bg-surface-2 transition-all backdrop-blur-sm active:scale-95"
-          >
+          <Link href="/agents/blog-master" className="btn-secondary px-7 py-3.5 text-base">
             ✍️ 블로그 AI 무료 체험
           </Link>
         </motion.div>
 
-        {/* Stats */}
+        {/* Trust signals */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-12 flex items-center justify-center gap-6 text-sm text-gray-400"
         >
-          {[
-            { label: 'AI 에이전트', value: '8+' },
-            { label: '무료 체험', value: '가능' },
-            { label: '한국어 최적화', value: '100%' },
-          ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-2xl md:text-3xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-xs md:text-sm text-zinc-500 mt-1">{stat.label}</div>
-            </div>
-          ))}
+          <span>🆓 무료 체험</span>
+          <span className="w-1 h-1 bg-gray-300 rounded-full" />
+          <span>💳 카드 불필요</span>
+          <span className="w-1 h-1 bg-gray-300 rounded-full" />
+          <span>🇰🇷 한국어 100%</span>
         </motion.div>
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 }

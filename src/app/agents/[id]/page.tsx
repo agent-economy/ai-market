@@ -21,7 +21,6 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showChat, setShowChat] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -35,8 +34,8 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
         <Navbar />
         <main className="min-h-screen pt-24 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-xl text-zinc-400">에이전트를 찾을 수 없습니다</p>
-            <button onClick={() => router.push('/agents')} className="mt-4 text-violet-400 hover:underline">
+            <p className="text-lg text-gray-500">에이전트를 찾을 수 없습니다</p>
+            <button onClick={() => router.push('/agents')} className="mt-3 text-indigo-500 hover:underline text-sm">
               ← 목록으로
             </button>
           </div>
@@ -58,7 +57,6 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setLoading(true);
-    setShowChat(true);
 
     try {
       const res = await fetch('/api/chat', {
@@ -72,17 +70,17 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
       });
 
       if (!res.ok) throw new Error('API error');
-
       const data = await res.json();
 
-      const assistantMsg: Message = {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        content: data.response || '죄송합니다, 응답을 생성하지 못했습니다.',
-        timestamp: Date.now(),
-      };
-
-      setMessages(prev => [...prev, assistantMsg]);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          content: data.response || '응답을 생성하지 못했습니다.',
+          timestamp: Date.now(),
+        },
+      ]);
     } catch {
       setMessages(prev => [
         ...prev,
@@ -107,144 +105,126 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
   };
 
   const placeholders: Record<string, string> = {
-    'blog-master': '예: 강남역 근처 분위기 좋은 카페를 소개하는 블로그 글 써줘',
+    'blog-master': '예: 강남 분위기 좋은 카페 블로그 글 써줘',
     'soul-friend': '예: 오늘 하루 너무 힘들었어...',
-    'resume-pro': '예: 마케팅 3년차 경력직 자기소개서 써줘',
-    'contract-guard': '예: 이 전세 계약서 검토해줘 (계약 내용을 붙여넣어주세요)',
-    'study-buddy': '예: 미적분의 기초를 쉽게 설명해줘',
-    'sns-creator': '예: 새로 오픈한 카페 인스타 게시물 캡션 써줘',
+    'resume-pro': '예: 마케팅 3년차 자기소개서 써줘',
+    'contract-guard': '예: 전세 계약서 검토해줘',
+    'study-buddy': '예: 미적분 쉽게 설명해줘',
+    'sns-creator': '예: 새 카페 인스타 게시물 캡션 써줘',
   };
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20">
-        <div className="max-w-4xl mx-auto px-4">
-          {/* Agent info header */}
+      <main className="min-h-screen pt-20 bg-gray-50/30">
+        <div className="max-w-3xl mx-auto px-4">
+          {/* Agent header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="py-6 flex items-start gap-4"
+            className="py-5 flex items-center gap-3"
           >
             <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl shrink-0"
-              style={{ background: `${agent.color}20` }}
+              className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"
+              style={{ background: `${agent.color}12` }}
             >
               {agent.icon}
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-2xl font-bold text-white">{agent.nameKo}</h1>
-                {agent.status === 'beta' && (
-                  <span className="px-2 py-0.5 text-[10px] rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30">
-                    BETA
-                  </span>
-                )}
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-bold text-gray-900">{agent.nameKo}</h1>
+                {agent.status === 'beta' && <span className="badge badge-indigo text-[10px] py-0">BETA</span>}
               </div>
-              <p className="text-sm text-zinc-500 mt-0.5">
-                {CATEGORY_LABELS[agent.category]} · {agent.pricing.type === 'free' ? '무료' : `${agent.pricing.freeMessages}회 무료`}
+              <p className="text-xs text-gray-400">
+                {CATEGORY_LABELS[agent.category]} · {agent.pricing.freeMessages ? `${agent.pricing.freeMessages}회 무료` : '무료'}
               </p>
-              <p className="text-sm text-zinc-400 mt-2">{agent.descriptionKo}</p>
             </div>
           </motion.div>
 
           {/* Chat area */}
-          <div className="bg-surface rounded-2xl border border-white/5 overflow-hidden" style={{ minHeight: '60vh' }}>
-            {/* Messages */}
-            <div className="p-4 space-y-4 overflow-y-auto" style={{ maxHeight: 'calc(60vh - 80px)' }}>
-              {!showChat && messages.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-20 text-center">
-                  <span className="text-5xl mb-4">{agent.icon}</span>
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    {agent.nameKo}와 대화를 시작하세요
-                  </h3>
-                  <p className="text-sm text-zinc-500 max-w-md">
-                    {agent.descriptionKo}
-                  </p>
-
-                  {/* Quick actions */}
-                  <div className="flex flex-wrap gap-2 mt-6 justify-center">
-                    {agent.tags.map(tag => (
-                      <button
-                        key={tag}
-                        className="px-3 py-1.5 text-sm rounded-lg bg-surface-2 border border-white/5 text-zinc-400 hover:text-white hover:border-violet-500/30 transition-all"
-                        onClick={() => {
-                          setInput(`#${tag} 관련 도움이 필요해요`);
-                          inputRef.current?.focus();
-                        }}
-                      >
-                        #{tag}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {messages.map(msg => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                      msg.role === 'user'
-                        ? 'bg-violet-600 text-white'
-                        : 'bg-surface-2 text-zinc-200 border border-white/5'
-                    }`}
-                  >
-                    <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
-                  </div>
-                </motion.div>
-              ))}
-
-              {loading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex justify-start"
-                >
-                  <div className="bg-surface-2 rounded-2xl px-4 py-3 border border-white/5">
-                    <div className="flex gap-1.5">
-                      <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-soft overflow-hidden" style={{ minHeight: '65vh' }}>
+            <div className="flex flex-col" style={{ height: '65vh' }}>
+              {/* Messages */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {messages.length === 0 && (
+                  <div className="flex flex-col items-center justify-center h-full text-center px-4">
+                    <span className="text-4xl mb-3">{agent.icon}</span>
+                    <h3 className="text-base font-semibold text-gray-900 mb-1.5">
+                      {agent.nameKo}에게 물어보세요
+                    </h3>
+                    <p className="text-sm text-gray-400 max-w-sm mb-5">
+                      {agent.descriptionKo}
+                    </p>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {agent.tags.map(tag => (
+                        <button
+                          key={tag}
+                          className="px-3 py-1.5 text-xs rounded-xl bg-gray-50 border border-gray-100 text-gray-500 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 transition-all"
+                          onClick={() => { setInput(`#${tag} 관련 도움이 필요해요`); inputRef.current?.focus(); }}
+                        >
+                          #{tag}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                </motion.div>
-              )}
+                )}
 
-              <div ref={messagesEndRef} />
-            </div>
+                {messages.map(msg => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
+                        msg.role === 'user'
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}
+                    >
+                      <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                    </div>
+                  </motion.div>
+                ))}
 
-            {/* Input */}
-            <div className="border-t border-white/5 p-4">
-              <div className="flex gap-3 items-end">
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={e => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder={placeholders[agent.id] || '메시지를 입력하세요...'}
-                  rows={1}
-                  className="flex-1 bg-surface-2 rounded-xl border border-white/10 px-4 py-3 text-sm text-white placeholder-zinc-600 resize-none focus:outline-none focus:border-violet-500/50 transition-colors"
-                  style={{ minHeight: '44px', maxHeight: '120px' }}
-                  disabled={agent.status === 'coming_soon'}
-                />
-                <button
-                  onClick={handleSend}
-                  disabled={!input.trim() || loading || agent.status === 'coming_soon'}
-                  className="px-4 py-3 rounded-xl bg-violet-600 text-white font-medium hover:bg-violet-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 shrink-0"
-                >
-                  {loading ? '...' : '전송'}
-                </button>
+                {loading && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                    <div className="bg-gray-100 rounded-2xl px-4 py-3">
+                      <div className="flex gap-1">
+                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
-              {agent.status === 'coming_soon' && (
-                <p className="text-xs text-zinc-600 mt-2 text-center">
-                  이 에이전트는 곧 출시됩니다. 기대해주세요!
-                </p>
-              )}
+
+              {/* Input */}
+              <div className="border-t border-gray-100 p-3">
+                <div className="flex gap-2 items-end">
+                  <textarea
+                    ref={inputRef}
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholders[agent.id] || '메시지를 입력하세요...'}
+                    rows={1}
+                    className="flex-1 bg-gray-50 rounded-xl border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 resize-none focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all"
+                    style={{ minHeight: '42px', maxHeight: '100px' }}
+                    disabled={agent.status === 'coming_soon'}
+                  />
+                  <button
+                    onClick={handleSend}
+                    disabled={!input.trim() || loading || agent.status === 'coming_soon'}
+                    className="btn-primary px-4 py-2.5 text-sm disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                  >
+                    {loading ? '···' : '전송'}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
