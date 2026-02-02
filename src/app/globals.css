@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 
 :root {
   --background: #FAFBFC;
@@ -25,14 +26,14 @@
   --color-accent: var(--accent);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Pretendard Variable', 'Pretendard', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--text-primary);
-  font-family: var(--font-sans, 'Pretendard', system-ui, -apple-system, sans-serif);
+  font-family: 'Pretendard Variable', 'Pretendard', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
