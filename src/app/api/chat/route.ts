@@ -85,7 +85,14 @@ export async function POST(req: NextRequest) {
     const data = await geminiRes.json();
     const response = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-    return NextResponse.json({ response, agentId });
+    return NextResponse.json(
+      { response, agentId },
+      {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0', // Chat should not be cached
+        },
+      }
+    );
   } catch (err) {
     console.error('Chat API error:', err);
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
