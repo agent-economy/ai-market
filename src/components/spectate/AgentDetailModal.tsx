@@ -365,25 +365,69 @@ function MiniTransaction({ tx, agentId }: { tx: { id: string; buyer_id: string; 
   const isBuyer = tx.buyer_id === agentId;
   const otherName = AGENT_NAMES[isBuyer ? tx.seller_id : tx.buyer_id] || (isBuyer ? tx.seller_id : tx.buyer_id);
   const otherEmoji = AGENT_EMOJI[isBuyer ? tx.seller_id : tx.buyer_id] || '🤖';
+  
+  // 파산 관련 거래 체크
+  const isBankruptcyRelated = tx.narrative && (tx.narrative.includes('bankruptcy') || tx.narrative.includes('파산'));
+  
+  // 대형 거래 체크 ($10 이상)
+  const isLargeTrade = tx.amount >= 10;
+
+  const timeStr = new Date(tx.created_at).toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   return (
-    <div className="flex items-center gap-3 py-2 px-3 bg-[var(--surface-2)] rounded-lg">
-      <span className="text-sm">{otherEmoji}</span>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 text-xs">
-          <span className={`font-semibold ${isBuyer ? 'text-red-400' : 'text-emerald-400'}`}>
-            {isBuyer ? '구매' : '판매'}
-          </span>
-          <span className="text-[var(--text-secondary)]">{otherName}</span>
-          <span className="px-1.5 py-0.5 bg-[var(--accent)]/10 text-[var(--accent)] rounded text-[10px] font-semibold">
-            {tx.skill_type}
-          </span>
+    <div className={`p-3 rounded-lg transition-all hover:scale-[1.02] ${
+      isBankruptcyRelated 
+        ? 'bg-red-500/10 border border-red-500/20' 
+        : isLargeTrade
+        ? 'bg-emerald-500/10 border border-emerald-500/20'
+        : 'bg-[var(--surface-2)] border border-transparent'
+    }`}>
+      {/* 헤더 */}
+      <div className="flex items-center gap-3">
+        <span className="text-sm">{otherEmoji}</span>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 text-xs">
+            <span className={`font-semibold ${isBuyer ? 'text-red-400' : 'text-emerald-400'}`}>
+              {isBuyer ? '구매' : '판매'}
+            </span>
+            <span className="text-[var(--text-secondary)]">{otherName}</span>
+            <span className="px-1.5 py-0.5 bg-[var(--accent)]/10 text-[var(--accent)] rounded text-[10px] font-semibold">
+              {tx.skill_type}
+            </span>
+            {/* 특별 태그 */}
+            {isBankruptcyRelated && (
+              <span className="px-1.5 py-0.5 bg-red-500/20 text-red-400 rounded text-[10px] font-bold">
+                💀 파산
+              </span>
+            )}
+            {isLargeTrade && !isBankruptcyRelated && (
+              <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-[10px] font-bold">
+                💰 대형거래
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="text-right">
+          <div className={`font-mono text-xs font-bold ${isBuyer ? 'text-red-400' : 'text-emerald-400'}`}>
+            {isBuyer ? '-' : '+'}${tx.amount.toFixed(2)}
+          </div>
+          <div className="text-[10px] text-[var(--text-tertiary)] font-mono">
+            E{tx.epoch} · {timeStr}
+          </div>
         </div>
       </div>
-      <span className={`font-mono text-xs font-bold ${isBuyer ? 'text-red-400' : 'text-emerald-400'}`}>
-        {isBuyer ? '-' : '+'}${tx.amount.toFixed(2)}
-      </span>
-      <span className="text-[10px] text-[var(--text-tertiary)] font-mono">E{tx.epoch}</span>
+
+      {/* Narrative (축약해서 표시) */}
+      {tx.narrative && (
+        <div className="mt-2 pt-2 border-t border-[var(--border)]/50">
+          <p className="text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-2">
+            {tx.narrative.length > 100 ? `${tx.narrative.substring(0, 100)}...` : tx.narrative}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
