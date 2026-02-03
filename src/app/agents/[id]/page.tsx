@@ -30,6 +30,11 @@ const SUGGESTED_PROMPTS: Record<string, string[]> = {
   'food-recipe': ['계란이랑 밥만 있어', '닭가슴살로 뭐 해먹지?', '자취생 간단 저녁 추천'],
   'mood-diary': ['오늘 기분이 별로야', '불안한 마음을 정리하고 싶어', '감정일기 써보고 싶어'],
   'code-helper': ['Python 에러 해결해줘', 'React 코드 리뷰 부탁', 'API 설계 도와줘'],
+  'real-estate': ['서울 아파트 전세가율 분석해줘', '청약 당첨 전략 알려줘', '2억으로 투자할 수 있는 곳은?'],
+  'korean-grammar': ['이 문장 맞춤법 검사해줘', '비즈니스 이메일 교정해줘', '"되"와 "돼" 차이가 뭐야?'],
+  'health-coach': ['다이어트 식단 짜줘', '삼겹살 칼로리 얼마야?', '초보 홈트 루틴 추천해줘'],
+  'legal-qa': ['퇴직금 계산해줘', '전세 사기 예방법 알려줘', '내용증명 작성 도와줘'],
+  'ad-copywriter': ['카페 오픈 광고 문구 써줘', '네이버 검색광고 카피 만들어줘', '할인 이벤트 SNS 문구 추천'],
 };
 
 export default function AgentPage({ params }: { params: Promise<{ id: string }> }) {
