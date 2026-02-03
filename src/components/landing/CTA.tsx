@@ -12,14 +12,14 @@ export default function CTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="bg-gradient-to-br from-indigo-600 to-violet-600 rounded-3xl p-8 sm:p-10 md:p-14 text-center text-white">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">
+          <div className="bg-gradient-to-br from-indigo-600 to-violet-600 rounded-3xl p-8 sm:p-10 md:p-14 text-center text-white break-keep">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
               지금 바로 시작하세요
             </h2>
-            <p className="text-sm sm:text-base text-indigo-100 mb-6 sm:mb-8 leading-relaxed">
-              회원가입 없이 무료로 체험할 수 있어요.
-              <br className="hidden sm:block" />
-              {' '}AI가 당신의 시간을 아껴드립니다.
+            <p className="text-sm sm:text-base text-indigo-100 mb-6 sm:mb-8 leading-relaxed max-w-sm mx-auto">
+              회원가입 없이
+              <br />
+              무료로 체험할 수 있어요
             </p>
 
             <Link
