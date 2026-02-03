@@ -15,6 +15,8 @@ export interface Agent {
   featured: boolean;
   systemPrompt?: string;
   model?: string;
+  greeting?: string;
+  suggestedPrompts?: string[];
 }
 
 export type AgentCategory =

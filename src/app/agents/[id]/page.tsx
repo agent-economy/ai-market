@@ -18,26 +18,7 @@ interface Message {
   timestamp: number;
 }
 
-const SUGGESTED_PROMPTS: Record<string, string[]> = {
-  'soul-friend': ['오늘 하루 너무 힘들었어...', '남친이 연락을 안 해 😢', '회사 상사가 미치겠어'],
-  'blog-master': ['강남 카페 블로그 글 써줘', '미용실 홍보 글 작성해줘', '맛집 리뷰 포맷 알려줘'],
-  'resume-pro': ['삼성전자 마케팅 자소서 써줘', '신입 개발자 이력서 첨삭', '면접 예상 질문 뽑아줘'],
-  'contract-guard': ['전세 계약서 검토해줘', '근로계약서 위험 조항 확인', '프리랜서 용역 계약 분석'],
-  'study-buddy': ['미적분 쉽게 설명해줘', '경제학 수요공급 법칙', '퀴즈 내줘!'],
-  'sns-creator': ['카페 인스타 게시물 써줘', '틱톡 릴스 스크립트', '해시태그 추천해줘'],
-  'startup-mentor': ['아이디어 검증해줘', '피치덱 구성 도와줘', 'TIPS 지원 방법 알려줘'],
-  'english-tutor': ["Let's practice English!", '비즈니스 이메일 작성 도와줘', '콩글리시 교정해줘'],
-  'tax-helper': ['프리랜서 종소세 계산해줘', '간이과세자 부가세 신고', '절세 방법 알려줘'],
-  'travel-planner': ['제주도 2박3일 코스 짜줘', '일본 오사카 3박4일 계획', '부산 맛집 여행 코스'],
-  'food-recipe': ['계란이랑 밥만 있어', '닭가슴살로 뭐 해먹지?', '자취생 간단 저녁 추천'],
-  'mood-diary': ['오늘 기분이 별로야', '불안한 마음을 정리하고 싶어', '감정일기 써보고 싶어'],
-  'code-helper': ['Python 에러 해결해줘', 'React 코드 리뷰 부탁', 'API 설계 도와줘'],
-  'real-estate': ['서울 아파트 전세가율 분석해줘', '청약 당첨 전략 알려줘', '2억으로 투자할 수 있는 곳은?'],
-  'korean-grammar': ['이 문장 맞춤법 검사해줘', '비즈니스 이메일 교정해줘', '"되"와 "돼" 차이가 뭐야?'],
-  'health-coach': ['다이어트 식단 짜줘', '삼겹살 칼로리 얼마야?', '초보 홈트 루틴 추천해줘'],
-  'legal-qa': ['퇴직금 계산해줘', '전세 사기 예방법 알려줘', '내용증명 작성 도와줘'],
-  'ad-copywriter': ['카페 오픈 광고 문구 써줘', '네이버 검색광고 카피 만들어줘', '할인 이벤트 SNS 문구 추천'],
-};
+// Suggested prompts now come from agent.suggestedPrompts in agents.ts
 
 // ── Helper: format numbers like 12,847 or 1.2만
 function formatCount(n: number): string {
@@ -281,7 +262,8 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
     }
   };
 
-  const prompts = SUGGESTED_PROMPTS[agent.id] || [];
+  const prompts = agent.suggestedPrompts || [];
+  const greeting = agent.greeting;
 
   return (
     <>
@@ -387,79 +369,81 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
             <div className="flex flex-col" style={{ height: '70vh' }}>
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* ─── Empty state: Agent detail info ─── */}
+                {/* ─── Empty state: Greeting + Agent info + Suggested chips ─── */}
                 {messages.length === 0 && !loading && (
-                  <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                    {/* Icon + name */}
-                    <div
-                      className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl mb-4 shadow-lg"
-                      style={{ background: `linear-gradient(135deg, ${agent.color}22, ${agent.color}08)` }}
-                    >
-                      {agent.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                      {agent.nameKo}
-                    </h3>
-                    <p className="text-sm text-gray-400 dark:text-gray-500 max-w-sm mb-5 leading-relaxed">
-                      {agent.descriptionKo}
-                    </p>
-
-                    {/* ── Stats row ── */}
-                    <div className="flex flex-wrap items-center justify-center gap-2 mb-5">
-                      {/* Rating */}
-                      {agent.stats.rating > 0 && (
-                        <div className="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200/60 dark:border-amber-700/40 rounded-full px-3 py-1.5">
-                          <StarRating rating={agent.stats.rating} />
-                          <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">{agent.stats.rating}</span>
-                          <span className="text-[11px] text-amber-500/70 dark:text-amber-400/60">({formatCount(agent.stats.reviews)})</span>
+                  <div className="flex flex-col h-full">
+                    {/* Agent info header */}
+                    <div className="flex flex-col items-center text-center pt-6 pb-4 px-4">
+                      <div
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-lg"
+                        style={{ background: `linear-gradient(135deg, ${agent.color}22, ${agent.color}08)` }}
+                      >
+                        {agent.icon}
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-0.5">
+                        {agent.nameKo}
+                      </h3>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 max-w-xs leading-relaxed mb-3">
+                        {agent.descriptionKo}
+                      </p>
+                      {/* Stats row */}
+                      <div className="flex flex-wrap items-center justify-center gap-2 mb-2">
+                        {agent.stats.rating > 0 && (
+                          <div className="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200/60 dark:border-amber-700/40 rounded-full px-2.5 py-1">
+                            <StarRating rating={agent.stats.rating} />
+                            <span className="text-xs font-semibold text-amber-700 dark:text-amber-300">{agent.stats.rating}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2.5 py-1 text-[11px] text-gray-600 dark:text-gray-300">
+                          <span>💬</span>
+                          <span className="font-semibold">{formatCount(agent.stats.totalChats)}</span>
                         </div>
-                      )}
-                      {/* Total chats */}
-                      <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-3 py-1.5 text-xs text-gray-600 dark:text-gray-300">
-                        <span>💬</span>
-                        <span className="font-semibold">{formatCount(agent.stats.totalChats)}</span>
-                        <span className="text-gray-400 dark:text-gray-500">대화</span>
-                      </div>
-                      {/* Monthly users */}
-                      <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-3 py-1.5 text-xs text-gray-600 dark:text-gray-300">
-                        <span>👥</span>
-                        <span className="font-semibold">{formatCount(agent.stats.monthlyUsers)}</span>
-                        <span className="text-gray-400 dark:text-gray-500">월간</span>
+                        <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2.5 py-1 text-[11px] text-gray-600 dark:text-gray-300">
+                          <span>👥</span>
+                          <span className="font-semibold">{formatCount(agent.stats.monthlyUsers)}</span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* ── Tags ── */}
-                    {agent.tags.length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-1.5 mb-7">
-                        {agent.tags.map(tag => (
-                          <span
-                            key={tag}
-                            className="text-[11px] px-2.5 py-1 rounded-md font-medium transition-colors"
-                            style={{
-                              background: `${agent.color}10`,
-                              color: agent.color,
-                              border: `1px solid ${agent.color}25`,
-                            }}
+                    {/* Greeting message bubble */}
+                    {greeting && (
+                      <div className="px-4">
+                        <div className="flex gap-2.5 justify-start">
+                          <div
+                            className="w-7 h-7 rounded-lg flex items-center justify-center text-sm shrink-0 mt-0.5"
+                            style={{ background: `${agent.color}12` }}
                           >
-                            #{tag}
-                          </span>
-                        ))}
+                            {agent.icon}
+                          </div>
+                          <div>
+                            <div className="max-w-[80%] rounded-2xl px-4 py-2.5 bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-gray-700">
+                              <p className="text-sm leading-relaxed">{greeting}</p>
+                            </div>
+                            <p className="text-[10px] text-gray-300 dark:text-gray-600 mt-1 ml-1">🤖 AI가 생성한 답변입니다</p>
+                          </div>
+                        </div>
+
+                        {/* Suggested prompt chips */}
+                        {prompts.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-3 ml-9">
+                            {prompts.map((prompt, i) => (
+                              <button
+                                key={i}
+                                className="rounded-full px-4 py-2 text-sm cursor-pointer hover:opacity-80 transition-all border"
+                                style={{
+                                  background: `${agent.color}10`,
+                                  color: agent.color,
+                                  borderColor: `${agent.color}30`,
+                                }}
+                                onClick={() => handleSend(prompt)}
+                              >
+                                {prompt}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
-
-                    {/* ── Suggested prompts ── */}
-                    <div className="w-full max-w-md space-y-2">
-                      {prompts.map((prompt, i) => (
-                        <button
-                          key={i}
-                          className="w-full text-left px-4 py-3 text-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-800 transition-all group"
-                          onClick={() => handleSend(prompt)}
-                        >
-                          <span className="text-gray-300 dark:text-gray-600 group-hover:text-indigo-400 mr-2">→</span>
-                          {prompt}
-                        </button>
-                      ))}
-                    </div>
                   </div>
                 )}
 
@@ -478,14 +462,19 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
                         {agent.icon}
                       </div>
                     )}
-                    <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
-                        msg.role === 'user'
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-gray-700'
-                      }`}
-                    >
-                      <MarkdownRenderer content={msg.content} isUser={msg.role === 'user'} />
+                    <div>
+                      <div
+                        className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
+                          msg.role === 'user'
+                            ? 'bg-indigo-600 text-white'
+                            : 'bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-gray-700'
+                        }`}
+                      >
+                        <MarkdownRenderer content={msg.content} isUser={msg.role === 'user'} />
+                      </div>
+                      {msg.role === 'assistant' && (
+                        <p className="text-[10px] text-gray-300 dark:text-gray-600 mt-1 ml-1">🤖 AI가 생성한 답변입니다</p>
+                      )}
                     </div>
                   </motion.div>
                 ))}
