@@ -7,6 +7,7 @@ import { getAgent } from '@/data/agents';
 import { CATEGORY_LABELS } from '@/types/agent';
 import MarkdownRenderer from '@/components/chat/MarkdownRenderer';
 import Navbar from '@/components/landing/Navbar';
+import PricingModal from '@/components/payment/PricingModal';
 
 interface Message {
   id: string;
@@ -39,6 +40,7 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [streamingContent, setStreamingContent] = useState('');
+  const [showPricing, setShowPricing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -248,7 +250,7 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
           </motion.div>
 
           {/* Chat area */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-soft overflow-hidden" style={{ minHeight: '70vh' }}>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-soft overflow-hidden" style={{ minHeight: '70vh' }}>
             <div className="flex flex-col" style={{ height: '70vh' }}>
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -260,7 +262,7 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
                     >
                       {agent.icon}
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                       {agent.nameKo}
                     </h3>
                     <p className="text-sm text-gray-400 max-w-sm mb-6 leading-relaxed">
@@ -272,7 +274,7 @@ export default function AgentPage({ params }: { params: Promise<{ id: string }> 
                       {prompts.map((prompt, i) => (
                         <button
                           key={i}
-                          className="w-full text-left px-4 py-3 text-sm rounded-xl bg-gray-50 border border-gray-100 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all group"
+                          className="w-full text-left px-4 py-3 text-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-800 transition-all group"
                           onClick={() => handleSend(prompt)}
                         >
                           <span className="text-gray-300 group-hover:text-indigo-400 mr-2">→</span>
