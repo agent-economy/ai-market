@@ -20,7 +20,7 @@ export default function FeaturedAgents() {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
             인기 에이전트
           </h2>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-gray-600 dark:text-slate-300">
             지금 바로 무료로 사용할 수 있어요
           </p>
         </motion.div>
@@ -51,11 +51,11 @@ export default function FeaturedAgents() {
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                     {agent.nameKo}
                   </h3>
-                  <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                  <span className="text-xs text-gray-500 dark:text-slate-400 font-medium">
                     {CATEGORY_LABELS[agent.category]}
                   </span>
 
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 leading-relaxed">
+                  <p className="text-sm text-gray-600 dark:text-slate-300 mt-3 leading-relaxed">
                     {agent.descriptionKo}
                   </p>
 
@@ -63,15 +63,15 @@ export default function FeaturedAgents() {
                     {agent.tags.slice(0, 3).map(tag => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 text-[11px] rounded-md bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-medium"
+                        className="px-2 py-0.5 text-[11px] rounded-md bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-300 font-medium"
                       >
                         #{tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="mt-5 pt-4 border-t border-gray-50 dark:border-gray-800 flex items-center justify-between">
-                    <span className="text-sm text-gray-400 dark:text-gray-500">
+                  <div className="mt-5 pt-4 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
+                    <span className="text-sm text-gray-500 dark:text-slate-400">
                       {agent.pricing.freeMessages
                         ? `${agent.pricing.freeMessages}회 무료`
                         : '무료'}

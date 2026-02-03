@@ -71,7 +71,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base md:text-lg text-gray-500 dark:text-gray-300 max-w-xl mx-auto mb-10 leading-relaxed"
+          className="text-base md:text-lg text-gray-600 dark:text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed"
         >
           블로그 대필, 이력서 작성, 계약서 분석, AI 친구까지.
           <br className="hidden sm:block" />
@@ -98,7 +98,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12 flex items-center justify-center gap-6 text-sm text-gray-400 dark:text-gray-400"
+          className="mt-12 flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-slate-400"
         >
           <span>🆓 무료 체험</span>
           <span className="w-1 h-1 bg-gray-300 dark:bg-gray-700 rounded-full" />

@@ -25,7 +25,7 @@ function AnimatedNumber({ value, decimal }: { value: number; decimal?: boolean }
     const timer = setInterval(() => {
       current++;
       const progress = current / steps;
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       setCount(decimal ? parseFloat((value * eased).toFixed(1)) : Math.floor(value * eased));
       if (current >= steps) clearInterval(timer);
     }, stepTime);
@@ -42,7 +42,7 @@ function AnimatedNumber({ value, decimal }: { value: number; decimal?: boolean }
 
 export default function Stats() {
   return (
-    <section className="py-16 px-6 bg-gradient-to-b from-transparent to-gray-50/50 dark:to-gray-900/30">
+    <section className="py-16 px-6 bg-gradient-to-b from-transparent to-gray-50/50 dark:to-slate-900/30">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {STATS.map((stat, i) => (
@@ -52,14 +52,14 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="text-center p-6 rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 shadow-soft"
+              className="text-center p-6 rounded-2xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-600 shadow-soft"
             >
               <span className="text-2xl mb-2 block">{stat.icon}</span>
               <div className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-1">
                 <AnimatedNumber value={stat.value} decimal={stat.decimal} />
-                <span className="text-base font-medium text-gray-400 ml-0.5">{stat.suffix}</span>
+                <span className="text-base font-medium text-gray-500 dark:text-slate-400 ml-0.5">{stat.suffix}</span>
               </div>
-              <p className="text-xs text-gray-400 dark:text-gray-500 font-medium">{stat.label}</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 font-medium">{stat.label}</p>
             </motion.div>
           ))}
         </div>

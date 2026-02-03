@@ -14,7 +14,7 @@ const TESTIMONIALS = [
   {
     name: '이수진',
     role: '대학생 · 취준생',
-    avatar: '👩‍🎓',
+    avatar: '👩🎓',
     text: '이력서프로가 써준 자소서로 삼성 서류 합격했어요! STAR 기법 적용이 확실히 다르더라고요.',
     agent: '이력서프로',
     rating: 5,
@@ -66,7 +66,7 @@ export default function Testimonials() {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
             사용자 후기
           </h2>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-gray-600 dark:text-slate-300">
             실제 사용자들의 생생한 이야기
           </p>
         </motion.div>
@@ -79,27 +79,27 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="p-6 rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 shadow-soft hover:shadow-medium transition-shadow"
+              className="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-600 shadow-soft hover:shadow-medium transition-shadow"
             >
               <div className="flex items-center gap-1 mb-3">
                 {Array.from({ length: t.rating }).map((_, j) => (
                   <span key={j} className="text-amber-400 text-sm">★</span>
                 ))}
               </div>
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+              <p className="text-sm text-gray-700 dark:text-slate-200 leading-relaxed mb-4">
                 &ldquo;{t.text}&rdquo;
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-lg">
+                  <div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-lg">
                     {t.avatar}
                   </div>
                   <div>
                     <p className="text-sm font-bold text-gray-900 dark:text-white">{t.name}</p>
-                    <p className="text-[11px] text-gray-400">{t.role}</p>
+                    <p className="text-[11px] text-gray-500 dark:text-slate-400">{t.role}</p>
                   </div>
                 </div>
-                <span className="text-[10px] px-2 py-1 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-500 dark:text-indigo-400 font-medium">
+                <span className="text-[10px] px-2 py-1 rounded-md bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 font-semibold">
                   {t.agent}
                 </span>
               </div>
