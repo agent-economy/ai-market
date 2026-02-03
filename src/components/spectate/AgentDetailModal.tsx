@@ -5,7 +5,6 @@ import {
   AGENT_EMOJI,
   AGENT_COLORS,
   AGENT_NAMES,
-  MOCK_BALANCE_HISTORY,
   type SpectateAgentDetail,
 } from '@/lib/spectate-mock-data';
 
@@ -66,7 +65,11 @@ export default function AgentDetailModal({ agent, onClose }: Props) {
 
               {/* Balance Chart */}
               <Section title="잔고 히스토리">
-                <MiniChart agentId={agent.id} />
+                <MiniChart
+                  agentId={agent.id}
+                  currentBalance={agent.balance}
+                  transactions={agent.recentTransactions}
+                />
               </Section>
 
               {/* Financial Summary */}
@@ -196,8 +199,37 @@ function FinancialCard({ label, value, color, icon }: {
   );
 }
 
-function MiniChart({ agentId }: { agentId: string }) {
-  const history = MOCK_BALANCE_HISTORY[agentId] || [];
+function MiniChart({ agentId, currentBalance, transactions }: {
+  agentId: string;
+  currentBalance: number;
+  transactions: { buyer_id: string; seller_id: string; amount: number; fee: number; epoch: number }[];
+}) {
+  if (transactions.length < 2) return <p className="text-xs text-[var(--text-tertiary)]">거래 데이터 수집 중...</p>;
+
+  // Compute balance history by walking backward from current balance
+  const rawPoints: { epoch: number; balance: number }[] = [];
+  let balance = currentBalance;
+  const latestEpoch = transactions[0]?.epoch || 0;
+  rawPoints.push({ epoch: latestEpoch, balance });
+
+  for (const tx of transactions) {
+    if (tx.buyer_id === agentId) {
+      balance += tx.amount; // Before buying, balance was higher
+    } else if (tx.seller_id === agentId) {
+      balance -= (tx.amount - tx.fee); // Before selling, balance was lower
+    }
+    rawPoints.push({ epoch: tx.epoch, balance: Math.max(0, balance) });
+  }
+
+  // Reverse to chronological order and dedupe by epoch (keep earliest per epoch)
+  rawPoints.reverse();
+  const seen = new Set<number>();
+  const history = rawPoints.filter(p => {
+    if (seen.has(p.epoch)) return false;
+    seen.add(p.epoch);
+    return true;
+  });
+
   if (history.length < 2) return <p className="text-xs text-[var(--text-tertiary)]">데이터 부족</p>;
 
   const maxBal = Math.max(...history.map(h => h.balance));
@@ -205,7 +237,7 @@ function MiniChart({ agentId }: { agentId: string }) {
   const range = maxBal - minBal || 1;
 
   const chartHeight = 60;
-  const chartWidth = 100; // percentage width
+  const chartWidth = 100;
 
   const points = history.map((h, i) => {
     const x = (i / (history.length - 1)) * chartWidth;
@@ -217,7 +249,6 @@ function MiniChart({ agentId }: { agentId: string }) {
   const strokeColor = isPositive ? '#34D399' : '#F87171';
   const fillColor = isPositive ? '#34D39915' : '#F8717115';
 
-  // Create fill polygon (close the path)
   const fillPoints = `0,${chartHeight} ${points} ${chartWidth},${chartHeight}`;
 
   return (

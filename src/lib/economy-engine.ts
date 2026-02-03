@@ -521,16 +521,16 @@ export async function getEconomyStats() {
 
   const [
     { data: agents },
-    { data: epochs },
-    { data: txCount },
+    { data: allEpochs },
+    { count: txCount },
   ] = await Promise.all([
     supabase.from('economy_agents').select('*'),
-    supabase.from('economy_epochs').select('*').order('epoch', { ascending: false }).limit(1),
+    supabase.from('economy_epochs').select('*').order('epoch', { ascending: false }).limit(20),
     supabase.from('economy_transactions').select('id', { count: 'exact', head: true }),
   ]);
 
   const agentList = (agents || []) as EconomyAgent[];
-  const latestEpoch = epochs?.[0] || null;
+  const latestEpoch = allEpochs?.[0] || null;
   const totalBalance = agentList.reduce((sum, a) => sum + Number(a.balance), 0);
   const activeCount = agentList.filter(a => a.status === 'active').length;
   const bankruptCount = agentList.filter(a => a.status === 'bankrupt').length;
@@ -541,7 +541,7 @@ export async function getEconomyStats() {
     bankruptAgents: bankruptCount,
     totalBalance: Number(totalBalance.toFixed(4)),
     averageBalance: agentList.length > 0 ? Number((totalBalance / agentList.length).toFixed(4)) : 0,
-    totalTransactions: txCount,
+    totalTransactions: txCount || 0,
     latestEpoch: latestEpoch?.epoch || 0,
     latestEvent: latestEpoch ? {
       type: latestEpoch.event_type,
@@ -552,6 +552,11 @@ export async function getEconomyStats() {
       name: a.name,
       balance: Number(a.balance),
       status: a.status,
+    })),
+    epochEvents: (allEpochs || []).map((e: Record<string, unknown>) => ({
+      epoch: e.epoch as number,
+      type: e.event_type as string,
+      description: e.event_description as string,
     })),
   };
 }

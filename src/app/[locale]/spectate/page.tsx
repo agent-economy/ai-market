@@ -8,30 +8,41 @@ import Leaderboard from '@/components/spectate/Leaderboard';
 import TransactionFeed from '@/components/spectate/TransactionFeed';
 import AgentDetailModal from '@/components/spectate/AgentDetailModal';
 
-import {
-  MOCK_AGENTS,
-  MOCK_TRANSACTIONS,
-  MOCK_STATS,
-  MOCK_AGENT_DETAILS,
-  MOCK_EPOCH_EVENTS,
-  type SpectateAgent,
-  type SpectateTransaction,
-  type SpectateStats,
-  type SpectateAgentDetail,
-  type EpochEventCard,
+import type {
+  SpectateAgent,
+  SpectateTransaction,
+  SpectateStats,
+  SpectateAgentDetail,
+  EpochEventCard,
 } from '@/lib/spectate-mock-data';
 
 const POLL_INTERVAL = 10_000; // 10초마다 새로고침
 
+const EMPTY_STATS: SpectateStats = {
+  totalAgents: 0,
+  activeAgents: 0,
+  bankruptAgents: 0,
+  totalBalance: 0,
+  averageBalance: 0,
+  totalTransactions: 0,
+  latestEpoch: 0,
+  latestEvent: null,
+  agents: [],
+};
+
 export default function SpectatePage() {
-  const [agents, setAgents] = useState<SpectateAgent[]>(MOCK_AGENTS);
-  const [transactions, setTransactions] = useState<SpectateTransaction[]>(MOCK_TRANSACTIONS);
-  const [stats, setStats] = useState<SpectateStats>(MOCK_STATS);
-  const [epochEvents] = useState<EpochEventCard[]>(MOCK_EPOCH_EVENTS);
+  const [agents, setAgents] = useState<SpectateAgent[]>([]);
+  const [transactions, setTransactions] = useState<SpectateTransaction[]>([]);
+  const [stats, setStats] = useState<SpectateStats>(EMPTY_STATS);
+  const [epochEvents, setEpochEvents] = useState<EpochEventCard[]>([]);
 
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
   const [agentDetail, setAgentDetail] = useState<SpectateAgentDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+
+  // Loading / error states
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
 
   // Bankruptcy flash effect
   const [bankruptFlash, setBankruptFlash] = useState(false);
@@ -67,10 +78,12 @@ export default function SpectatePage() {
         prevBankruptIds.current = currentBankruptIds;
 
         setAgents(newAgents);
+        return true;
       }
     } catch {
-      // Keep mock data on failure
+      // Will be handled by caller
     }
+    return false;
   }, []);
 
   // Fetch feed
@@ -81,13 +94,15 @@ export default function SpectatePage() {
       const data = await res.json();
       if (data.feed && Array.isArray(data.feed)) {
         setTransactions(data.feed as SpectateTransaction[]);
+        return true;
       }
     } catch {
-      // Keep mock data
+      // Will be handled by caller
     }
+    return false;
   }, []);
 
-  // Fetch stats
+  // Fetch stats (includes epoch events)
   const fetchStats = useCallback(async () => {
     try {
       const res = await fetch('/api/economy/stats', { cache: 'no-store' });
@@ -95,10 +110,16 @@ export default function SpectatePage() {
       const data = await res.json();
       if (data.totalAgents !== undefined) {
         setStats(data as SpectateStats);
+        // Extract epoch events from stats response
+        if (data.epochEvents && Array.isArray(data.epochEvents)) {
+          setEpochEvents(data.epochEvents as EpochEventCard[]);
+        }
+        return true;
       }
     } catch {
-      // Keep mock data
+      // Will be handled by caller
     }
+    return false;
   }, []);
 
   // Fetch agent detail
@@ -114,8 +135,7 @@ export default function SpectatePage() {
         throw new Error('no data');
       }
     } catch {
-      // Fallback to mock
-      setAgentDetail(MOCK_AGENT_DETAILS[agentId] || null);
+      setAgentDetail(null);
     } finally {
       setDetailLoading(false);
     }
@@ -123,17 +143,35 @@ export default function SpectatePage() {
 
   // Initial fetch + polling
   useEffect(() => {
-    fetchLeaderboard();
-    fetchFeed();
-    fetchStats();
+    let cancelled = false;
+
+    const initialFetch = async () => {
+      const results = await Promise.all([
+        fetchLeaderboard(),
+        fetchFeed(),
+        fetchStats(),
+      ]);
+      if (!cancelled) {
+        const anySuccess = results.some(Boolean);
+        setFetchError(!anySuccess);
+        setInitialLoading(false);
+      }
+    };
+
+    initialFetch();
 
     const interval = setInterval(() => {
-      fetchLeaderboard();
-      fetchFeed();
-      fetchStats();
+      if (!cancelled) {
+        fetchLeaderboard();
+        fetchFeed();
+        fetchStats();
+      }
     }, POLL_INTERVAL);
 
-    return () => clearInterval(interval);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
   }, [fetchLeaderboard, fetchFeed, fetchStats]);
 
   // Open agent detail
@@ -159,6 +197,31 @@ export default function SpectatePage() {
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   };
+
+  // Loading screen
+  if (initialLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="text-center space-y-4">
+          <div className="w-10 h-10 border-3 border-[var(--accent)] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-sm text-[var(--text-secondary)]">경제 데이터 로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error screen (no data at all)
+  if (fetchError && agents.length === 0) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="text-center space-y-4">
+          <span className="text-4xl">📡</span>
+          <p className="text-sm text-[var(--text-secondary)]">데이터를 불러올 수 없습니다</p>
+          <p className="text-xs text-[var(--text-tertiary)]">잠시 후 자동으로 재시도합니다</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex flex-col bg-[var(--background)] overflow-hidden relative">

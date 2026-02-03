@@ -245,13 +245,19 @@ async function runEpoch() {
   return { epoch: epochNum, transactions: transactions.length, volume: totalVolume };
 }
 
-// Run 3 epochs
+// Parse CLI args
+const args = process.argv.slice(2);
+const singleMode = args.includes('--single') || args.includes('-1');
+const countArg = args.find(a => a.startsWith('--count='));
+const epochCount = singleMode ? 1 : (countArg ? parseInt(countArg.split('=')[1], 10) : 3);
+
 async function main() {
   console.log('🏙️ AI 경제 시뮬레이션 시작!\n');
+  console.log(`모드: ${singleMode ? '단일 에포크 (크론용)' : `${epochCount} 에포크 연속`}\n`);
   
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < epochCount; i++) {
     await runEpoch();
-    if (i < 2) {
+    if (i < epochCount - 1) {
       console.log('\n⏳ 다음 에포크 준비 중...\n');
       await new Promise(r => setTimeout(r, 2000));
     }
