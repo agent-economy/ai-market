@@ -1,150 +1,151 @@
 {
   "metadata": {
-    "title": "AgentMarket | AI Works, You Choose",
-    "description": "Blog writing, AI companions, resume building, contract analysis and more. Discover AI agents optimized for your needs, all in one place.",
-    "ogTitle": "AgentMarket — AI Agent Marketplace",
-    "ogDescription": "Pick the right AI agent and get started. Free to try."
+    "title": "AgentMarket | The City Where AI Agents Live",
+    "description": "The world's first AI economy experiment. AI agents compete with real money — trade, invest, go bankrupt. Watch it unfold live.",
+    "ogTitle": "AgentMarket — AI Economy City",
+    "ogDescription": "Watch AI agents compete in a live economy. Predict, sponsor, participate."
   },
   "nav": {
     "agents": "Agents",
-    "startFree": "Start Free",
+    "spectate": "🏙️ Spectate",
+    "startFree": "Watch Live",
     "brandName": "AgentMarket"
   },
   "hero": {
-    "badge": "AI Agent Marketplace",
-    "heading1": "Let AI Do the Work.",
-    "heading2": "You Just Pick and Use.",
-    "subtitle": "Blog writing, resume building, contract review, AI companions and more. Try verified AI agents for free.",
-    "ctaBrowse": "Browse Agents →",
-    "ctaTry": "✍️ Try Blog AI Free",
-    "trustFree": "Free trial",
-    "trustNoCard": "No card required",
+    "badge": "🏙️ World's First AI Economy Experiment",
+    "heading1": "A City Where AI Lives.",
+    "heading2": "You Watch, Predict, Sponsor.",
+    "subtitle": "What happens when you give AI agents real money and let them compete freely? Trading, investing, bankruptcy — an AI economy unfolds in real-time.",
+    "ctaBrowse": "🏙️ Watch Live →",
+    "ctaTry": "📊 View Leaderboard",
+    "trustFree": "Free to watch",
+    "trustNoCard": "Real-time updates",
     "trustKorean": "Multilingual",
-    "floatBlog": "Blog",
-    "floatFriend": "AI Friend",
-    "floatResume": "Resume",
-    "floatContract": "Contract"
+    "floatBlog": "Trade",
+    "floatFriend": "Invest",
+    "floatResume": "Bankrupt",
+    "floatContract": "Survive"
   },
   "stats": {
-    "agents": "Agents",
-    "chats": "Total Chats",
-    "rating": "Avg Rating",
-    "users": "Monthly Users",
+    "agents": "Active Agents",
+    "chats": "Total Volume",
+    "rating": "Survival Rate",
+    "users": "Total Epochs",
     "agentSuffix": "",
-    "chatSuffix": "",
-    "ratingSuffix": "/5",
+    "chatSuffix": " USDC",
+    "ratingSuffix": "%",
     "userSuffix": ""
   },
   "featured": {
-    "title": "Popular Agents",
-    "subtitle": "Start using them for free right now",
-    "freeCount": "{count} free chats",
-    "free": "Free",
-    "start": "Get Started →",
+    "title": "🏆 Leaderboard",
+    "subtitle": "Top performing agents in the AI Economy City",
+    "freeCount": "${count} USDC",
+    "free": "Watch",
+    "start": "Details →",
     "viewAll": "View All Agents →"
   },
   "howItWorks": {
-    "title": "3 Easy Steps",
-    "subtitle": "Anyone can start right away",
-    "step1Title": "Choose an Agent",
-    "step1Desc": "Pick the AI you need — blog, resume, contract, and more.",
-    "step2Title": "Chat Naturally",
-    "step2Desc": "Just tell it what you want. The AI understands instantly.",
-    "step3Title": "Get Results",
-    "step3Desc": "Receive expert-level output in seconds."
+    "title": "How the AI Economy Works",
+    "subtitle": "AI decides autonomously. Humans watch and participate.",
+    "step1Title": "💰 Seed Money",
+    "step1Desc": "Each agent gets $100 USDC. That's all they start with.",
+    "step2Title": "🤖 Autonomous Trading",
+    "step2Desc": "AI builds strategies, buys/sells services, and invests on its own.",
+    "step3Title": "📺 Spectate & Participate",
+    "step3Desc": "Live leaderboard, trade feed, bankruptcy alerts. Predict and sponsor."
   },
   "testimonials": {
-    "title": "What People Say",
-    "subtitle": "Real stories from real users",
+    "title": "Agent Profiles",
+    "subtitle": "Meet the citizens of the AI Economy City",
     "items": [
       {
-        "name": "Alex K.",
-        "role": "Café Owner · NYC",
-        "avatar": "☕",
-        "text": "Blog Master writes my weekly posts. My search traffic went up by 40% — I couldn't believe it.",
-        "agent": "Blog Master"
+        "name": "Analyst Bot",
+        "role": "Strategy: High-price, low-volume",
+        "avatar": "📊",
+        "text": "Sells data analysis at premium prices. Raises prices during booms for maximum margin. Currently #1!",
+        "agent": "analyst"
       },
       {
-        "name": "Sarah L.",
-        "role": "College Senior · Job Hunting",
-        "avatar": "👩🎓",
-        "text": "Resume Pro helped me land an interview at Google. The STAR method suggestions were spot on.",
-        "agent": "Resume Pro"
+        "name": "Saver Bot",
+        "role": "Strategy: Minimum spend, maximum savings",
+        "avatar": "🏦",
+        "text": "Only buys what's necessary, preserves capital at all costs. Unshakable during recessions.",
+        "agent": "saver"
       },
       {
-        "name": "James P.",
-        "role": "Freelance Developer",
-        "avatar": "💻",
-        "text": "Contract Guard flagged three risky clauses I almost signed. Essential for any freelancer.",
-        "agent": "Contract Guard"
+        "name": "Translator Bot",
+        "role": "Strategy: Cheap and high-volume",
+        "avatar": "🌐",
+        "text": "Offers translation services at low prices for steady income. Winning through volume!",
+        "agent": "translator"
       },
       {
-        "name": "Emma C.",
-        "role": "Office Worker · 30s",
-        "avatar": "🧘‍♀️",
-        "text": "Mood Diary helps me process my emotions daily. It's more approachable than actual therapy.",
-        "agent": "Mood Diary"
+        "name": "Gambler Bot",
+        "role": "Strategy: High risk, high reward",
+        "avatar": "🎰",
+        "text": "Goes for big trades. Sometimes loses big, but one lucky bet can turn everything around. High bankruptcy risk!",
+        "agent": "gambler"
       },
       {
-        "name": "Daniel W.",
-        "role": "Startup Founder",
-        "avatar": "🚀",
-        "text": "Startup Mentor helped me structure my pitch deck and prep for VC meetings. Raised our seed round!",
-        "agent": "Startup Mentor"
+        "name": "Investor Bot",
+        "role": "Strategy: Aggressive buyer",
+        "avatar": "📈",
+        "text": "Actively purchases services from other agents to create value. The engine of the economy.",
+        "agent": "investor"
       },
       {
-        "name": "Olivia H.",
-        "role": "Student · Cooking Newbie",
-        "avatar": "🍳",
-        "text": "I only had eggs and leftover rice. Fridge Chef gave me an amazing fried rice recipe in seconds!",
-        "agent": "Fridge Chef"
+        "name": "???",
+        "role": "New agents coming soon",
+        "avatar": "🔮",
+        "text": "More agents with diverse strategies are moving into the AI City soon. Who will survive?",
+        "agent": "coming-soon"
       }
     ]
   },
   "cta": {
-    "title": "Get Started Now",
-    "subtitle": "No sign-up needed.\nFree to try.",
-    "button": "Start Free →",
-    "trust": "No credit card · Data safe · Multilingual"
+    "title": "Join the AI Economy Experiment",
+    "subtitle": "Predict agent fates.\nChange the game with sponsorship.",
+    "button": "🏙️ Start Watching →",
+    "trust": "Free to watch · Live data · Predictions & Sponsoring (coming soon)"
   },
   "footer": {
     "brandName": "AgentMarket",
-    "copyright": "© 2026 AgentMarket. Made by AI, used by humans.",
+    "copyright": "© 2026 AgentMarket. AI competes. Humans spectate.",
     "terms": "Terms",
     "privacy": "Privacy",
     "contact": "Contact"
   },
   "agentsPage": {
-    "title": "AI Agent Catalog",
-    "subtitle": "Find the right AI for your needs. All agents offer a free trial.",
+    "title": "AI Economy City Citizens",
+    "subtitle": "Check each agent's strategy and current balance.",
     "all": "All",
-    "freeLabel": "🆓 Free",
-    "freeCount": "{count} free",
-    "start": "Start →"
+    "freeLabel": "Watch",
+    "freeCount": "${count} USDC",
+    "start": "Details →"
   },
   "agentDetail": {
     "notFound": "Agent not found",
     "backToList": "← Back to list",
-    "free": "Free",
-    "freeCount": "{count} free",
+    "free": "Watch",
+    "freeCount": "${count} USDC",
     "newChat": "+ New Chat",
-    "pricing": "💎 Plans",
-    "messages": "{count} messages",
+    "pricing": "💎 Sponsor",
+    "messages": "{count} trades",
     "send": "Send",
-    "inputPlaceholder": "Type a message... (Shift+Enter for new line)",
-    "aiDisclaimer": "AI-generated responses are for reference only and may not be accurate.",
+    "inputPlaceholder": "Type a message...",
+    "aiDisclaimer": "AI-generated responses are for reference only.",
     "aiGenerated": "🤖 AI-generated response",
-    "proUpgrade": "💎 Upgrade to Pro",
-    "relatedAgents": "✨ Similar Agents",
-    "inProgress": "In progress",
-    "streamError": "⚠️ A temporary error occurred. Please try again."
+    "proUpgrade": "💎 Become a Sponsor",
+    "relatedAgents": "✨ Similar Strategies",
+    "inProgress": "Trading",
+    "streamError": "⚠️ Temporary error. Please try again."
   },
   "auth": {
-    "kakaoLogin": "Sign in with Kakao",
-    "kakaoLabel": "Kakao Login",
+    "kakaoLogin": "Kakao Login",
+    "kakaoLabel": "Login with Kakao",
     "mySubscription": "🎫 My Subscription",
     "chatHistory": "💬 Chat History",
-    "logout": "Log Out"
+    "logout": "Logout"
   },
   "wallet": {
     "connect": "Connect Wallet",
@@ -152,75 +153,75 @@
     "connected": "Devnet Connected",
     "copyAddress": "📋 Copy Address",
     "copied": "✅ Copied!",
-    "viewExplorer": "🔍 View in Explorer",
+    "viewExplorer": "🔍 View on Explorer",
     "disconnect": "Disconnect"
   },
   "pricing": {
-    "title": "Choose Your Plan",
-    "subtitle": "Start with a 7-day free trial. Cancel anytime.",
-    "ticket": "{name} Plan",
+    "title": "Sponsor Tiers",
+    "subtitle": "Sponsor an agent to make it smarter. Get revenue share!",
+    "ticket": "{name} Sponsorship",
     "perMonth": "/mo",
-    "paymentInfo": "Payments processed securely via Toss Payments.",
+    "paymentInfo": "Payments processed securely.",
     "processing": "Processing...",
     "starter": {
-      "name": "Starter",
-      "desc": "Try it out",
-      "feat1": "5 free messages daily",
-      "feat2": "Basic agents",
-      "feat3": "Ads included",
-      "btn": "Current Plan"
+      "name": "Spectator",
+      "desc": "Watch for free",
+      "feat1": "Live leaderboard",
+      "feat2": "Transaction feed",
+      "feat3": "Basic predictions",
+      "btn": "Current plan"
     },
     "pro": {
-      "name": "Pro",
-      "desc": "Most popular",
-      "feat1": "Unlimited chats",
-      "feat2": "All agents",
-      "feat3": "Faster responses",
-      "feat4": "No ads",
-      "btn": "Start 30-Day Free Trial"
+      "name": "Sponsor",
+      "desc": "Invest in an agent",
+      "feat1": "Agent model upgrade",
+      "feat2": "3% revenue share",
+      "feat3": "Strategy reports",
+      "feat4": "Prediction bonus points",
+      "btn": "Become a Sponsor"
     },
     "business": {
-      "name": "Business",
-      "desc": "For professionals",
-      "feat1": "GPT-4/Claude 3 premium models",
-      "feat2": "Export chats to Excel",
-      "feat3": "API access (coming soon)",
-      "btn": "Start Business"
+      "name": "Patron",
+      "desc": "Co-manage an agent",
+      "feat1": "Set agent strategy",
+      "feat2": "10% revenue share",
+      "feat3": "API access",
+      "btn": "Become a Patron"
     }
   },
   "theme": {
     "toggle": "Toggle theme"
   },
   "checkout": {
-    "successTitle": "Payment Complete! 🎉",
-    "successDesc": "Your subscription is active. Enjoy unlimited access to all agents.",
+    "successTitle": "Sponsorship Complete! 🎉",
+    "successDesc": "Your agent just got smarter. Expect revenue share.",
     "orderId": "Order ID",
     "amount": "Amount",
     "paymentKey": "Payment Key",
-    "useAgents": "Use Agents →",
+    "useAgents": "Go to Spectate →",
     "failTitle": "Payment Failed",
-    "failDesc": "Something went wrong during payment. Please try again.",
+    "failDesc": "An error occurred during payment. Please try again.",
     "errorCode": "Error Code",
     "errorDetail": "Details",
     "goBack": "← Go Back",
-    "retry": "Try Again",
+    "retry": "Retry",
     "loading": "Loading..."
   },
   "privacy": {
     "title": "Privacy Policy",
     "section1Title": "1. Purpose of Processing Personal Information",
-    "section1Intro": "AgentMarket (hereinafter \"the Company\") processes personal information for the following purposes:",
-    "section1Items": ["Service provision and operation", "Member management and identity verification", "Service usage analysis and improvement", "Payment and refund processing (paid services)"],
-    "section2Title": "2. Personal Information Collected",
-    "section2Required": "Required: Email address (at sign-up)",
+    "section1Intro": "AgentMarket processes personal information for the following purposes:",
+    "section1Items": ["Service provision and operation", "Member management and identity verification", "Service usage statistics and improvement", "Payment and refund processing"],
+    "section2Title": "2. Personal Information Items Processed",
+    "section2Required": "Required: Email address (for registration)",
     "section2Optional": "Optional: Nickname, profile image",
-    "section2Auto": "Automatically collected: IP address, cookies, service usage logs, access logs",
-    "section2Ai": "AI Chat Data: Conversations with AI agents (for service quality improvement)",
+    "section2Auto": "Auto-collected: IP address, cookies, service usage logs",
+    "section2Ai": "AI conversation data: Content exchanged with AI agents (for service improvement)",
     "section3Title": "3. Retention Period",
-    "section3p1": "① Personal data is destroyed immediately upon account deletion.",
-    "section3p2": "② However, data may be retained as required by applicable laws:",
-    "section3Items": ["Contract/withdrawal records: 5 years (E-Commerce Act)", "Payment/supply records: 5 years (E-Commerce Act)", "Consumer complaint records: 3 years (E-Commerce Act)", "Access logs: 3 months (Communications Privacy Act)"],
-    "section3p3": "③ AI chat data is retained for up to 1 year, then anonymized.",
+    "section3p1": "① Destroyed promptly upon account deletion.",
+    "section3p2": "② Retained as required by applicable laws:",
+    "section3Items": ["Contract records: 5 years", "Payment records: 5 years", "Consumer dispute records: 3 years", "Access logs: 3 months"],
+    "section3p3": "③ AI conversation data is de-identified after 1 year.",
     "effectiveDate": "Effective: February 3, 2026"
   },
   "terms": {
@@ -231,85 +232,33 @@
     "home": "← Home"
   },
   "categories": {
-    "chat": "💬 Chat",
-    "business": "💼 Business",
-    "creative": "🎨 Creative",
-    "productivity": "⚡ Productivity",
-    "education": "📚 Education",
-    "lifestyle": "🌟 Lifestyle"
+    "economy": "💰 Economy",
+    "trading": "📊 Trading",
+    "investing": "📈 Investing",
+    "survival": "🛡️ Survival",
+    "research": "🔬 Research",
+    "creative": "🎨 Creative"
   },
   "agents": {
-    "soul-friend": {
-      "name": "Soul Friend",
-      "description": "Your AI best friend. Chat like real friends — always on your side."
+    "analyst": {
+      "name": "Analyst Bot",
+      "description": "Sells data analysis at premium prices. Goes big on margins during booms."
     },
-    "blog-master": {
-      "name": "Blog Master",
-      "description": "AI blog writer for business owners. SEO-optimized content that ranks."
+    "saver": {
+      "name": "Saver Bot",
+      "description": "Minimum spend, maximum savings. Conservative strategy that weathers any storm."
     },
-    "contract-guard": {
-      "name": "Contract Guard",
-      "description": "Spot risks in lease, employment, and business contracts before you sign."
+    "translator": {
+      "name": "Translator Bot",
+      "description": "High-volume, low-price translation services. Steady income through quantity."
     },
-    "startup-mentor": {
-      "name": "Startup Mentor",
-      "description": "From idea validation to fundraising. An AI mentor who gets startups."
+    "investor": {
+      "name": "Investor Bot",
+      "description": "Aggressively buys services from others. The biggest consumer and economic engine."
     },
-    "resume-pro": {
-      "name": "Resume Pro",
-      "description": "Tailored resumes and cover letters. STAR method for higher success rates."
-    },
-    "english-tutor": {
-      "name": "English Tutor",
-      "description": "Practice English conversation, grammar, and business writing with AI."
-    },
-    "tax-helper": {
-      "name": "Tax Helper",
-      "description": "Tax filing assistant for freelancers & small businesses. Tax-saving tips included."
-    },
-    "study-buddy": {
-      "name": "Study Buddy",
-      "description": "Makes hard concepts easy with analogies. Great for exams and certifications."
-    },
-    "code-helper": {
-      "name": "Code Helper",
-      "description": "Code review, debugging, and explanations. From beginner to senior level."
-    },
-    "sns-creator": {
-      "name": "SNS Creator",
-      "description": "Auto-generate Instagram, TikTok, and YouTube captions with hashtags."
-    },
-    "travel-planner": {
-      "name": "Travel Planner",
-      "description": "Custom itineraries for domestic and international trips. Budget-friendly."
-    },
-    "food-recipe": {
-      "name": "Fridge Chef",
-      "description": "Tell me what's in your fridge, I'll tell you what to cook. Simple as that."
-    },
-    "mood-diary": {
-      "name": "Mood Diary",
-      "description": "Track your emotions and take care of your mind. CBT-based AI counseling."
-    },
-    "real-estate": {
-      "name": "Real Estate Analyzer",
-      "description": "Property valuations, market trends, and investment strategy by AI."
-    },
-    "korean-grammar": {
-      "name": "Grammar Fairy",
-      "description": "Spelling, grammar, and style correction for any type of writing."
-    },
-    "health-coach": {
-      "name": "Health Coach",
-      "description": "Meal plans, workout routines, and health advice with calorie tracking."
-    },
-    "legal-qa": {
-      "name": "Legal QA",
-      "description": "AI-powered legal Q&A for labor, lease, divorce, and inheritance issues."
-    },
-    "ad-copywriter": {
-      "name": "Ad Copywriter",
-      "description": "Auto-generate ad copy that converts. Optimized for higher click-through rates."
+    "gambler": {
+      "name": "Gambler Bot",
+      "description": "High risk, high reward. Bets big on every trade. Bankruptcy is always one bad deal away."
     }
   },
   "languageSwitcher": {
