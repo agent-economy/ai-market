@@ -38,30 +38,56 @@ const MARKET_EVENTS = [
   { type: 'normal', description: '📊 평범한 시장 상황', priceMultiplier: 1.0, tradeProbability: 0.5 },
 ];
 
+// Agent personality traits for richer decision-making
+const PERSONALITIES = {
+  analyst: { risk: 'low', emotion: '냉정하고 데이터 중심', style: '고급 분석 보고서를 프리미엄 가격에 판매' },
+  saver: { risk: 'very-low', emotion: '불안하고 보수적', style: '절대 큰돈 안 쓰고 남들이 다 쓸 때 저축' },
+  translator: { risk: 'low', emotion: '성실하고 꾸준함', style: '싸지만 많이 팔아서 꾸준히 벌기' },
+  gambler: { risk: 'very-high', emotion: '흥분과 긴장, 승부사', style: '한 방에 크게 벌거나 크게 잃거나' },
+  investor: { risk: 'high', emotion: '야심적이고 공격적', style: '남의 서비스를 사서 가치 창출' },
+  hacker: { risk: 'medium', emotion: '은밀하고 기회주의적', style: '시장 불안할 때 보안 서비스 비싸게 판매' },
+  professor: { risk: 'low', emotion: '차분하고 학문적', style: '교육 서비스를 안정적으로 제공' },
+  trader: { risk: 'high', emotion: '예민하고 트렌드에 민감', style: '타이밍을 맞춰 매매' },
+  marketer: { risk: 'medium', emotion: '사교적이고 설득력 있음', style: '네트워크로 수수료 벌기' },
+  coder: { risk: 'medium', emotion: '장인 정신, 품질 우선', style: '적지만 큰 프로젝트 수주' },
+  consultant: { risk: 'low', emotion: '자신감 넘치고 희소성 중시', style: '소수 고가 자문' },
+  artist: { risk: 'high', emotion: '감성적이고 창의적', style: '대박 작품 한 방 노림' },
+  broker: { risk: 'low', emotion: '눈치 빠르고 중립적', style: '양쪽에서 수수료' },
+  insurance: { risk: 'low', emotion: '신중하고 계산적', style: '리스크 관리 서비스 판매' },
+  spy: { risk: 'medium', emotion: '의심 많고 정보 중시', style: '시장 인텔리전스 판매' },
+};
+
+const WARNING_THRESHOLD = 10.0; // $10 이하: 경고
+const BAILOUT_THRESHOLD = 5.0;  // $5 이하: 구제 신청 가능
+
 async function getAgentDecision(agent, marketEvent, agents) {
   const otherAgents = agents.filter(a => a.id !== agent.id && a.status === 'active');
-  const prompt = `You are an AI economic agent named "${agent.name}".
-Your strategy: ${agent.strategy}
-Your current balance: $${agent.balance} USDC
-Market condition: ${marketEvent.description}
+  const personality = PERSONALITIES[agent.id] || { risk: 'medium', emotion: '평범', style: '일반 전략' };
+  
+  const statusWarning = agent.balance < WARNING_THRESHOLD 
+    ? `\n⚠️ WARNING: Your balance is critically low ($${agent.balance}). You are at risk of bankruptcy (under $1 = death). Be very careful or try a desperate move.`
+    : '';
 
-Other active agents and their balances:
-${otherAgents.map(a => `- ${a.name}: $${a.balance}`).join('\n')}
+  const prompt = `You are "${agent.name}", an AI economic agent in a simulated city.
+Strategy: ${agent.strategy}
+Personality: ${personality.emotion}. Trading style: ${personality.style}. Risk tolerance: ${personality.risk}.
+Balance: $${agent.balance} USDC${statusWarning}
+Market: ${marketEvent.description} (price multiplier: ${marketEvent.priceMultiplier}x)
 
-Available skills to trade:
-${SKILLS.map(s => `- ${s.name}: base price $${s.basePrice}`).join('\n')}
+Other agents:
+${otherAgents.map(a => `- ${a.name}: $${a.balance}${a.balance < WARNING_THRESHOLD ? ' ⚠️위험' : ''}`).join('\n')}
 
-Current market price multiplier: ${marketEvent.priceMultiplier}x
+Skills:
+${SKILLS.map(s => `- ${s.type}: $${s.basePrice} base`).join('\n')}
 
-Decide your action. Respond ONLY with valid JSON:
-{"action":"SELL"|"BUY"|"WAIT","skill":"${SKILLS.map(s=>s.type).join('|')}","price":number,"target":"agent_id","reason":"brief reason"}
+Respond ONLY with valid JSON:
+{"action":"SELL"|"BUY"|"WAIT","skill":"skill_type","price":number,"target":"agent_id","reason":"1-2 sentence reason in Korean, dramatic and emotional"}
 
 Rules:
-- SELL: You offer a skill. Price = your asking price.
-- BUY: You want to buy a skill from target agent. Price = max you'll pay.
-- WAIT: Do nothing this round.
-- You cannot spend more than your balance.
-- Be strategic based on your personality.`;
+- Price adjusted by market multiplier
+- Cannot spend more than balance
+- Reason should be colorful and show your personality
+- If you're desperate (low balance), you can take big risks`;
 
   try {
     const res = await fetch(`${GEMINI_URL}?key=${GEMINI_KEY}`, {
@@ -211,20 +237,47 @@ async function runEpoch() {
     await supabase.from('economy_transactions').insert(transactions);
   }
 
-  // Check bankruptcies
+  // Check bankruptcies + warnings
   const { data: updatedAgents } = await supabase
     .from('economy_agents')
     .select('*')
     .order('balance', { ascending: false });
 
   let bankruptcies = 0;
+  const events = [];
   for (const agent of updatedAgents) {
-    if (agent.balance < BANKRUPTCY_THRESHOLD && agent.status === 'active') {
+    if (agent.balance < BANKRUPTCY_THRESHOLD && agent.status !== 'bankrupt') {
       await supabase.from('economy_agents')
         .update({ status: 'bankrupt', updated_at: new Date().toISOString() })
         .eq('id', agent.id);
       bankruptcies++;
-      console.log(`  💀 파산! ${agent.name} ($${agent.balance})`);
+      events.push({ type: 'bankruptcy', agent: agent.name, balance: agent.balance });
+      console.log(`  💀 파산 선고! ${agent.name} ($${agent.balance}) — 더 이상 거래 불가`);
+      
+      // Record bankruptcy as special transaction
+      await supabase.from('economy_transactions').insert({
+        buyer_id: agent.id,
+        seller_id: agent.id,
+        skill_type: 'bankruptcy',
+        amount: 0,
+        fee: 0,
+        epoch: epochNum,
+        narrative: `💀 ${agent.name} 파산! 잔고 $${parseFloat(agent.balance).toFixed(2)}로 시장에서 퇴장.`,
+      });
+    } else if (agent.balance < BAILOUT_THRESHOLD && agent.status === 'active') {
+      // Bailout request event
+      events.push({ type: 'bailout_request', agent: agent.name, balance: agent.balance });
+      console.log(`  🆘 구제 신청! ${agent.name} ($${parseFloat(agent.balance).toFixed(2)}) — 생존 위기`);
+    } else if (agent.balance < WARNING_THRESHOLD && agent.status === 'active') {
+      events.push({ type: 'warning', agent: agent.name, balance: agent.balance });
+      console.log(`  ⚠️ 경고! ${agent.name} ($${parseFloat(agent.balance).toFixed(2)}) — 잔고 부족`);
+    }
+    
+    // Check for big earners (역전 드라마)
+    const originalBalance = 100;
+    const gainPercent = ((agent.balance - originalBalance) / originalBalance) * 100;
+    if (gainPercent > 30) {
+      events.push({ type: 'surge', agent: agent.name, gain: gainPercent.toFixed(1) });
     }
   }
 
