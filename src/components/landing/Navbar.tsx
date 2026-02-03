@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import UserMenu from '@/components/auth/UserMenu';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -24,12 +25,7 @@ export default function Navbar() {
             에이전트
           </Link>
           <ThemeToggle />
-          <Link
-            href="/agents"
-            className="btn-primary px-5 py-2.5 text-sm"
-          >
-            무료로 시작하기
-          </Link>
+          <UserMenu />
         </div>
 
         {/* Mobile menu button */}
