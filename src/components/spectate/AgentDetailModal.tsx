@@ -135,21 +135,38 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
 
       <div className="flex items-center gap-4">
         <div
-          className="w-14 h-14 rounded-full flex items-center justify-center text-2xl"
+          className="w-14 h-14 rounded-full flex items-center justify-center text-2xl relative"
           style={{ backgroundColor: `${color}20`, borderColor: `${color}40`, borderWidth: 2 }}
         >
           {isBankrupt ? '💀' : emoji}
+          {/* 상태별 펄스 효과 */}
+          {agent.status === 'active' && (
+            <div className="absolute -top-1 -right-1">
+              <div className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+              </div>
+            </div>
+          )}
         </div>
         <div>
-          <h3 className="text-xl font-bold text-[var(--text-primary)]">
+          <h3 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
             {agent.name}
-            {isBankrupt && <span className="ml-2 text-sm text-red-400">(파산)</span>}
+            <StatusBadge status={agent.status} />
           </h3>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="flex items-center gap-3 mt-1">
             <span className="font-mono text-lg font-bold text-[var(--text-primary)]">
               ${agent.balance.toFixed(2)}
             </span>
-            <StatusBadge status={agent.status} />
+            {/* P&L 표시 */}
+            <span className={`text-sm font-semibold ${
+              agent.total_earned - agent.total_spent >= 0 
+                ? 'text-emerald-400' 
+                : 'text-red-400'
+            }`}>
+              {agent.total_earned - agent.total_spent >= 0 ? '+' : ''}
+              ${(agent.total_earned - agent.total_spent).toFixed(2)} P&L
+            </span>
           </div>
         </div>
       </div>
@@ -158,15 +175,28 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const configs: Record<string, { label: string; className: string }> = {
-    active: { label: 'Active', className: 'bg-emerald-500/20 text-emerald-400' },
-    struggling: { label: 'Struggling', className: 'bg-amber-500/20 text-amber-400' },
-    bankrupt: { label: 'Bankrupt', className: 'bg-red-500/20 text-red-400' },
+  const configs: Record<string, { label: string; className: string; emoji: string }> = {
+    active: { 
+      label: 'Active', 
+      className: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30', 
+      emoji: '🟢'
+    },
+    struggling: { 
+      label: 'Warning', 
+      className: 'bg-amber-500/20 text-amber-400 border border-amber-500/30', 
+      emoji: '🟡'
+    },
+    bankrupt: { 
+      label: 'Bankrupt', 
+      className: 'bg-red-500/20 text-red-400 border border-red-500/30', 
+      emoji: '💀'
+    },
   };
   const c = configs[status] || configs.active;
   return (
-    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${c.className}`}>
-      {c.label}
+    <span className={`flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold uppercase ${c.className}`}>
+      <span>{c.emoji}</span>
+      <span>{c.label}</span>
     </span>
   );
 }
@@ -204,7 +234,12 @@ function MiniChart({ agentId, currentBalance, transactions }: {
   currentBalance: number;
   transactions: { buyer_id: string; seller_id: string; amount: number; fee: number; epoch: number }[];
 }) {
-  if (transactions.length < 2) return <p className="text-xs text-[var(--text-tertiary)]">거래 데이터 수집 중...</p>;
+  if (transactions.length < 2) return (
+    <div className="bg-[var(--surface-2)] rounded-xl p-4 text-center">
+      <span className="text-2xl">📊</span>
+      <p className="text-xs text-[var(--text-tertiary)] mt-2">거래 데이터 수집 중...</p>
+    </div>
+  );
 
   // Compute balance history by walking backward from current balance
   const rawPoints: { epoch: number; balance: number }[] = [];
@@ -236,37 +271,91 @@ function MiniChart({ agentId, currentBalance, transactions }: {
   const minBal = Math.min(...history.map(h => h.balance));
   const range = maxBal - minBal || 1;
 
-  const chartHeight = 60;
-  const chartWidth = 100;
+  const chartHeight = 80;
+  const chartWidth = 300;
+  const padding = 10;
+
+  // Grid lines
+  const gridLines: string[] = [];
+  for (let i = 0; i <= 4; i++) {
+    const y = padding + (i / 4) * (chartHeight - padding * 2);
+    gridLines.push(`M${padding},${y} L${chartWidth - padding},${y}`);
+  }
 
   const points = history.map((h, i) => {
-    const x = (i / (history.length - 1)) * chartWidth;
-    const y = chartHeight - ((h.balance - minBal) / range) * chartHeight;
-    return `${x},${y}`;
-  }).join(' ');
+    const x = padding + (i / (history.length - 1)) * (chartWidth - padding * 2);
+    const y = padding + (1 - (h.balance - minBal) / range) * (chartHeight - padding * 2);
+    return { x, y, epoch: h.epoch, balance: h.balance };
+  });
 
+  const pathPoints = points.map(p => `${p.x},${p.y}`).join(' ');
   const isPositive = history[history.length - 1].balance >= history[0].balance;
   const strokeColor = isPositive ? '#34D399' : '#F87171';
   const fillColor = isPositive ? '#34D39915' : '#F8717115';
 
-  const fillPoints = `0,${chartHeight} ${points} ${chartWidth},${chartHeight}`;
+  const fillPoints = `${padding},${chartHeight - padding} ${pathPoints} ${chartWidth - padding},${chartHeight - padding}`;
+
+  const startBalance = history[0].balance;
+  const endBalance = history[history.length - 1].balance;
+  const change = ((endBalance - startBalance) / startBalance * 100);
 
   return (
-    <div className="w-full">
-      <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-16" preserveAspectRatio="none">
-        <polygon points={fillPoints} fill={fillColor} />
-        <polyline
-          points={points}
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <div className="flex justify-between text-[10px] text-[var(--text-tertiary)] font-mono mt-1">
-        <span>E{history[0].epoch}</span>
-        <span>E{history[history.length - 1].epoch}</span>
+    <div className="bg-[var(--surface-2)] rounded-xl p-4">
+      {/* 차트 헤더 */}
+      <div className="flex justify-between items-center mb-3">
+        <span className="text-sm font-semibold text-[var(--text-primary)]">잔고 추이</span>
+        <div className="flex items-center gap-2">
+          <span className={`text-xs font-bold ${isPositive ? 'text-emerald-400' : 'text-red-400'}`}>
+            {change >= 0 ? '+' : ''}{change.toFixed(1)}%
+          </span>
+          <span className="text-xs text-[var(--text-tertiary)]">
+            {history.length}개 에포크
+          </span>
+        </div>
+      </div>
+
+      {/* SVG 차트 */}
+      <div className="w-full">
+        <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-20">
+          {/* Grid */}
+          <g stroke="var(--border)" strokeWidth="0.5" opacity="0.3">
+            {gridLines.map((path, i) => (
+              <path key={i} d={path} />
+            ))}
+          </g>
+          
+          {/* Fill area */}
+          <polygon points={fillPoints} fill={fillColor} />
+          
+          {/* Line */}
+          <polyline
+            points={pathPoints}
+            fill="none"
+            stroke={strokeColor}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          
+          {/* Points */}
+          {points.map((point, i) => (
+            <g key={i}>
+              <circle 
+                cx={point.x} 
+                cy={point.y} 
+                r="2" 
+                fill={strokeColor}
+                className="hover:r-3 transition-all cursor-pointer"
+              />
+            </g>
+          ))}
+        </svg>
+      </div>
+
+      {/* 범례 */}
+      <div className="flex justify-between text-[10px] text-[var(--text-tertiary)] font-mono mt-2">
+        <span>E{history[0].epoch}: ${startBalance.toFixed(2)}</span>
+        <span>E{history[history.length - 1].epoch}: ${endBalance.toFixed(2)}</span>
       </div>
     </div>
   );
