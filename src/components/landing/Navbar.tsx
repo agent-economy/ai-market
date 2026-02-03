@@ -25,8 +25,8 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/agents" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
-            {t('agents')}
+          <Link href="/spectate" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+            {t('spectate')}
           </Link>
           <WalletButton />
           <LanguageSwitcher />
@@ -60,11 +60,11 @@ export default function Navbar() {
           >
             <div className="px-6 py-4 flex flex-col gap-3">
               <Link
-                href="/agents"
+                href="/spectate"
                 className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
                 onClick={() => setOpen(false)}
               >
-                {t('agents')}
+                {t('spectate')}
               </Link>
               <div className="py-2">
                 <WalletButton />
@@ -73,7 +73,7 @@ export default function Navbar() {
                 <LanguageSwitcher />
               </div>
               <Link
-                href="/agents"
+                href="/spectate"
                 className="btn-primary px-5 py-2.5 text-sm text-center"
                 onClick={() => setOpen(false)}
               >

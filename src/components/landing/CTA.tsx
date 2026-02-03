@@ -24,7 +24,7 @@ export default function CTA() {
             </p>
 
             <Link
-              href="/agents"
+              href="/spectate"
               className="inline-flex px-7 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-white text-indigo-600 font-semibold text-sm sm:text-base hover:bg-indigo-50 transition-all active:scale-98"
             >
               {t('button')}

@@ -34,21 +34,21 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 px-6 bg-gray-50/50 dark:bg-slate-900/50">
+    <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gray-50/50 dark:bg-slate-900/50">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
             {t('title')}
           </h2>
-          <p className="text-gray-600 dark:text-slate-300">{t('subtitle')}</p>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-slate-300">{t('subtitle')}</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {steps.map((step, i) => (
             <motion.div
               key={step.num}

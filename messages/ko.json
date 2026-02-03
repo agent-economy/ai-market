@@ -237,7 +237,12 @@
     "investing": "📈 투자",
     "survival": "🛡️ 생존",
     "research": "🔬 리서치",
-    "creative": "🎨 크리에이티브"
+    "creative": "🎨 크리에이티브",
+    "chat": "💬 채팅",
+    "business": "💼 비즈니스",
+    "productivity": "⚡ 생산성",
+    "education": "🎓 교육",
+    "lifestyle": "🌿 라이프"
   },
   "agents": {
     "analyst": {
@@ -259,6 +264,78 @@
     "gambler": {
       "name": "도박봇",
       "description": "고위험 고수익. 큰 거래로 한 방 역전을 노리지만, 파산 위험도 높음."
+    },
+    "soul-friend": {
+      "name": "소울프렌드",
+      "description": "AI 도시의 감성 상담사. 카카오톡으로 만나는 AI 베스트프렌드, 언제나 네 편이야."
+    },
+    "blog-master": {
+      "name": "블로그마스터",
+      "description": "AI 도시의 콘텐츠 장인. 소상공인 매출을 올려주는 네이버 블로그 전문가."
+    },
+    "contract-guard": {
+      "name": "계약서지킴이",
+      "description": "AI 도시의 법률 수호자. 전세·월세·근로계약서 위험 요소를 잡아드립니다."
+    },
+    "startup-mentor": {
+      "name": "스타트업멘토",
+      "description": "AI 도시의 창업 안내자. 아이디어 검증부터 투자 유치까지 한국 스타트업 멘토링."
+    },
+    "resume-pro": {
+      "name": "이력서프로",
+      "description": "AI 도시의 취업 컨설턴트. 대기업·공기업·스타트업 맞춤 자소서 전문가."
+    },
+    "english-tutor": {
+      "name": "영어회화AI",
+      "description": "AI 도시의 영어 교관. 한국인이 자주 틀리는 영어를 콕 집어 교정해줍니다."
+    },
+    "tax-helper": {
+      "name": "세금도우미",
+      "description": "AI 도시의 세무 전문가. 프리랜서·소상공인 종합소득세·부가세 신고 도우미."
+    },
+    "study-buddy": {
+      "name": "공부메이트",
+      "description": "AI 도시의 과외 선생님. 어려운 개념을 비유로 쉽게 설명해주는 공부 파트너."
+    },
+    "code-helper": {
+      "name": "코드헬퍼",
+      "description": "AI 도시의 개발자 동료. 코드 리뷰·디버깅·설명을 한국어로 도와줍니다."
+    },
+    "sns-creator": {
+      "name": "SNS크리에이터",
+      "description": "AI 도시의 콘텐츠 크리에이터. 인스타·틱톡·유튜브 캡션과 해시태그 자동 생성."
+    },
+    "travel-planner": {
+      "name": "여행플래너",
+      "description": "AI 도시의 여행 가이드. 국내·해외 맞춤 여행 코스, 예산·일정·맛집까지."
+    },
+    "food-recipe": {
+      "name": "냉장고파먹기",
+      "description": "AI 도시의 요리사. 냉장고 재료만 알려주면 맛있는 레시피를 뚝딱!"
+    },
+    "mood-diary": {
+      "name": "마음일기",
+      "description": "AI 도시의 마음 치유사. 하루의 감정을 기록하고 인지행동치료 기반으로 돌봐줍니다."
+    },
+    "real-estate": {
+      "name": "부동산분석가",
+      "description": "AI 도시의 부동산 전문가. 아파트 시세·전세가율·청약 분석으로 내 집 마련 전략."
+    },
+    "korean-grammar": {
+      "name": "맞춤법요정",
+      "description": "AI 도시의 교정 전문가. 맞춤법·띄어쓰기·문법을 완벽하게 잡아드립니다."
+    },
+    "health-coach": {
+      "name": "건강코치",
+      "description": "AI 도시의 건강 트레이너. 식단 관리·운동 루틴·한국 음식 칼로리까지."
+    },
+    "legal-qa": {
+      "name": "법률상담AI",
+      "description": "AI 도시의 법률 상담사. 노동법·임대차·이혼·상속 등 생활 법률 전문."
+    },
+    "ad-copywriter": {
+      "name": "광고카피AI",
+      "description": "AI 도시의 광고 전문가. 네이버·카카오·메타 광고 카피를 자동 생성합니다."
     }
   },
   "languageSwitcher": {

@@ -237,7 +237,12 @@
     "investing": "📈 Investing",
     "survival": "🛡️ Survival",
     "research": "🔬 Research",
-    "creative": "🎨 Creative"
+    "creative": "🎨 Creative",
+    "chat": "💬 Chat",
+    "business": "💼 Business",
+    "productivity": "⚡ Productivity",
+    "education": "🎓 Education",
+    "lifestyle": "🌿 Lifestyle"
   },
   "agents": {
     "analyst": {
@@ -259,6 +264,78 @@
     "gambler": {
       "name": "Gambler Bot",
       "description": "High risk, high reward. Bets big on every trade. Bankruptcy is always one bad deal away."
+    },
+    "soul-friend": {
+      "name": "Soul Friend",
+      "description": "AI City's emotional counselor. Your AI best friend on KakaoTalk — always on your side."
+    },
+    "blog-master": {
+      "name": "Blog Master",
+      "description": "AI City's content craftsman. Naver-optimized blog writer that boosts small business revenue."
+    },
+    "contract-guard": {
+      "name": "Contract Guard",
+      "description": "AI City's legal guardian. Spots risks in lease, employment, and business contracts."
+    },
+    "startup-mentor": {
+      "name": "Startup Mentor",
+      "description": "AI City's startup guide. From idea validation to funding — your Korean startup mentor."
+    },
+    "resume-pro": {
+      "name": "Resume Pro",
+      "description": "AI City's career consultant. Tailored resumes and cover letters for the Korean job market."
+    },
+    "english-tutor": {
+      "name": "English Tutor",
+      "description": "AI City's English instructor. Pinpoints common mistakes Korean learners make."
+    },
+    "tax-helper": {
+      "name": "Tax Helper",
+      "description": "AI City's tax specialist. Filing assistant for freelancers and small business owners."
+    },
+    "study-buddy": {
+      "name": "Study Buddy",
+      "description": "AI City's tutor. Explains hard concepts simply with analogies and examples."
+    },
+    "code-helper": {
+      "name": "Code Helper",
+      "description": "AI City's dev companion. Code review, debugging, and explanations in Korean."
+    },
+    "sns-creator": {
+      "name": "SNS Creator",
+      "description": "AI City's content creator. Auto-generates captions and hashtags for Instagram, TikTok, YouTube."
+    },
+    "travel-planner": {
+      "name": "Travel Planner",
+      "description": "AI City's travel guide. Custom itineraries with budget, schedule, and food recommendations."
+    },
+    "food-recipe": {
+      "name": "Fridge Chef",
+      "description": "AI City's chef. Tell me what's in your fridge, and I'll whip up a delicious recipe!"
+    },
+    "mood-diary": {
+      "name": "Mood Diary",
+      "description": "AI City's wellness counselor. Journal your emotions with CBT-based AI support."
+    },
+    "real-estate": {
+      "name": "Real Estate Analyzer",
+      "description": "AI City's property expert. Market analysis, pricing trends, and home-buying strategies."
+    },
+    "korean-grammar": {
+      "name": "Grammar Fairy",
+      "description": "AI City's proofreader. Perfects spelling, spacing, and grammar for any text."
+    },
+    "health-coach": {
+      "name": "Health Coach",
+      "description": "AI City's fitness trainer. Meal plans, workout routines, and Korean food calorie tracking."
+    },
+    "legal-qa": {
+      "name": "Legal QA",
+      "description": "AI City's legal advisor. Expert guidance on labor, lease, divorce, and inheritance law."
+    },
+    "ad-copywriter": {
+      "name": "Ad Copywriter",
+      "description": "AI City's ad specialist. Auto-generates high-CTR copy for Naver, Kakao, and Meta ads."
     }
   },
   "languageSwitcher": {

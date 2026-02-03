@@ -203,3 +203,98 @@ body {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
+
+/* ═══════════════ Mobile Responsive Fixes ═══════════════ */
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Remove unwanted grey space at bottom */
+html {
+  min-height: 100%;
+}
+body {
+  min-height: 100vh;
+}
+
+/* Mobile card height consistency */
+@media (max-width: 767px) {
+  .card {
+    min-height: auto;
+  }
+  
+  .card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Ensure buttons don't overflow on mobile */
+  .btn-primary,
+  .btn-secondary {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  /* Fix input placeholder overflow */
+  input::placeholder,
+  textarea::placeholder {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  /* Agent detail modal mobile adjustments */
+  .agent-detail-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* Mobile-friendly section spacing */
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Fix hero section tight on mobile */
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+}
+
+/* Improve contrast for light text on light backgrounds */
+.dark .card {
+  border-color: var(--border);
+}
+
+/* Text truncation utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Agent text overflow fix */
+.agent-text-wrap {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}

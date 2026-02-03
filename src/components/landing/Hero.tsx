@@ -15,7 +15,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/60 via-white to-teal-50/40 dark:from-indigo-950/40 dark:via-[#0B1120] dark:to-teal-950/20" />
 
       {floatingAgents.map((agent, i) => (
@@ -80,10 +80,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-3 justify-center px-4 sm:px-0"
         >
-          <Link href="/agents" className="btn-primary px-7 py-3 sm:py-3.5 text-sm sm:text-base">
+          <Link href="/spectate" className="btn-primary px-7 py-3 sm:py-3.5 text-sm sm:text-base">
             {t('ctaBrowse')}
           </Link>
-          <Link href="/agents/blog-master" className="btn-secondary px-7 py-3 sm:py-3.5 text-sm sm:text-base dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700">
+          <Link href="/spectate" className="btn-secondary px-7 py-3 sm:py-3.5 text-sm sm:text-base dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700">
             {t('ctaTry')}
           </Link>
         </motion.div>
