@@ -18,13 +18,13 @@ export async function GET() {
       .from('economy_transactions')
       .select('*', { count: 'exact', head: true });
 
-    // Fetch latest epoch
-    const { data: latestEpoch } = await supabase
+    // Fetch latest epoch (avoid .single() crash on empty table)
+    const { data: latestEpochs } = await supabase
       .from('economy_epochs')
       .select('epoch')
       .order('epoch', { ascending: false })
-      .limit(1)
-      .single();
+      .limit(1);
+    const latestEpoch = latestEpochs?.[0] ?? null;
 
     const totalAgents = agents?.length ?? 0;
     const activeAgents = agents?.filter(a => a.status === 'active').length ?? 0;
@@ -50,15 +50,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Economy stats error:', error);
-    return NextResponse.json({
-      totalAgents: 5,
-      activeAgents: 5,
-      bankruptAgents: 0,
-      totalBalance: 498,
-      totalVolume: 498,
-      survivalRate: 100.0,
-      totalEpochs: 6,
-      totalTransactions: 30,
-    });
+    return NextResponse.json(
+      { error: 'Failed to fetch economy stats' },
+      { status: 500 }
+    );
   }
 }

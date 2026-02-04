@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUsageStats } from '@/lib/rate-limit';
 
-// 간단한 관리자 인증 (쿼리 파라미터)
-const ADMIN_SECRET = process.env.ADMIN_SECRET || 'agentmarket2026';
+// Admin authentication via header or query parameter
+const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 export async function GET(req: NextRequest) {
-  const secret = req.nextUrl.searchParams.get('secret');
+  if (!ADMIN_SECRET) {
+    return NextResponse.json({ error: 'Admin not configured' }, { status: 503 });
+  }
+
+  const secret = req.headers.get('authorization')?.replace('Bearer ', '') 
+    || req.nextUrl.searchParams.get('secret');
 
   if (secret !== ADMIN_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

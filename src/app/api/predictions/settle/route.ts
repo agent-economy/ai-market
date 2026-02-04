@@ -32,11 +32,12 @@ export async function POST(req: NextRequest) {
       .select('id, balance, status');
 
     // Get previous epoch balances (from transactions or estimate)
-    const { data: prevEpoch } = await supabase
+    const { data: prevEpochArr } = await supabase
       .from('economy_epochs')
       .select('*')
-      .eq('epoch_number', epoch - 1)
-      .single();
+      .eq('epoch', epoch - 1)
+      .limit(1);
+    const prevEpoch = prevEpochArr?.[0] || null;
 
     const agentMap = new Map((agents || []).map(a => [a.id, a]));
     

@@ -158,26 +158,34 @@ function generateEpochEvent(epochNumber: number): EpochEvent {
 // ---------- Gemini 호출 ----------
 
 async function callGemini(prompt: string): Promise<string> {
-  const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: 'application/json',
-        temperature: 0.7,
-        maxOutputTokens: 512,
-      },
-    }),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15_000); // 15s timeout
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Gemini API error ${response.status}: ${errText}`);
+  try {
+    const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: 'application/json',
+          temperature: 0.7,
+          maxOutputTokens: 512,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Gemini API error ${response.status}: ${errText}`);
+    }
+
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+  } finally {
+    clearTimeout(timeout);
   }
-
-  const data = await response.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
 }
 
 // ---------- Decision Prompt (personality-aware) ----------
@@ -497,79 +505,102 @@ export async function initializeAgents(): Promise<{ success: boolean; message: s
   return { success: true, message: `${allAgents.length} agents initialized. $100 each.` };
 }
 
+// Simple epoch lock to prevent concurrent execution
+let _epochRunning = false;
+
 export async function runEpoch(epochNumber: number): Promise<EpochResult> {
-  const supabase = getSupabase();
-
-  const { data: agents, error: agentErr } = await supabase
-    .from('economy_agents')
-    .select('*')
-    .order('balance', { ascending: false });
-
-  if (agentErr || !agents || agents.length === 0) {
-    throw new Error('Failed to fetch agent data');
+  if (_epochRunning) {
+    throw new Error('Epoch already in progress — concurrent execution blocked');
   }
+  _epochRunning = true;
 
-  const activeAgents = agents.filter((a: EconomyAgent) => 
-    a.status === 'active' || a.status === 'struggling' || a.status === 'bailout'
-  );
+  try {
+    const supabase = getSupabase();
 
-  if (activeAgents.length < 2) {
-    throw new Error('Less than 2 active agents — simulation impossible');
-  }
+    // DB-level duplicate check (prevents same epoch from running twice across restarts)
+    const { data: existingEpoch } = await supabase
+      .from('economy_epochs')
+      .select('epoch')
+      .eq('epoch', epochNumber)
+      .limit(1);
 
-  const event = generateEpochEvent(epochNumber);
-
-  // AI 의사결정 (병렬)
-  const decisions = new Map<string, AgentDecision>();
-  const decisionPromises = activeAgents.map(async (agent: EconomyAgent) => {
-    try {
-      const prompt = buildDecisionPrompt(agent, agents as EconomyAgent[], epochNumber, event);
-      const raw = await callGemini(prompt);
-      decisions.set(agent.id, parseDecision(raw, agent, agents as EconomyAgent[]));
-    } catch (err) {
-      console.error(`[E${epochNumber}] ${agent.name} AI failed:`, err);
-      decisions.set(agent.id, { action: 'WAIT', reason: 'AI call failed' });
+    if (existingEpoch && existingEpoch.length > 0) {
+      throw new Error(`Epoch ${epochNumber} already executed`);
     }
-  });
-  await Promise.all(decisionPromises);
 
-  // Execute transactions
-  const transactions = await executeTransactions(decisions, agents as EconomyAgent[], epochNumber, event);
+    const { data: agents, error: agentErr } = await supabase
+      .from('economy_agents')
+      .select('*')
+      .order('balance', { ascending: false });
 
-  // Check bankruptcies
-  const bankruptcies = await checkBankruptcies(agents as EconomyAgent[]);
+    if (agentErr || !agents || agents.length === 0) {
+      throw new Error('Failed to fetch agent data');
+    }
 
-  // 최신 상태 조회
-  const { data: updatedAgents } = await supabase
-    .from('economy_agents')
-    .select('*')
-    .order('balance', { ascending: false });
+    const activeAgents = agents.filter((a: EconomyAgent) => 
+      a.status === 'active' || a.status === 'struggling' || a.status === 'bailout'
+    );
 
-  const topEarner = (updatedAgents || agents)
-    .sort((a: EconomyAgent, b: EconomyAgent) => Number(b.balance) - Number(a.balance))[0];
+    if (activeAgents.length < 2) {
+      throw new Error('Less than 2 active agents — simulation impossible');
+    }
 
-  const totalVolume = transactions.reduce((sum, t) => sum + Number(t.amount), 0);
+    const event = generateEpochEvent(epochNumber);
 
-  // 에포크 결과 저장
-  await supabase
-    .from('economy_epochs')
-    .upsert({
-      epoch: epochNumber,
-      total_volume: Number(totalVolume.toFixed(4)),
-      active_agents: activeAgents.length - bankruptcies.length,
-      bankruptcies: bankruptcies.length,
-      top_earner: topEarner?.id || null,
-      event_type: event.type,
-      event_description: event.description,
+    // AI 의사결정 (병렬)
+    const decisions = new Map<string, AgentDecision>();
+    const decisionPromises = activeAgents.map(async (agent: EconomyAgent) => {
+      try {
+        const prompt = buildDecisionPrompt(agent, agents as EconomyAgent[], epochNumber, event);
+        const raw = await callGemini(prompt);
+        decisions.set(agent.id, parseDecision(raw, agent, agents as EconomyAgent[]));
+      } catch (err) {
+        console.error(`[E${epochNumber}] ${agent.name} AI failed:`, err);
+        decisions.set(agent.id, { action: 'WAIT', reason: 'AI call failed' });
+      }
     });
+    await Promise.all(decisionPromises);
 
-  return {
-    epoch: epochNumber,
-    transactions,
-    events: event,
-    agents: (updatedAgents || agents) as EconomyAgent[],
-    bankruptcies,
-  };
+    // Execute transactions
+    const transactions = await executeTransactions(decisions, agents as EconomyAgent[], epochNumber, event);
+
+    // Check bankruptcies
+    const bankruptcies = await checkBankruptcies(agents as EconomyAgent[]);
+
+    // 최신 상태 조회
+    const { data: updatedAgents } = await supabase
+      .from('economy_agents')
+      .select('*')
+      .order('balance', { ascending: false });
+
+    const topEarner = (updatedAgents || agents)
+      .sort((a: EconomyAgent, b: EconomyAgent) => Number(b.balance) - Number(a.balance))[0];
+
+    const totalVolume = transactions.reduce((sum, t) => sum + Number(t.amount), 0);
+
+    // 에포크 결과 저장
+    await supabase
+      .from('economy_epochs')
+      .upsert({
+        epoch: epochNumber,
+        total_volume: Number(totalVolume.toFixed(4)),
+        active_agents: activeAgents.length - bankruptcies.length,
+        bankruptcies: bankruptcies.length,
+        top_earner: topEarner?.id || null,
+        event_type: event.type,
+        event_description: event.description,
+      });
+
+    return {
+      epoch: epochNumber,
+      transactions,
+      events: event,
+      agents: (updatedAgents || agents) as EconomyAgent[],
+      bankruptcies,
+    };
+  } finally {
+    _epochRunning = false;
+  }
 }
 
 export async function getLeaderboard(): Promise<EconomyAgent[]> {

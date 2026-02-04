@@ -22,27 +22,26 @@ export async function GET(req: NextRequest) {
     }
 
     if (type === 'my-bets' && userId) {
-      const [{ data: points }, { data: bets }] = await Promise.all([
-        supabase.from('user_points').select('*').eq('user_id', userId).single(),
+      const [{ data: pointsArr }, { data: bets }] = await Promise.all([
+        supabase.from('user_points').select('*').eq('user_id', userId).limit(1),
         supabase.from('predictions')
           .select('*')
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
           .limit(50),
       ]);
-      return NextResponse.json({ points, bets: bets || [] });
+      return NextResponse.json({ points: pointsArr?.[0] || null, bets: bets || [] });
     }
 
     // Active predictions for current epoch
     if (type === 'active') {
       const { data: latestEpoch } = await supabase
         .from('economy_epochs')
-        .select('epoch_number')
-        .order('epoch_number', { ascending: false })
-        .limit(1)
-        .single();
+        .select('epoch')
+        .order('epoch', { ascending: false })
+        .limit(1);
 
-      const nextEpoch = (latestEpoch?.epoch_number || 0) + 1;
+      const nextEpoch = (latestEpoch?.[0]?.epoch || 0) + 1;
       const { data: predictions } = await supabase
         .from('predictions')
         .select('agent_id, prediction, amount')
@@ -111,12 +110,11 @@ export async function POST(req: NextRequest) {
     // Get next epoch
     const { data: latestEpoch } = await supabase
       .from('economy_epochs')
-      .select('epoch_number')
-      .order('epoch_number', { ascending: false })
-      .limit(1)
-      .single();
+      .select('epoch')
+      .order('epoch', { ascending: false })
+      .limit(1);
 
-    const nextEpoch = (latestEpoch?.epoch_number || 0) + 1;
+    const nextEpoch = (latestEpoch?.[0]?.epoch || 0) + 1;
 
     // Check duplicate bet
     const { data: existing } = await supabase
