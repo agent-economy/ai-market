@@ -95,7 +95,7 @@ export default function SubmitAgent() {
           className="text-center"
         >
           <a
-            href="mailto:support@agentmarket.kr"
+            href="mailto:agentmarket.kr@gmail.com"
             className="inline-flex items-center gap-2 px-7 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold text-sm sm:text-base hover:from-indigo-700 hover:to-violet-700 transition-all active:scale-[0.98] shadow-lg shadow-indigo-500/25"
           >
             ✉️ {t('button')}

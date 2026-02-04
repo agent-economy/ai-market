@@ -7,6 +7,30 @@ import { useTranslations } from 'next-intl';
 import { AGENT_EMOJI } from '@/lib/spectate-mock-data';
 import Link from 'next/link';
 
+interface DiaryEntry {
+  id: string;
+  agent_id: string;
+  agent_name: string;
+  agent_emoji: string;
+  epoch: number;
+  content: string;
+  mood: string;
+  mood_emoji: string;
+  highlights: string[];
+  created_at: string;
+}
+
+const MOOD_EMOJI: Record<string, string> = {
+  excited:    '🤩',
+  worried:    '😰',
+  confident:  '😎',
+  desperate:  '😱',
+  strategic:  '🧠',
+  angry:      '😤',
+  hopeful:    '🌟',
+  neutral:    '😐',
+};
+
 interface AgentProfile {
   agent: {
     id: string;
@@ -57,6 +81,8 @@ export default function AgentChronicle() {
   const [memoirLoading, setMemoirLoading] = useState(false);
   const [memoir, setMemoir] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'chronicle' | 'trades' | 'stats'>('chronicle');
+  const [diaries, setDiaries] = useState<DiaryEntry[]>([]);
+  const [diariesLoading, setDiariesLoading] = useState(true);
 
   const emoji = AGENT_EMOJI[agentId] || '🤖';
   let agentName: string;
@@ -85,7 +111,19 @@ export default function AgentChronicle() {
     setMemoirLoading(false);
   };
 
-  useEffect(() => { fetchData(); }, [fetchData]);
+  const fetchDiaries = useCallback(async () => {
+    setDiariesLoading(true);
+    try {
+      const res = await fetch(`/api/economy/diary?agent_id=${agentId}&limit=20`);
+      if (res.ok) {
+        const json = await res.json();
+        setDiaries(json.diaries || []);
+      }
+    } catch { /* ignore */ }
+    setDiariesLoading(false);
+  }, [agentId]);
+
+  useEffect(() => { fetchData(); fetchDiaries(); }, [fetchData, fetchDiaries]);
 
   if (loading) {
     return (
@@ -203,6 +241,52 @@ export default function AgentChronicle() {
                   >
                     {memoirLoading ? '✍️ Writing memoir...' : `✨ Generate ${agentName}'s Memoir`}
                   </button>
+                )}
+              </div>
+
+              {/* Agent Diary */}
+              <div className="mb-8">
+                <h2 className="text-lg font-bold mb-3">📔 Agent Diary</h2>
+                {diariesLoading ? (
+                  <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)]">
+                    <div className="w-4 h-4 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+                    Loading diary...
+                  </div>
+                ) : diaries.length > 0 ? (
+                  <div className="space-y-3">
+                    {diaries.map((entry, i) => (
+                      <motion.div
+                        key={entry.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.05 }}
+                        className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 hover:border-[var(--accent)]/20 transition-colors"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-xs font-mono text-[var(--text-tertiary)] bg-[var(--surface-2)] px-2 py-0.5 rounded">
+                            Epoch {entry.epoch}
+                          </span>
+                          <span className="text-base" title={entry.mood}>
+                            {MOOD_EMOJI[entry.mood] || '😐'}
+                          </span>
+                          <span className="text-[10px] text-[var(--text-tertiary)] capitalize">
+                            {entry.mood}
+                          </span>
+                          <span className="flex-1" />
+                          <span className="text-[10px] text-[var(--text-tertiary)]">
+                            {new Date(entry.created_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed italic">
+                          &ldquo;{entry.content}&rdquo;
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-[var(--text-tertiary)]">
+                    No diary entries yet. Diaries are written after each epoch.
+                  </p>
                 )}
               </div>
 

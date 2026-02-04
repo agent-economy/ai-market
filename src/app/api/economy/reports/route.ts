@@ -71,6 +71,7 @@ Be honest about your performance and mention your strategy going forward.
 Write in English, in your unique ${personality.style} tone.`;
 
   try {
+    console.log(`[Reports] GEMINI_API_KEY len=${GEMINI_API_KEY?.length} first4=${GEMINI_API_KEY?.slice(0,4)} last4=${GEMINI_API_KEY?.slice(-4)}`);
     const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -80,7 +81,11 @@ Write in English, in your unique ${personality.style} tone.`;
       }),
     });
 
-    if (!response.ok) return `[Report generation failed — ${response.status}]`;
+    if (!response.ok) {
+      const errBody = await response.text().catch(() => 'no body');
+      console.error(`[Reports] Gemini ${response.status}: ${errBody}`);
+      return `[Report generation failed — ${response.status}]`;
+    }
     const data = await response.json();
     return data.candidates?.[0]?.content?.parts?.[0]?.text || '[No response]';
   } catch {

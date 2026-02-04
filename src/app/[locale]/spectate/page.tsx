@@ -10,6 +10,7 @@ import TransactionFeed from '@/components/spectate/TransactionFeed';
 import AgentDetailModal from '@/components/spectate/AgentDetailModal';
 import EventBanner from '@/components/spectate/EventBanner';
 import SocialFeedWidget from '@/components/spectate/SocialFeedWidget';
+import DiaryWidget from '@/components/spectate/DiaryWidget';
 
 import type {
   SpectateAgent,
@@ -297,9 +298,14 @@ export default function SpectatePage() {
             />
           </div>
 
-          {/* Right: Social Feed Widget */}
+          {/* Right: Social Feed + Diary Widget */}
           <div className="w-80 flex-shrink-0 border-l border-[var(--border)] bg-[var(--surface)] hidden xl:flex flex-col">
-            <SocialFeedWidget />
+            <div className="flex-1 overflow-hidden flex flex-col" style={{ maxHeight: '60%' }}>
+              <SocialFeedWidget />
+            </div>
+            <div className="border-t border-[var(--border)] flex-1 overflow-hidden flex flex-col" style={{ maxHeight: '40%' }}>
+              <DiaryWidget />
+            </div>
           </div>
 
           {/* Mobile Leaderboard (bottom sheet style) */}

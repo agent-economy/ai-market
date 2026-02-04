@@ -21,7 +21,7 @@ export default function Footer() {
         <div className="flex gap-5 text-xs text-gray-400 dark:text-gray-500">
           <Link href="/terms" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">{t('terms')}</Link>
           <Link href="/privacy" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">{t('privacy')}</Link>
-          <a href="mailto:support@agentmarket.kr" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">{t('contact')}</a>
+          <a href="mailto:agentmarket.kr@gmail.com" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">{t('contact')}</a>
         </div>
       </div>
     </footer>

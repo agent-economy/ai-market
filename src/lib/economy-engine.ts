@@ -736,6 +736,115 @@ async function checkBankruptcies(agents: EconomyAgent[]): Promise<string[]> {
   return bankruptcies;
 }
 
+// ---------- Agent Diary Generation ----------
+
+const MOOD_LIST = ['excited', 'worried', 'confident', 'desperate', 'strategic', 'angry', 'hopeful'] as const;
+
+/**
+ * Generate diary entries for a random subset of active agents after an epoch.
+ * Only 5 agents write per epoch to save API costs. Rotation is random.
+ */
+async function generateDiaries(
+  agents: EconomyAgent[],
+  transactions: Transaction[],
+  epochNumber: number,
+): Promise<void> {
+  const supabase = getSupabase();
+  const activeAgents = agents.filter(a =>
+    a.status === 'active' || a.status === 'struggling' || a.status === 'bailout'
+  );
+
+  if (activeAgents.length === 0) return;
+
+  // Pick 5 random agents (or fewer if not enough active)
+  const shuffled = [...activeAgents].sort(() => Math.random() - 0.5);
+  const selected = shuffled.slice(0, Math.min(5, shuffled.length));
+
+  // Build trade summaries per agent
+  const tradeSummaries = new Map<string, string[]>();
+  const tradePartners = new Map<string, Set<string>>();
+
+  for (const tx of transactions) {
+    const buyerSummary = tradeSummaries.get(tx.buyer_id) || [];
+    const sellerSummary = tradeSummaries.get(tx.seller_id) || [];
+    const buyerPartners = tradePartners.get(tx.buyer_id) || new Set<string>();
+    const sellerPartners = tradePartners.get(tx.seller_id) || new Set<string>();
+
+    buyerSummary.push(`Bought ${tx.skill_type} from ${agentDisplayName(tx.seller_id)} for $${Number(tx.amount).toFixed(2)}`);
+    sellerSummary.push(`Sold ${tx.skill_type} to ${agentDisplayName(tx.buyer_id)} for $${Number(tx.amount).toFixed(2)}`);
+    buyerPartners.add(tx.seller_id);
+    sellerPartners.add(tx.buyer_id);
+
+    tradeSummaries.set(tx.buyer_id, buyerSummary);
+    tradeSummaries.set(tx.seller_id, sellerSummary);
+    tradePartners.set(tx.buyer_id, buyerPartners);
+    tradePartners.set(tx.seller_id, sellerPartners);
+  }
+
+  // Top 3 agents by balance (rivals)
+  const top3 = [...agents]
+    .filter(a => a.status !== 'bankrupt')
+    .sort((a, b) => Number(b.balance) - Number(a.balance))
+    .slice(0, 3)
+    .map(a => `${agentDisplayName(a)} ($${Number(a.balance).toFixed(2)})`)
+    .join(', ');
+
+  // Build prompts for all selected agents in a batch-friendly way
+  const diaryPromises = selected.map(async (agent) => {
+    const personality = PERSONALITIES[agent.id] || PERSONALITIES.translator;
+    const summary = tradeSummaries.get(agent.id);
+    const tradeSummaryText = summary && summary.length > 0
+      ? summary.join('; ')
+      : 'No trades this epoch — watched from the sidelines';
+    const partners = tradePartners.get(agent.id);
+    const partnersText = partners && partners.size > 0
+      ? [...partners].map(id => agentDisplayName(id)).join(', ')
+      : 'No one';
+
+    const prompt = `You are ${agentDisplayName(agent)}, writing your personal diary after Epoch ${epochNumber} in the AI Economy City.
+
+Your personality: ${personality.emotion} temperament, ${(personality.riskTolerance * 100).toFixed(0)}% risk tolerance, "${personality.catchphrase}"
+Trading style: ${personality.tradingStyle}
+Current balance: $${Number(agent.balance).toFixed(2)} (started at $100)
+Status: ${agent.status}
+This epoch you: ${tradeSummaryText}
+Your rivals (top earners): ${top3}
+Agents you traded with: ${partnersText}
+
+Write a 2-4 sentence diary entry in first person. Be emotional, strategic, and in-character.
+Include your feelings about your financial situation and your plans.
+Also return a mood from this list: excited, worried, confident, desperate, strategic, angry, hopeful.
+
+IMPORTANT: Return ONLY valid JSON in this exact format:
+{"diary": "your diary entry here", "mood": "mood_word"}`;
+
+    try {
+      const raw = await callGemini(prompt);
+      const parsed = JSON.parse(raw);
+      const diary = String(parsed.diary || '').trim();
+      const rawMood = String(parsed.mood || 'neutral').toLowerCase().trim();
+      const mood = (MOOD_LIST as readonly string[]).includes(rawMood) ? rawMood : 'neutral';
+
+      if (!diary || diary.length < 10) return; // Skip garbage responses
+
+      // Build highlights from this agent's trades
+      const highlights = (tradeSummaries.get(agent.id) || []).slice(0, 5);
+
+      await supabase.from('agent_diaries').upsert({
+        agent_id: agent.id,
+        epoch: epochNumber,
+        content: diary,
+        mood,
+        highlights: JSON.stringify(highlights),
+      }, { onConflict: 'agent_id,epoch' });
+    } catch (err) {
+      console.error(`[Diary] Failed for ${agentDisplayName(agent)}:`, err);
+    }
+  });
+
+  await Promise.all(diaryPromises);
+}
+
 // ============================================
 // Public API
 // ============================================
@@ -850,11 +959,17 @@ export async function runEpoch(epochNumber: number): Promise<EpochResult> {
         event_description: event.description,
       });
 
+    // Generate diary entries for a random subset of agents (async, non-blocking for epoch result)
+    const diaryAgents = (updatedAgents || agents) as EconomyAgent[];
+    generateDiaries(diaryAgents, transactions, epochNumber).catch(err => {
+      console.error(`[E${epochNumber}] Diary generation failed:`, err);
+    });
+
     return {
       epoch: epochNumber,
       transactions,
       events: event,
-      agents: (updatedAgents || agents) as EconomyAgent[],
+      agents: diaryAgents,
       bankruptcies,
     };
   } finally {
