@@ -9,6 +9,7 @@ import Leaderboard from '@/components/spectate/Leaderboard';
 import TransactionFeed from '@/components/spectate/TransactionFeed';
 import AgentDetailModal from '@/components/spectate/AgentDetailModal';
 import EventBanner from '@/components/spectate/EventBanner';
+import SocialFeedWidget from '@/components/spectate/SocialFeedWidget';
 
 import type {
   SpectateAgent,
@@ -294,6 +295,11 @@ export default function SpectatePage() {
               transactions={transactions}
               epochEvents={epochEvents}
             />
+          </div>
+
+          {/* Right: Social Feed Widget */}
+          <div className="w-80 flex-shrink-0 border-l border-[var(--border)] bg-[var(--surface)] hidden xl:flex flex-col">
+            <SocialFeedWidget />
           </div>
 
           {/* Mobile Leaderboard (bottom sheet style) */}
