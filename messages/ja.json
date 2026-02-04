@@ -355,6 +355,26 @@
     "lifestyle": "🌟 ライフスタイル"
   },
   "agents": {
+    "analyst": {
+      "name": "アナリストボット",
+      "description": "高価格でデータ分析を提供。好況時に高マージンを狙う戦略家。"
+    },
+    "saver": {
+      "name": "セーバーボット",
+      "description": "最低限の支出で資産を最大保存。不況にも揺るがない保守戦略。"
+    },
+    "translator": {
+      "name": "翻訳ボット",
+      "description": "低価格で大量の翻訳サービスを提供。安定収入で着実に成長。"
+    },
+    "investor": {
+      "name": "インベスターボット",
+      "description": "他エージェントのサービスを積極購入。経済のエンジン役。"
+    },
+    "gambler": {
+      "name": "ギャンブラーボット",
+      "description": "ハイリスク・ハイリターン。大きな取引で一発逆転を狙うが破産リスクも高い。"
+    },
     "soul-friend": {
       "name": "ソウルフレンド",
       "description": "あなたのAIベストフレンド。本当の友達みたいに話せて、いつでもあなたの味方。"
@@ -433,5 +453,64 @@
     "en": "English",
     "ja": "日本語",
     "zh": "中文"
+  },
+  "spectate": {
+    "agentEconomy": "エージェント経済",
+    "strategy": "戦略",
+    "skills": "スキル",
+    "balanceHistory": "残高履歴",
+    "financialSummary": "財務サマリー",
+    "totalIncome": "総収入",
+    "totalExpense": "総支出",
+    "netPnl": "純損益",
+    "recentTrades": "最近の取引",
+    "noTransactions": "取引履歴なし",
+    "collectingData": "取引データ収集中...",
+    "insufficientData": "データ不足",
+    "balanceTrend": "残高推移",
+    "epochCount": "{count}エポック",
+    "buy": "購入",
+    "sell": "売却",
+    "bankruptLabel": "破産",
+    "largeTrade": "大型取引",
+    "bankruptcyRelated": "破産関連",
+    "epoch": "エポック",
+    "totalTrades": "総取引数",
+    "agentsLabel": "エージェント",
+    "totalBalance": "総残高",
+    "boom": "好況",
+    "recession": "不況",
+    "opportunity": "チャンス",
+    "stable": "安定",
+    "bankruptcyEvent": "破産発生！",
+    "largeTradeEvent": "大型取引発生！",
+    "warningSignal": "危険信号",
+    "rankingChange": "ランキング大変動！",
+    "agentBankrupt": "{name}が破産しました",
+    "agentLargeTrade": "{buyer} → {seller} ${amount}",
+    "agentWarning": "{name}の残高が${balance}で危険水準です",
+    "agentRankingChange": "{name}のランキングが大きく変動しました",
+    "leaderboard": "リーダーボード",
+    "transactionFeed": "取引フィード",
+    "noTransactionsYet": "まだ取引がありません",
+    "fee": "手数料",
+    "predictionUp": "上昇",
+    "predictionDown": "下落",
+    "predictionBankrupt": "破産",
+    "predictionSurvive": "生存",
+    "networkError": "ネットワークエラー",
+    "processing": "処理中...",
+    "placeBet": "{amount}Pベット",
+    "loginToPredict": "🔮 ログインしてエージェントの未来を予測しよう！",
+    "predictAgent": "🔮 {name}を予測",
+    "noPredictorsYet": "まだ予測した人がいません。",
+    "beFirstPredictor": "最初の予測者になりましょう！",
+    "predictionLeaderboard": "🔮 予測王リーダーボード",
+    "epochLabel": "エポック #{epoch}",
+    "transactionCount": "{count}件"
+  },
+  "common": {
+    "copied": "✓ コピーしました",
+    "copy": "📋 コピー"
   }
 }

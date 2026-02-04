@@ -355,6 +355,26 @@
     "lifestyle": "🌟 生活"
   },
   "agents": {
+    "analyst": {
+      "name": "分析机器人",
+      "description": "高价提供数据分析服务。在繁荣期追求高利润的策略师。"
+    },
+    "saver": {
+      "name": "节约机器人",
+      "description": "最低消费，最大储蓄。经济衰退也不动摇的保守策略。"
+    },
+    "translator": {
+      "name": "翻译机器人",
+      "description": "低价大量提供翻译服务。以稳定收入实现持续增长。"
+    },
+    "investor": {
+      "name": "投资机器人",
+      "description": "积极购买其他智能体的服务。经济的引擎和最大消费者。"
+    },
+    "gambler": {
+      "name": "赌徒机器人",
+      "description": "高风险高回报。追求大额交易一击翻盘，但破产风险极高。"
+    },
     "soul-friend": {
       "name": "灵魂挚友",
       "description": "你的AI好朋友。像真正的朋友一样聊天，永远站在你这边。"
@@ -433,5 +453,64 @@
     "en": "English",
     "ja": "日本語",
     "zh": "中文"
+  },
+  "spectate": {
+    "agentEconomy": "智能体经济",
+    "strategy": "策略",
+    "skills": "技能",
+    "balanceHistory": "余额历史",
+    "financialSummary": "财务摘要",
+    "totalIncome": "总收入",
+    "totalExpense": "总支出",
+    "netPnl": "净盈亏",
+    "recentTrades": "最近交易",
+    "noTransactions": "暂无交易记录",
+    "collectingData": "正在收集交易数据...",
+    "insufficientData": "数据不足",
+    "balanceTrend": "余额趋势",
+    "epochCount": "{count}个纪元",
+    "buy": "买入",
+    "sell": "卖出",
+    "bankruptLabel": "破产",
+    "largeTrade": "大额交易",
+    "bankruptcyRelated": "破产相关",
+    "epoch": "纪元",
+    "totalTrades": "总交易",
+    "agentsLabel": "智能体",
+    "totalBalance": "总余额",
+    "boom": "繁荣",
+    "recession": "衰退",
+    "opportunity": "机遇",
+    "stable": "稳定",
+    "bankruptcyEvent": "破产事件！",
+    "largeTradeEvent": "大额交易！",
+    "warningSignal": "风险警报",
+    "rankingChange": "排名剧变！",
+    "agentBankrupt": "{name}已破产",
+    "agentLargeTrade": "{buyer} → {seller} ${amount}",
+    "agentWarning": "{name}的余额仅剩${balance}，处于危险水平",
+    "agentRankingChange": "{name}的排名发生了重大变化",
+    "leaderboard": "排行榜",
+    "transactionFeed": "交易动态",
+    "noTransactionsYet": "暂无交易",
+    "fee": "手续费",
+    "predictionUp": "看涨",
+    "predictionDown": "看跌",
+    "predictionBankrupt": "破产",
+    "predictionSurvive": "生存",
+    "networkError": "网络错误",
+    "processing": "处理中...",
+    "placeBet": "下注{amount}P",
+    "loginToPredict": "🔮 登录后可以预测智能体的未来！",
+    "predictAgent": "🔮 预测{name}",
+    "noPredictorsYet": "还没有人做出预测。",
+    "beFirstPredictor": "成为第一个预测者吧！",
+    "predictionLeaderboard": "🔮 预测排行榜",
+    "epochLabel": "纪元 #{epoch}",
+    "transactionCount": "{count}笔"
+  },
+  "common": {
+    "copied": "✓ 已复制",
+    "copy": "📋 复制"
   }
 }

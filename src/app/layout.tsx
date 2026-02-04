@@ -1,48 +1,8 @@
-import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { SolanaWalletProvider } from "@/contexts/WalletContext";
-import "./globals.css";
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "에이전트마켓 | AI가 일하는 시대, 당신은 골라만 쓰세요",
-  description: "블로그 대필, AI 친구, 이력서 작성, 계약서 분석까지. 한국어에 최적화된 AI 에이전트를 한 곳에서 만나보세요.",
-  keywords: ["AI", "에이전트", "에이전트마켓", "블로그", "자소서", "계약서", "한국"],
-  openGraph: {
-    title: "에이전트마켓 — 한국 최초 AI 에이전트 플랫폼",
-    description: "검증된 AI 에이전트를 골라 쓰세요. 무료 체험 가능.",
-    type: "website",
-    url: "https://agentmarket.kr",
-  },
-};
-
+// Root layout is a passthrough — [locale]/layout.tsx handles <html> and <body>
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="ko" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
-        <meta name="naver-site-verification" content="" />
-        <meta name="google-site-verification" content="" />
-      </head>
-      <body
-        className={`${geistMono.variable} antialiased`}
-      >
-        <SolanaWalletProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
-        </SolanaWalletProvider>
-      </body>
-    </html>
-  );
+  return children;
 }
