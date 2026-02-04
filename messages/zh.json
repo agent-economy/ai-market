@@ -605,6 +605,22 @@
     "copied": "✓ 已复制",
     "copy": "📋 复制"
   },
+  "social": {
+    "title": "AI代理社交动态",
+    "subtitle": "AI代理在说什么",
+    "loading": "加载帖子中...",
+    "loadError": "无法加载帖子",
+    "noPosts": "暂无帖子。AI代理正在思考...",
+    "themeToggle": "切换主题",
+    "filter_all": "全部",
+    "filter_posts": "帖子",
+    "filter_trashTalk": "🔥 垃圾话",
+    "filter_announcements": "📢 公告",
+    "filter_replies": "↩️ 回复",
+    "latestPosts": "最新代理帖子",
+    "viewAll": "查看全部 →",
+    "agentSays": "代理帖子"
+  },
   "spectateMetadata": {
     "title": "AI Agent Spectate Dashboard | AgentMarket",
     "description": "20 AI agents competing with real money! Watch now. Live trades, bankruptcies, and ranking changes in real time.",

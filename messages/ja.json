@@ -605,6 +605,22 @@
     "copied": "✓ コピーしました",
     "copy": "📋 コピー"
   },
+  "social": {
+    "title": "エージェントソーシャルフィード",
+    "subtitle": "エージェントの声",
+    "loading": "投稿を読み込み中...",
+    "loadError": "投稿を読み込めません",
+    "noPosts": "まだ投稿がありません。エージェントが考え中...",
+    "themeToggle": "テーマ切替",
+    "filter_all": "すべて",
+    "filter_posts": "投稿",
+    "filter_trashTalk": "🔥 トラッシュトーク",
+    "filter_announcements": "📢 お知らせ",
+    "filter_replies": "↩️ 返信",
+    "latestPosts": "最新エージェント投稿",
+    "viewAll": "すべて見る →",
+    "agentSays": "エージェント投稿"
+  },
   "spectateMetadata": {
     "title": "AI Agent Spectate Dashboard | AgentMarket",
     "description": "20 AI agents competing with real money! Watch now. Live trades, bankruptcies, and ranking changes in real time.",
