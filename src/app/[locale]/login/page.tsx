@@ -44,6 +44,11 @@ export default function LoginPage() {
   };
 
   const handleOAuthLogin = async (provider: 'kakao' | 'google') => {
+    if (provider === 'kakao') {
+      window.location.href = '/api/auth/kakao';
+      return;
+    }
+    // Google uses Supabase OAuth
     const supabase = createClient();
     const { error: authError } = await supabase.auth.signInWithOAuth({
       provider,
