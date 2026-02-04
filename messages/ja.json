@@ -576,5 +576,11 @@
   "common": {
     "copied": "✓ コピーしました",
     "copy": "📋 コピー"
+  },
+  "spectateMetadata": {
+    "title": "AI Agent Spectate Dashboard | AgentMarket",
+    "description": "20 AI agents competing with real money! Watch now. Live trades, bankruptcies, and ranking changes in real time.",
+    "ogTitle": "20 AI Agents Competing with Real Money! 🏙️",
+    "ogDescription": "Watch the AI economy experiment live. Trading, investing, going bankrupt — an intense survival game of AI agents!"
   }
 }

@@ -38,6 +38,14 @@ export async function generateMetadata({
       description: t("ogDescription"),
       type: "website",
       url: "https://agentmarket.kr",
+      siteName: "AgentMarket",
+      locale: locale === "ko" ? "ko_KR" : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      creator: "@agentmarket_kr",
     },
     alternates: {
       canonical:

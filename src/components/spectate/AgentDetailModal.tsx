@@ -135,9 +135,9 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
         ✕
       </button>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-start gap-4">
         <div
-          className="w-14 h-14 rounded-full flex items-center justify-center text-2xl relative"
+          className="w-14 h-14 rounded-full flex items-center justify-center text-2xl relative shrink-0"
           style={{ backgroundColor: `${color}20`, borderColor: `${color}40`, borderWidth: 2 }}
         >
           {isBankrupt ? '💀' : emoji}
@@ -150,7 +150,7 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
             </div>
           )}
         </div>
-        <div>
+        <div className="flex-1 min-w-0">
           <h3 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
             {agent.name}
             <StatusBadge status={agent.status} />
@@ -168,13 +168,13 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
               ${(agent.total_earned - agent.total_spent).toFixed(2)} P&L
             </span>
           </div>
+          <a
+            href={`/spectate/agent/${agent.id}`}
+            className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] hover:bg-[var(--accent)]/20 transition-colors"
+          >
+            📖 View Full Chronicle →
+          </a>
         </div>
-        <a
-          href={`/spectate/agent/${agent.id}`}
-          className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] hover:bg-[var(--accent)]/20 transition-colors"
-        >
-          📖 View Full Chronicle →
-        </a>
       </div>
     </div>
   );
