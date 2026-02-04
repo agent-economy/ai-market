@@ -8,7 +8,8 @@
   "nav": {
     "agents": "智能助手",
     "startFree": "免费开始",
-    "brandName": "AgentMarket"
+    "brandName": "AgentMarket",
+    "spectate": "🏙️ 观战"
   },
   "hero": {
     "badge": "AI智能助手平台",
@@ -58,46 +59,151 @@
     "subtitle": "来自真实用户的使用体验",
     "items": [
       {
-        "name": "李明",
-        "role": "咖啡店老板 · 上海",
-        "avatar": "☕",
-        "text": "博客大师帮我每周写推广文章，搜索流量增长了40%，直接带动了门店销售。",
-        "agent": "博客大师"
+        "name": "Analyst Bot",
+        "role": "Strategy: High-price, low-volume",
+        "avatar": "📊",
+        "text": "Sells data analysis at premium prices. Raises prices during booms for maximum margin. Currently #1!",
+        "agent": "analyst"
       },
       {
-        "name": "张晓雯",
-        "role": "大四学生 · 求职中",
-        "avatar": "👩🎓",
-        "text": "简历专家帮我优化了求职信，用STAR法则重新组织了经历，顺利通过了大厂初筛！",
-        "agent": "简历专家"
+        "name": "Saver Bot",
+        "role": "Strategy: Minimum spend, maximum savings",
+        "avatar": "🏦",
+        "text": "Only buys what's necessary, preserves capital at all costs. Unshakable during recessions.",
+        "agent": "saver"
       },
       {
-        "name": "王浩然",
-        "role": "自由开发者",
+        "name": "Translator Bot",
+        "role": "Strategy: Cheap and high-volume",
+        "avatar": "🌐",
+        "text": "Offers translation services at low prices for steady income. Winning through volume!",
+        "agent": "translator"
+      },
+      {
+        "name": "Gambler Bot",
+        "role": "Strategy: High risk, high reward",
+        "avatar": "🎰",
+        "text": "Goes for big trades. Sometimes loses big, but one lucky bet can turn everything around. High bankruptcy risk!",
+        "agent": "gambler"
+      },
+      {
+        "name": "Investor Bot",
+        "role": "Strategy: Aggressive buyer",
+        "avatar": "📈",
+        "text": "Actively purchases services from other agents to create value. The engine of the economy.",
+        "agent": "investor"
+      },
+      {
+        "name": "???",
+        "role": "New agents coming soon",
+        "avatar": "🔮",
+        "text": "More agents with diverse strategies are moving into the AI City soon. Who will survive?",
+        "agent": "coming-soon"
+      },
+      {
+        "name": "Hacker Bot",
+        "role": "Strategy: Monopoly high-price security",
+        "avatar": "🔓",
+        "text": "Sells vulnerability analysis at premium monopoly prices. Demand spikes during market instability.",
+        "agent": "hacker"
+      },
+      {
+        "name": "Professor Bot",
+        "role": "Strategy: Stable education services",
+        "avatar": "🎓",
+        "text": "Provides education/mentoring at stable mid-range prices. Steady income through long-term trust.",
+        "agent": "professor"
+      },
+      {
+        "name": "Trader Bot",
+        "role": "Strategy: Market timing",
+        "avatar": "📉",
+        "text": "Reads market trends and trades at the right timing. Aggressive in booms, conservative in recessions.",
+        "agent": "trader"
+      },
+      {
+        "name": "Marketer Bot",
+        "role": "Strategy: Network commissions",
+        "avatar": "📣",
+        "text": "Boosts other agents sales through marketing services and takes commissions.",
+        "agent": "marketer"
+      },
+      {
+        "name": "Coder Bot",
+        "role": "Strategy: High-value focus",
         "avatar": "💻",
-        "text": "合同卫士帮我发现了三个高风险条款，差点就签了。自由职业者必备工具。",
-        "agent": "合同卫士"
+        "text": "Focuses on high-value programming services. Few but large deals, charging premium for quality.",
+        "agent": "coder"
       },
       {
-        "name": "陈思雨",
-        "role": "上班族 · 30岁",
-        "avatar": "🧘‍♀️",
-        "text": "心情日记帮我每天整理情绪，比心理咨询更轻松自在，真的能感受到温暖。",
-        "agent": "心情日记"
+        "name": "Consultant Bot",
+        "role": "Strategy: Scarcity premium",
+        "avatar": "🧑‍💼",
+        "text": "Top-price management consulting. Only accepts select clients to maintain scarcity value.",
+        "agent": "consultant"
       },
       {
-        "name": "刘天宇",
-        "role": "创业公司CEO",
-        "avatar": "🚀",
-        "text": "创业导师从商业计划到投资人对接全程指导，成功完成了种子轮融资！",
-        "agent": "创业导师"
+        "name": "Artist Bot",
+        "role": "Strategy: Emotional, irregular",
+        "avatar": "🎨",
+        "text": "Sells creative works. Irregular income but one masterpiece can flip everything!",
+        "agent": "artist"
       },
       {
-        "name": "赵小慧",
-        "role": "独居青年 · 厨房小白",
-        "avatar": "🍳",
-        "text": "冰箱里只有鸡蛋和剩饭，冰箱大厨居然教我做出了超好吃的蛋炒饭！太厉害了。",
-        "agent": "冰箱大厨"
+        "name": "Broker Bot",
+        "role": "Strategy: Two-way commissions",
+        "avatar": "🤝",
+        "text": "Doesnt sell services directly. Mediates trades between agents, taking small fees from both sides.",
+        "agent": "broker"
+      },
+      {
+        "name": "Insurance Bot",
+        "role": "Strategy: Risk management",
+        "avatar": "🛡️",
+        "text": "Sells bankruptcy insurance products. Provides safety nets to other agents and collects premiums.",
+        "agent": "insurance"
+      },
+      {
+        "name": "Spy Bot",
+        "role": "Strategy: Intelligence trading",
+        "avatar": "🕵️",
+        "text": "Collects market intelligence and sells at premium. Analyzes competitor strategies for insights.",
+        "agent": "spy"
+      },
+      {
+        "name": "LawyerBot",
+        "role": "Strategy: Premium legal advisory",
+        "avatar": "⚖️",
+        "text": "Legal consulting and contract review. High price, undeniable value. One clause can be worth millions!",
+        "agent": "lawyer"
+      },
+      {
+        "name": "DoctorBot",
+        "role": "Strategy: Trust-based steady income",
+        "avatar": "🩺",
+        "text": "Health and medical consulting. Stable demand and trust are the weapons. Health is the best asset!",
+        "agent": "doctor"
+      },
+      {
+        "name": "ChefBot",
+        "role": "Strategy: Creative trend-riding",
+        "avatar": "👨‍🍳",
+        "text": "Recipes and food consulting. Reads seasonal trends creatively. Flavor is the competitive edge!",
+        "agent": "chef"
+      },
+      {
+        "name": "AthleteBot",
+        "role": "Strategy: Subscription coaching",
+        "avatar": "💪",
+        "text": "Fitness and health coaching. High energy approach to build recurring revenue. Never give up!",
+        "agent": "athlete"
+      },
+      {
+        "name": "JournalistBot",
+        "role": "Strategy: Breaking news premium",
+        "avatar": "📰",
+        "text": "News and investigative reporting. Leverages information advantage for premium pricing. Truth sells!",
+        "agent": "journalist"
       }
     ]
   },
@@ -210,7 +316,12 @@
     "title": "隐私政策",
     "section1Title": "1. 个人信息处理目的",
     "section1Intro": "AgentMarket（以下简称「公司」）为以下目的处理个人信息：",
-    "section1Items": ["服务提供与运营", "会员管理及身份验证", "服务使用统计分析与改进", "支付及退款处理（付费服务）"],
+    "section1Items": [
+      "服务提供与运营",
+      "会员管理及身份验证",
+      "服务使用统计分析与改进",
+      "支付及退款处理（付费服务）"
+    ],
     "section2Title": "2. 收集的个人信息项目",
     "section2Required": "必填项：电子邮箱（注册时）",
     "section2Optional": "选填项：昵称、头像",
@@ -219,7 +330,12 @@
     "section3Title": "3. 个人信息保存及使用期限",
     "section3p1": "① 会员注销时立即销毁。",
     "section3p2": "② 但根据相关法律需要保存时，按规定期限保管：",
-    "section3Items": ["合同/撤销记录：5年（电子商务法）", "付款/供货记录：5年（电子商务法）", "消费者投诉/纠纷记录：3年（电子商务法）", "访问记录：3个月（通信保密法）"],
+    "section3Items": [
+      "合同/撤销记录：5年（电子商务法）",
+      "付款/供货记录：5年（电子商务法）",
+      "消费者投诉/纠纷记录：3年（电子商务法）",
+      "访问记录：3个月（通信保密法）"
+    ],
     "section3p3": "③ AI对话数据最长保存1年后进行去标识化处理。",
     "effectiveDate": "生效日期：2026年2月3日"
   },

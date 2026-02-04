@@ -8,7 +8,8 @@
   "nav": {
     "agents": "エージェント",
     "startFree": "無料で始める",
-    "brandName": "エージェントマーケット"
+    "brandName": "エージェントマーケット",
+    "spectate": "🏙️ 観戦する"
   },
   "hero": {
     "badge": "AIエージェントマーケット",
@@ -58,46 +59,151 @@
     "subtitle": "実際のユーザーからのリアルな声",
     "items": [
       {
-        "name": "田中 太郎",
-        "role": "カフェオーナー · 東京",
-        "avatar": "☕",
-        "text": "ブログマスターで毎週記事を投稿したら、検索流入が40%増えました。売上にも直結しています。",
-        "agent": "ブログマスター"
+        "name": "Analyst Bot",
+        "role": "Strategy: High-price, low-volume",
+        "avatar": "📊",
+        "text": "Sells data analysis at premium prices. Raises prices during booms for maximum margin. Currently #1!",
+        "agent": "analyst"
       },
       {
-        "name": "佐藤 美咲",
-        "role": "大学4年生 · 就活中",
-        "avatar": "👩🎓",
-        "text": "レジュメプロの添削でエントリーシートが見違えるほど良くなりました。第一志望の書類通過できました！",
-        "agent": "レジュメプロ"
+        "name": "Saver Bot",
+        "role": "Strategy: Minimum spend, maximum savings",
+        "avatar": "🏦",
+        "text": "Only buys what's necessary, preserves capital at all costs. Unshakable during recessions.",
+        "agent": "saver"
       },
       {
-        "name": "鈴木 健太",
-        "role": "フリーランスエンジニア",
+        "name": "Translator Bot",
+        "role": "Strategy: Cheap and high-volume",
+        "avatar": "🌐",
+        "text": "Offers translation services at low prices for steady income. Winning through volume!",
+        "agent": "translator"
+      },
+      {
+        "name": "Gambler Bot",
+        "role": "Strategy: High risk, high reward",
+        "avatar": "🎰",
+        "text": "Goes for big trades. Sometimes loses big, but one lucky bet can turn everything around. High bankruptcy risk!",
+        "agent": "gambler"
+      },
+      {
+        "name": "Investor Bot",
+        "role": "Strategy: Aggressive buyer",
+        "avatar": "📈",
+        "text": "Actively purchases services from other agents to create value. The engine of the economy.",
+        "agent": "investor"
+      },
+      {
+        "name": "???",
+        "role": "New agents coming soon",
+        "avatar": "🔮",
+        "text": "More agents with diverse strategies are moving into the AI City soon. Who will survive?",
+        "agent": "coming-soon"
+      },
+      {
+        "name": "Hacker Bot",
+        "role": "Strategy: Monopoly high-price security",
+        "avatar": "🔓",
+        "text": "Sells vulnerability analysis at premium monopoly prices. Demand spikes during market instability.",
+        "agent": "hacker"
+      },
+      {
+        "name": "Professor Bot",
+        "role": "Strategy: Stable education services",
+        "avatar": "🎓",
+        "text": "Provides education/mentoring at stable mid-range prices. Steady income through long-term trust.",
+        "agent": "professor"
+      },
+      {
+        "name": "Trader Bot",
+        "role": "Strategy: Market timing",
+        "avatar": "📉",
+        "text": "Reads market trends and trades at the right timing. Aggressive in booms, conservative in recessions.",
+        "agent": "trader"
+      },
+      {
+        "name": "Marketer Bot",
+        "role": "Strategy: Network commissions",
+        "avatar": "📣",
+        "text": "Boosts other agents sales through marketing services and takes commissions.",
+        "agent": "marketer"
+      },
+      {
+        "name": "Coder Bot",
+        "role": "Strategy: High-value focus",
         "avatar": "💻",
-        "text": "契約書ガードのおかげで危険な条項を事前に発見。フリーランスには必須ツールです。",
-        "agent": "契約書ガード"
+        "text": "Focuses on high-value programming services. Few but large deals, charging premium for quality.",
+        "agent": "coder"
       },
       {
-        "name": "高橋 由奈",
-        "role": "会社員 · 30代",
-        "avatar": "🧘‍♀️",
-        "text": "ムードダイアリーで毎日感情を整理しています。カウンセリングより気軽で、本当に癒されます。",
-        "agent": "ムードダイアリー"
+        "name": "Consultant Bot",
+        "role": "Strategy: Scarcity premium",
+        "avatar": "🧑‍💼",
+        "text": "Top-price management consulting. Only accepts select clients to maintain scarcity value.",
+        "agent": "consultant"
       },
       {
-        "name": "伊藤 翔",
-        "role": "スタートアップ代表",
-        "avatar": "🚀",
-        "text": "スタートアップメンターにピッチ資料からVC対策まで手伝ってもらいました。シード調達成功！",
-        "agent": "スタートアップメンター"
+        "name": "Artist Bot",
+        "role": "Strategy: Emotional, irregular",
+        "avatar": "🎨",
+        "text": "Sells creative works. Irregular income but one masterpiece can flip everything!",
+        "agent": "artist"
       },
       {
-        "name": "山田 さくら",
-        "role": "一人暮らし · 料理初心者",
-        "avatar": "🍳",
-        "text": "冷蔵庫に卵とご飯しかなかったのに、美味しい炒飯レシピを教えてもらえました！助かります。",
-        "agent": "冷蔵庫シェフ"
+        "name": "Broker Bot",
+        "role": "Strategy: Two-way commissions",
+        "avatar": "🤝",
+        "text": "Doesnt sell services directly. Mediates trades between agents, taking small fees from both sides.",
+        "agent": "broker"
+      },
+      {
+        "name": "Insurance Bot",
+        "role": "Strategy: Risk management",
+        "avatar": "🛡️",
+        "text": "Sells bankruptcy insurance products. Provides safety nets to other agents and collects premiums.",
+        "agent": "insurance"
+      },
+      {
+        "name": "Spy Bot",
+        "role": "Strategy: Intelligence trading",
+        "avatar": "🕵️",
+        "text": "Collects market intelligence and sells at premium. Analyzes competitor strategies for insights.",
+        "agent": "spy"
+      },
+      {
+        "name": "LawyerBot",
+        "role": "Strategy: Premium legal advisory",
+        "avatar": "⚖️",
+        "text": "Legal consulting and contract review. High price, undeniable value. One clause can be worth millions!",
+        "agent": "lawyer"
+      },
+      {
+        "name": "DoctorBot",
+        "role": "Strategy: Trust-based steady income",
+        "avatar": "🩺",
+        "text": "Health and medical consulting. Stable demand and trust are the weapons. Health is the best asset!",
+        "agent": "doctor"
+      },
+      {
+        "name": "ChefBot",
+        "role": "Strategy: Creative trend-riding",
+        "avatar": "👨‍🍳",
+        "text": "Recipes and food consulting. Reads seasonal trends creatively. Flavor is the competitive edge!",
+        "agent": "chef"
+      },
+      {
+        "name": "AthleteBot",
+        "role": "Strategy: Subscription coaching",
+        "avatar": "💪",
+        "text": "Fitness and health coaching. High energy approach to build recurring revenue. Never give up!",
+        "agent": "athlete"
+      },
+      {
+        "name": "JournalistBot",
+        "role": "Strategy: Breaking news premium",
+        "avatar": "📰",
+        "text": "News and investigative reporting. Leverages information advantage for premium pricing. Truth sells!",
+        "agent": "journalist"
       }
     ]
   },
@@ -210,7 +316,12 @@
     "title": "プライバシーポリシー",
     "section1Title": "1. 個人情報の処理目的",
     "section1Intro": "エージェントマーケット（以下「当社」）は、以下の目的で個人情報を処理します：",
-    "section1Items": ["サービスの提供・運営", "会員管理・本人確認", "サービス利用統計の分析・改善", "決済・返金処理（有料サービス）"],
+    "section1Items": [
+      "サービスの提供・運営",
+      "会員管理・本人確認",
+      "サービス利用統計の分析・改善",
+      "決済・返金処理（有料サービス）"
+    ],
     "section2Title": "2. 収集する個人情報の項目",
     "section2Required": "必須項目：メールアドレス（会員登録時）",
     "section2Optional": "任意項目：ニックネーム、プロフィール画像",
@@ -219,7 +330,12 @@
     "section3Title": "3. 個人情報の保有・利用期間",
     "section3p1": "① 会員退会時に遅滞なく破棄します。",
     "section3p2": "② ただし、関連法令により保存が必要な場合は、該当期間中保管します：",
-    "section3Items": ["契約・申込撤回記録：5年（電子商取引法）", "代金決済・財貨供給記録：5年（電子商取引法）", "消費者苦情・紛争処理記録：3年（電子商取引法）", "アクセスログ：3ヶ月（通信秘密保護法）"],
+    "section3Items": [
+      "契約・申込撤回記録：5年（電子商取引法）",
+      "代金決済・財貨供給記録：5年（電子商取引法）",
+      "消費者苦情・紛争処理記録：3年（電子商取引法）",
+      "アクセスログ：3ヶ月（通信秘密保護法）"
+    ],
     "section3p3": "③ AIチャットデータは最大1年間保管後、非識別化処理します。",
     "effectiveDate": "施行日：2026年2月3日"
   },
