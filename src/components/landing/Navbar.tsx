@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import ThemeToggle from '@/components/ui/ThemeToggle';
-import UserMenu from '@/components/auth/UserMenu';
 import WalletButton from '@/components/wallet/WalletButton';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 
@@ -21,6 +20,9 @@ export default function Navbar() {
             <span className="text-white text-sm font-bold">A</span>
           </div>
           <span className="font-bold text-gray-900 dark:text-white text-lg">{t('brandName')}</span>
+          <span className="px-1.5 py-0.5 text-[10px] font-bold rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 uppercase tracking-wider">
+            Beta
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -31,7 +33,6 @@ export default function Navbar() {
           <WalletButton />
           <LanguageSwitcher />
           <ThemeToggle />
-          <UserMenu />
         </div>
 
         {/* Mobile menu button */}
