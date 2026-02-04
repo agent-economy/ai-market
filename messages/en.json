@@ -834,10 +834,12 @@
     "predictionLeaderboard": "🔮 Prediction Leaderboard",
     "epochLabel": "Epoch #{epoch}",
     "transactionCount": "{count}",
-    "dataLoadError": "Unable to load data",
-    "autoRetry": "Retrying automatically...",
+    "dataLoadError": "Failed to load economy data",
+    "autoRetry": "Auto-retrying...",
     "themeToggle": "Toggle theme",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "live": "LIVE",
+    "loadingEconomy": "Loading economy data..."
   },
   "common": {
     "copied": "✓ Copied",

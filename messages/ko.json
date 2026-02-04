@@ -834,10 +834,12 @@
     "predictionLeaderboard": "🔮 예측왕 리더보드",
     "epochLabel": "에포크 #{epoch}",
     "transactionCount": "{count}건",
-    "dataLoadError": "데이터를 불러올 수 없습니다",
-    "autoRetry": "잠시 후 자동으로 재시도합니다",
+    "dataLoadError": "경제 데이터를 불러오지 못했습니다",
+    "autoRetry": "자동 재시도 중...",
     "themeToggle": "테마 전환",
-    "loading": "로딩 중..."
+    "loading": "로딩 중...",
+    "live": "LIVE",
+    "loadingEconomy": "경제 데이터 로딩 중..."
   },
   "common": {
     "copied": "✓ 복사됨",

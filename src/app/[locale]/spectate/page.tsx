@@ -234,7 +234,7 @@ export default function SpectatePage() {
       <div className="h-screen flex items-center justify-center bg-[var(--background)]">
         <div className="text-center space-y-4">
           <div className="w-10 h-10 border-3 border-[var(--accent)] border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm text-[var(--text-secondary)]">Loading economy data...</p>
+          <p className="text-sm text-[var(--text-secondary)]">{t('loadingEconomy')}</p>
         </div>
       </div>
     );
