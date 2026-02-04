@@ -12,7 +12,7 @@ export const AGENTS: Agent[] = [
     icon: '💜',
     color: '#8B5CF6',
     gradient: 'from-violet-500 to-purple-600',
-    tags: ['chat', 'MBTI', 'healing', 'dating advice', 'daily talk'],
+    tags: ['chat', 'MBTI', 'healing', 'daily talk'],
     pricing: { type: 'freemium', freeMessages: 30, monthlyPrice: 4900 },
     stats: { totalChats: 12847, rating: 4.8, reviews: 342, monthlyUsers: 1893 },
     status: 'beta',

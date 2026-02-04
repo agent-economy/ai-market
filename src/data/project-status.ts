@@ -42,8 +42,8 @@ export const projectMeta = {
 
 export const keyStats = [
   { label: 'Live Agents', value: '20', emoji: '🤖' },
-  { label: 'D-Day (해커톤)', value: 'D-8', emoji: '⏰' },
   { label: 'Economy Agents', value: '20', emoji: '💰' },
+  { label: 'LLM Provider', value: 'Groq', emoji: '⚡' },
   { label: '비전 문서', value: '5개', emoji: '📄' },
 ];
 

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { loadTossPayments } from '@tosspayments/payment-sdk';
+// TODO: Re-enable when TossPayments integration is ready
+// import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { useTranslations, useLocale } from 'next-intl';
 
 interface Props {
@@ -51,14 +52,16 @@ export default function PricingModal({ isOpen, onClose, agentName }: Props) {
   const handlePayment = async (plan: typeof PLANS[0]) => {
     if (plan.price === 0) return;
 
+    // TODO: Re-enable when TossPayments integration is ready
+    console.log('[Payment] Not yet available — plan:', plan.id);
+    alert('결제 시스템 준비 중입니다. 곧 서비스됩니다!');
+
+    /* Original TossPayments logic — re-enable later:
     setLoading(plan.id);
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
-
     try {
       const tossPayments = await loadTossPayments(clientKey);
       const orderId = `ORDER-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-
-      // '카드' is a TossPayments SDK enum value, not a display string
       await tossPayments.requestPayment('카드', {
         amount: plan.price,
         orderId: orderId,
@@ -71,6 +74,7 @@ export default function PricingModal({ isOpen, onClose, agentName }: Props) {
     } finally {
       setLoading(null);
     }
+    */
   };
 
   return (

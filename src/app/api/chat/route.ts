@@ -3,6 +3,7 @@ import { getAgent } from '@/data/agents';
 import { getSystemPrompt } from '@/data/prompts';
 import { checkRateLimit, trackUsage, isDailyLimitReached } from '@/lib/rate-limit';
 
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
@@ -55,60 +56,112 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Agent not available' }, { status: 400 });
     }
 
-    if (!GEMINI_API_KEY) {
+    if (!GROQ_API_KEY && !GEMINI_API_KEY) {
       return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
     }
 
     const systemPrompt = getSystemPrompt(agentId);
+    const temperature = agentId === 'soul-friend' ? 0.9 : 0.7;
 
     const safeHistory = (Array.isArray(history) ? history : [])
       .slice(-MAX_HISTORY_LENGTH)
       .filter((h: ChatHistory) => h?.content && (h.role === 'user' || h.role === 'assistant'))
       .map((h: ChatHistory) => ({
-        role: h.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: String(h.content).slice(0, 2000) }],
+        role: h.role as 'user' | 'assistant',
+        content: String(h.content).slice(0, 2000),
       }));
 
-    const contents = [
-      ...safeHistory,
-      { role: 'user', parts: [{ text: cleanMessage }] },
-    ];
+    let response = '';
 
-    const geminiRes = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents,
-        generationConfig: {
-          temperature: agentId === 'soul-friend' ? 0.9 : 0.7,
-          topP: 0.95,
-          topK: 40,
-          maxOutputTokens: 2048,
-        },
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-        ],
-      }),
-    });
+    // === Try Groq first (primary) ===
+    if (GROQ_API_KEY) {
+      try {
+        const groqMessages = [
+          { role: 'system' as const, content: systemPrompt },
+          ...safeHistory.map((h) => ({ role: h.role, content: h.content })),
+          { role: 'user' as const, content: cleanMessage },
+        ];
 
-    if (!geminiRes.ok) {
-      console.error('Gemini API error:', geminiRes.status);
-      return NextResponse.json({ error: 'AI response error' }, { status: 502 });
+        const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${GROQ_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages: groqMessages,
+            temperature,
+            max_tokens: 2048,
+          }),
+        });
+
+        if (groqRes.ok) {
+          const data = await groqRes.json();
+          response = data.choices?.[0]?.message?.content || '';
+          if (response) {
+            trackUsage(ip);
+            return NextResponse.json(
+              { response, agentId },
+              { headers: { 'Cache-Control': 'no-store, max-age=0' } }
+            );
+          }
+        }
+        console.warn('[Chat] Groq failed:', groqRes.status, '— falling back to Gemini');
+      } catch (e) {
+        console.warn('[Chat] Groq error, falling back to Gemini:', e);
+      }
     }
 
-    trackUsage(ip);
+    // === Fallback to Gemini ===
+    if (GEMINI_API_KEY) {
+      const geminiHistory = safeHistory.map((h) => ({
+        role: h.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: h.content }],
+      }));
 
-    const data = await geminiRes.json();
-    const response = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const contents = [
+        ...geminiHistory,
+        { role: 'user', parts: [{ text: cleanMessage }] },
+      ];
 
-    return NextResponse.json(
-      { response, agentId },
-      { headers: { 'Cache-Control': 'no-store, max-age=0' } }
-    );
+      const geminiRes = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents,
+          generationConfig: {
+            temperature,
+            topP: 0.95,
+            topK: 40,
+            maxOutputTokens: 2048,
+          },
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+          ],
+        }),
+      });
+
+      if (geminiRes.ok) {
+        const data = await geminiRes.json();
+        response = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        if (response) {
+          trackUsage(ip);
+          return NextResponse.json(
+            { response, agentId },
+            { headers: { 'Cache-Control': 'no-store, max-age=0' } }
+          );
+        }
+      } else {
+        console.error('[Chat] Gemini API error:', geminiRes.status);
+      }
+    }
+
+    return NextResponse.json({ error: 'AI response error' }, { status: 502 });
   } catch (err) {
     console.error('Chat API error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function UserMenu() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, loading, signInWithKakao, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -24,18 +25,9 @@ export default function UserMenu() {
     return <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />;
   }
 
+  // Kakao login disabled — auth system under review
   if (!user) {
-    return (
-      <button
-        onClick={signInWithKakao}
-        className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-[#FEE500] text-[#3C1E1E] hover:bg-[#FDD835] transition-colors"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="#3C1E1E">
-          <path d="M12 3C6.48 3 2 6.58 2 10.9c0 2.78 1.86 5.22 4.65 6.6l-1.18 4.35c-.1.36.32.64.63.42l5.17-3.43c.24.02.48.03.73.03 5.52 0 10-3.58 10-7.97S17.52 3 12 3z" />
-        </svg>
-        {t('kakaoLogin')}
-      </button>
-    );
+    return null;
   }
 
   return (

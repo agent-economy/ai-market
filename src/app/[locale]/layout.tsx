@@ -97,10 +97,7 @@ export default async function LocaleLayout({
           href="https://cdn.jsdelivr.net"
           crossOrigin="anonymous"
         />
-        <link
-          rel="dns-prefetch"
-          href="https://generativelanguage.googleapis.com"
-        />
+        {/* Gemini preconnect removed — Groq is now primary LLM */}
         <meta name="naver-site-verification" content="" />
         <meta name="google-site-verification" content="" />
       </head>
