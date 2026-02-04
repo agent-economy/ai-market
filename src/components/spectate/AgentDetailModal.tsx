@@ -169,6 +169,12 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
             </span>
           </div>
         </div>
+        <a
+          href={`/spectate/agent/${agent.id}`}
+          className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] hover:bg-[var(--accent)]/20 transition-colors"
+        >
+          📖 View Full Chronicle →
+        </a>
       </div>
     </div>
   );
