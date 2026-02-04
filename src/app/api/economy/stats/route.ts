@@ -21,8 +21,8 @@ export async function GET() {
     // Fetch latest epoch
     const { data: latestEpoch } = await supabase
       .from('economy_epochs')
-      .select('epoch_number')
-      .order('epoch_number', { ascending: false })
+      .select('epoch')
+      .order('epoch', { ascending: false })
       .limit(1)
       .single();
 
@@ -41,7 +41,7 @@ export async function GET() {
       totalBalance,
       totalVolume: Math.round(totalBalance),
       survivalRate,
-      totalEpochs: latestEpoch?.epoch_number ?? 0,
+      totalEpochs: latestEpoch?.epoch ?? 0,
       totalTransactions: txCount ?? 0,
     }, {
       headers: {

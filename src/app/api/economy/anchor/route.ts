@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
 
     // Get epoch data from Supabase
     const [{ data: epochData }, { data: transactions }, { data: agents }] = await Promise.all([
-      supabase.from('economy_epochs').select('*').eq('epoch_number', epoch).single(),
+      supabase.from('economy_epochs').select('*').eq('epoch', epoch).single(),
       supabase.from('economy_transactions').select('*').eq('epoch', epoch),
       supabase.from('economy_agents').select('id, balance, status'),
     ]);
@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
 
     // Create deterministic state snapshot
     const epochState = {
-      epoch: epochData.epoch_number,
+      epoch: epochData.epoch,
       timestamp: epochData.created_at,
       event_type: epochData.event_type,
       transactions: (transactions || []).map(t => ({
@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
       .update({
         event_description: `${epochData.event_description}${anchorSuffix}`,
       })
-      .eq('epoch_number', epoch);
+      .eq('epoch', epoch);
 
     return NextResponse.json({
       success: true,
@@ -200,8 +200,8 @@ export async function GET(req: NextRequest) {
   if (!epochParam) {
     const { data: epochs } = await supabase
       .from('economy_epochs')
-      .select('epoch_number, event_type, event_description, total_volume, active_agents, created_at')
-      .order('epoch_number', { ascending: false })
+      .select('epoch, event_type, event_description, total_volume, active_agents, created_at')
+      .order('epoch', { ascending: false })
       .limit(50);
 
     const anchored = (epochs || []).filter(e => 
@@ -217,7 +217,7 @@ export async function GET(req: NextRequest) {
         const solanaMatch = e.event_description?.match(/solana:([a-zA-Z0-9]+)/);
         const hashMatch = e.event_description?.match(/hash:([a-f0-9]+)/);
         return {
-          epoch: e.epoch_number,
+          epoch: e.epoch,
           event: e.event_type,
           volume: e.total_volume,
           agents: e.active_agents,
@@ -235,7 +235,7 @@ export async function GET(req: NextRequest) {
   
   try {
     const [{ data: epochData }, { data: transactions }, { data: agents }] = await Promise.all([
-      supabase.from('economy_epochs').select('*').eq('epoch_number', epoch).single(),
+      supabase.from('economy_epochs').select('*').eq('epoch', epoch).single(),
       supabase.from('economy_transactions').select('*').eq('epoch', epoch),
       supabase.from('economy_agents').select('id, balance, status'),
     ]);
@@ -246,7 +246,7 @@ export async function GET(req: NextRequest) {
 
     // Re-compute hash for verification
     const epochState = {
-      epoch: epochData.epoch_number,
+      epoch: epochData.epoch,
       timestamp: epochData.created_at,
       event_type: epochData.event_type,
       transactions: (transactions || []).map(t => ({
