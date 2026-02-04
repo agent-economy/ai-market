@@ -33,6 +33,13 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     keywords: ["AI", "agent", "AgentMarket", "AI agent", "economy", "simulation"],
+    manifest: "/manifest.json",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: "AgentMarket",
+    },
+    themeColor: "#6366F1",
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDescription"),

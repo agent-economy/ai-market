@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import {
   AGENT_EMOJI,
   AGENT_COLORS,
+  AGENT_NAMES,
   type SpectateAgentDetail,
 } from '@/lib/spectate-mock-data';
 
@@ -152,7 +153,7 @@ function AgentHeader({ agent, onClose }: { agent: SpectateAgentDetail; onClose: 
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
-            {agent.name}
+            {AGENT_NAMES[agent.id] || agent.name}
             <StatusBadge status={agent.status} />
           </h3>
           <div className="flex items-center gap-3 mt-1">

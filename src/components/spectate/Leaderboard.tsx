@@ -6,6 +6,7 @@ import AnimatedNumber from './AnimatedNumber';
 import {
   AGENT_EMOJI,
   AGENT_COLORS,
+  AGENT_NAMES,
   type SpectateAgent,
 } from '@/lib/spectate-mock-data';
 
@@ -117,7 +118,7 @@ function AgentRow({
       <div className="flex-1 min-w-0 text-left">
         <div className="flex items-center gap-2">
           <span className={`text-sm font-bold ${isBankrupt ? 'line-through text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'}`}>
-            {agent.name}
+            {AGENT_NAMES[agent.id] || agent.name}
           </span>
           <span className={`text-[10px] font-semibold uppercase tracking-wider ${statusConf.className}`}>
             {statusConf.label}
