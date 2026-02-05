@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
       const errorData = await response.text();
       console.error('Groq API error:', response.status, errorData);
       return NextResponse.json(
-        { error: 'AI 생성에 실패했습니다. 잠시 후 다시 시도해주세요.' },
+        { error: `AI 생성 실패: ${response.status} - ${errorData.slice(0, 200)}` },
         { status: 502 }
       );
     }
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Generate API error:', error);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
+      { error: `서버 오류: ${error instanceof Error ? error.message : String(error)}` },
       { status: 500 }
     );
   }
