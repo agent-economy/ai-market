@@ -5,38 +5,9 @@ export const runtime = 'edge';
 
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
-const SYSTEM_PROMPT = `당신은 세계적 수준의 웹 디자이너 겸 프론트엔드 개발자입니다.
-사용자의 비즈니스 설명을 듣고, 완성도 높은 한국어 랜딩페이지를 HTML로 생성합니다.
-
-필수 규칙:
-- Tailwind CSS CDN: <script src="https://cdn.tailwindcss.com"></script>
-- 완전한 단일 HTML 파일 (<!DOCTYPE html> 부터 </html> 까지)
-- 한국어 콘텐츠 (자연스럽고 설득력 있는 마케팅 문구)
-- 반응형 디자인 (모바일 우선)
-- Inter + Noto Sans KR 폰트 (Google Fonts CDN)
-
-필수 섹션 (순서대로):
-1. 네비게이션 바 (로고 + 메뉴)
-2. 히어로 섹션 (큰 제목 + 설명 + CTA 버튼 + 배경 이미지/그라디언트)
-3. 서비스/메뉴 소개 (카드 그리드, 3-4개)
-4. 왜 우리인가 / 특징 (아이콘 + 텍스트, 3-4개)
-5. 고객 후기 (카드형, 2-3개, 별점 포함)
-6. 연락처 / 위치 / 예약 (전화번호, 주소, 영업시간)
-7. 푸터 (저작권, SNS 링크)
-
-디자인 규칙:
-- 이미지: https://images.unsplash.com/photo-{적절한ID}?w=800&h=600&fit=crop 형태로 Unsplash 이미지 활용
-  - 히어로 배경, 서비스 카드에 비즈니스와 관련된 실제 사진 사용
-  - 사진 ID 예시: 커피/카페=1495474472287-4d71bcdd2085, 네일=1604654894610-df63bc536371, 음식=1504674900247-0877df9cc836, 헬스=1534438327276-14e5300c3a48, 꽃=1490750967868-88aa4f44baee, 사무실=1497366216548-37526070297c, 뷰티=1522337360788-8b13dee7a37e
-- 이모지 적절히 활용 (과하지 않게)
-- smooth scroll 동작
-- hover 효과 (scale, shadow, color transition)
-- 그라디언트, rounded-2xl, shadow-xl 적극 활용
-
-출력 규칙:
-- HTML 코드만 출력 (설명 텍스트 절대 포함하지 마세요)
-- 코드블록 마커(\`\`\`html, \`\`\`) 절대 포함하지 마세요
-- <!DOCTYPE html>로 시작해서 </html>로 끝나야 합니다`;
+const SYSTEM_PROMPT = `한국어 랜딩페이지 HTML 생성. Tailwind CSS CDN 사용. 
+섹션: 네비게이션, 히어로(CTA버튼), 서비스소개(3개), 연락처, 푸터.
+Unsplash 이미지 사용. 반응형. 코드만 출력, 설명 없이. <!DOCTYPE html>로 시작.`;
 
 const STYLE_PROMPTS: Record<string, string> = {
   modern: '모던하고 트렌디한 디자인. 그라디언트 배경, 글래스모피즘 효과, 큰 타이포그래피, 넉넉한 여백.',
@@ -102,7 +73,7 @@ export async function POST(request: NextRequest) {
           { role: 'user', content: userPrompt },
         ],
         temperature: 0.7,
-        max_tokens: 8000,
+        max_tokens: 4000,
       }),
     });
 
