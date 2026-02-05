@@ -74,29 +74,18 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/agents" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
-            {t('agents')}
+          <Link href="/create" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+            웹사이트 만들기
           </Link>
-          <Link href="/tasks" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
-            {t('tasks')}
+          <Link href="/dashboard" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+            대시보드
           </Link>
-          <Link href="/guide" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
-            {t('guide')}
+          <Link href="/#pricing" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
+            가격
           </Link>
-          <Link href="/register" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
-            {t('registerAgent')}
+          <Link href="/create" className="text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors px-4 py-2 rounded-full">
+            무료로 시작 →
           </Link>
-          <Link href="/create" className="text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
-            {t('create')}
-          </Link>
-          {user && credits !== null && (
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-sm font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
-            >
-              💎 {credits.toLocaleString()} AM$
-            </Link>
-          )}
           <LanguageSwitcher />
           <ThemeToggle />
           <AuthButton />
@@ -128,42 +117,26 @@ export default function Navbar() {
           >
             <div className="px-6 py-4 flex flex-col gap-3">
               <Link
-                href="/agents"
-                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
-                onClick={() => setOpen(false)}
-              >
-                {t('agents')}
-              </Link>
-              <Link
-                href="/tasks"
-                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
-                onClick={() => setOpen(false)}
-              >
-                {t('tasks')}
-              </Link>
-              <Link
-                href="/guide"
-                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
-                onClick={() => setOpen(false)}
-              >
-                {t('guide')}
-              </Link>
-              <Link
-                href="/register"
-                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
-                onClick={() => setOpen(false)}
-              >
-                {t('registerAgent')}
-              </Link>
-              <Link
                 href="/create"
-                className="text-sm font-bold text-indigo-600 dark:text-indigo-400 py-2"
+                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
                 onClick={() => setOpen(false)}
               >
-                {t('create')}
+                🌐 웹사이트 만들기
               </Link>
-              <div className="py-2">
-              </div>
+              <Link
+                href="/dashboard"
+                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
+                onClick={() => setOpen(false)}
+              >
+                📊 대시보드
+              </Link>
+              <Link
+                href="/#pricing"
+                className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium"
+                onClick={() => setOpen(false)}
+              >
+                💰 가격
+              </Link>
               <div className="py-2">
                 <LanguageSwitcher />
               </div>
@@ -175,7 +148,7 @@ export default function Navbar() {
                 className="btn-primary px-5 py-2.5 text-sm text-center"
                 onClick={() => setOpen(false)}
               >
-                {t('startFree')}
+                무료로 시작하기
               </Link>
             </div>
           </motion.div>

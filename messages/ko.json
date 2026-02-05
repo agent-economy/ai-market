@@ -212,6 +212,7 @@
     "loginError": "로그인에 실패했습니다. 다시 시도해주세요.",
     "loginLink": "로그인",
     "kakaoLogin": "카카오로 로그인",
+    "naverLogin": "네이버로 로그인",
     "googleLogin": "구글로 로그인",
     "orEmail": "또는 이메일로 로그인",
     "email": "이메일",

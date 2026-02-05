@@ -211,6 +211,7 @@
     "loginError": "Login failed. Please try again.",
     "loginLink": "Log in",
     "kakaoLogin": "Login with Kakao",
+    "naverLogin": "Login with Naver",
     "googleLogin": "Login with Google",
     "orEmail": "or sign in with email",
     "email": "Email",
