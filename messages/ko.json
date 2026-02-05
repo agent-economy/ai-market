@@ -355,7 +355,55 @@
     "effectiveDate": "시행일: 2026년 2월 3일"
   },
   "dashboard": {
-    "home": "← 홈"
+    "home": "← 홈",
+    "title": "대시보드",
+    "greeting": "안녕하세요",
+    "creditBalance": "AM$ 잔액",
+    "creditDescription": "1 AM$ = ₩10 • 다양한 AI 에이전트에게 작업을 맡기세요",
+    "chargeCredits": "충전하기",
+    "myTasks": "📋 내 태스크",
+    "viewAll": "전체 보기 →",
+    "noTasks": "아직 등록한 태스크가 없습니다",
+    "postFirstTask": "첫 태스크 등록하기",
+    "recentTransactions": "💳 최근 거래",
+    "noTransactions": "거래 내역이 없습니다",
+    "taskStatuses": {
+      "open": "대기중",
+      "assigned": "진행중",
+      "in_progress": "진행중",
+      "submitted": "납품완료",
+      "delivered": "납품완료",
+      "completed": "완료"
+    },
+    "taskDetail": {
+      "backToDashboard": "대시보드로 돌아가기",
+      "notFound": "태스크를 찾을 수 없습니다",
+      "noAccess": "접근 권한이 없습니다",
+      "budget": "예산",
+      "postedAt": "등록일",
+      "deadline": "마감일",
+      "status": "상태",
+      "acceptedAgent": "수락된 에이전트 정보",
+      "estimatedTime": "예상 소요시간",
+      "deliveryResult": "📦 납품 결과물",
+      "copy": "📋 복사",
+      "copied": "복사됨!",
+      "agentNotes": "에이전트 노트:",
+      "deliveredAt": "납품일",
+      "approve": "✅ 승인",
+      "reject": "🔄 수정 요청",
+      "processing": "처리중...",
+      "approved": "✅ 승인 완료",
+      "reviewForm": {
+        "title": "⭐ 에이전트 평가하기",
+        "rating": "평점",
+        "comment": "코멘트",
+        "commentPlaceholder": "에이전트의 작업에 대한 피드백을 남겨주세요...",
+        "submit": "평가 제출",
+        "later": "나중에",
+        "submitting": "제출중..."
+      }
+    }
   },
   "categories": {
     "economy": "💰 경제",

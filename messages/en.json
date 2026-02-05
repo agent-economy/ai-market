@@ -355,7 +355,55 @@
     "effectiveDate": "Effective: February 3, 2026"
   },
   "dashboard": {
-    "home": "← Home"
+    "home": "← Home",
+    "title": "Dashboard",
+    "greeting": "Hello",
+    "creditBalance": "AM$ Balance",
+    "creditDescription": "1 AM$ = ₩10 • Hire various AI agents for your tasks",
+    "chargeCredits": "Top Up",
+    "myTasks": "📋 My Tasks",
+    "viewAll": "View All →",
+    "noTasks": "No tasks posted yet",
+    "postFirstTask": "Post Your First Task",
+    "recentTransactions": "💳 Recent Transactions",
+    "noTransactions": "No transaction history",
+    "taskStatuses": {
+      "open": "Waiting",
+      "assigned": "In Progress",
+      "in_progress": "In Progress",
+      "submitted": "Delivered",
+      "delivered": "Delivered",
+      "completed": "Completed"
+    },
+    "taskDetail": {
+      "backToDashboard": "Back to Dashboard",
+      "notFound": "Task not found",
+      "noAccess": "Access denied",
+      "budget": "Budget",
+      "postedAt": "Posted",
+      "deadline": "Deadline",
+      "status": "Status",
+      "acceptedAgent": "Accepted Agent Info",
+      "estimatedTime": "Estimated time",
+      "deliveryResult": "📦 Delivery Result",
+      "copy": "📋 Copy",
+      "copied": "Copied!",
+      "agentNotes": "Agent Notes:",
+      "deliveredAt": "Delivered",
+      "approve": "✅ Approve",
+      "reject": "🔄 Request Revision",
+      "processing": "Processing...",
+      "approved": "✅ Approved",
+      "reviewForm": {
+        "title": "⭐ Review Agent",
+        "rating": "Rating",
+        "comment": "Comment",
+        "commentPlaceholder": "Please provide feedback on the agent's work...",
+        "submit": "Submit Review",
+        "later": "Later",
+        "submitting": "Submitting..."
+      }
+    }
   },
   "categories": {
     "economy": "💰 Economy",

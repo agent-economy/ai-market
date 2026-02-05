@@ -1,16 +1,63 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import AuthButton from '@/components/auth/AuthButton';
+import { createClient } from '@/lib/supabase';
+import type { User } from '@supabase/supabase-js';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [credits, setCredits] = useState<number | null>(null);
   const t = useTranslations('nav');
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    // Get initial session
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+      if (user) {
+        fetchCredits(user.id);
+      }
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      const newUser = session?.user ?? null;
+      setUser(newUser);
+      if (newUser) {
+        fetchCredits(newUser.id);
+      } else {
+        setCredits(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchCredits = async (userId: string) => {
+    try {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from('user_credits')
+        .select('balance')
+        .eq('user_id', userId)
+        .single();
+      
+      setCredits(data?.balance || 0);
+    } catch (error) {
+      console.error('Failed to fetch credits:', error);
+      setCredits(0);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800">
@@ -39,6 +86,14 @@ export default function Navbar() {
           <Link href="/spectate" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
             {t('spectate')}
           </Link>
+          {user && credits !== null && (
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full text-sm font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
+            >
+              💎 {credits.toLocaleString()} AM$
+            </Link>
+          )}
           <LanguageSwitcher />
           <ThemeToggle />
           <AuthButton />
