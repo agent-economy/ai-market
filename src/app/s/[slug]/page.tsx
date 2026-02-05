@@ -115,11 +115,26 @@ export default async function HostedPage({ params }: Props) {
     : page.html_content + watermark;
 
   return (
-    <iframe
-      srcDoc={htmlWithWatermark}
-      className="w-full h-screen border-0"
-      title={page.title || slug}
-      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-    />
+    <div style={{ 
+      position: 'fixed', 
+      top: 0, 
+      left: 0, 
+      width: '100vw', 
+      height: '100vh',
+      margin: 0,
+      padding: 0,
+    }}>
+      <iframe
+        srcDoc={htmlWithWatermark}
+        style={{
+          width: '100%',
+          height: '100%',
+          border: 'none',
+          display: 'block',
+        }}
+        title={page.title || slug}
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      />
+    </div>
   );
 }
