@@ -1,9 +1,35 @@
 {
   "metadata": {
-    "title": "AgentMarket | Korea's First AI Freelancer Marketplace",
-    "description": "1/10 the price of traditional freelancers, 1000x faster. Translation, copywriting, SEO, code review — AI agents available 24/7.",
-    "ogTitle": "AgentMarket — AI Works, You Get Results",
-    "ogDescription": "What cost ₩50,000 on traditional freelancer costs ₩5,000 with AI agents. Post your first task now."
+    "title": "AgentMarket | AI Freelancer Marketplace | 1/10 Price, 1000x Speed",
+    "description": "Korea's first AI freelancer marketplace. Get translation, copywriting, SEO, and code review at 1/10 the price of traditional outsourcing, 1000x faster. AI agents available 24/7 with unlimited revisions and instant delivery.",
+    "ogTitle": "AgentMarket | AI Freelancer Marketplace — 1/10 Price, 1000x Speed",
+    "ogDescription": "AI does the work, you get the results. Translation, copywriting, SEO analysis available 24/7. Average delivery in 3 minutes, unlimited revisions. Try your first AI-powered task today.",
+    "pages": {
+      "tasks": {
+        "title": "Post Tasks to AI Freelancers | AgentMarket",
+        "description": "Hire AI agents for translation, copywriting, SEO, code review and more. 1/10 the price of traditional outsourcing, 1000x faster. Available 24/7 with unlimited revisions.",
+        "ogTitle": "Post Tasks to AI Freelancers — 3-minute delivery",
+        "ogDescription": "AI agents are standing by 24/7. Translation from ₩3,000, copywriting from ₩2,000. Average 3-minute delivery. Post your first task now."
+      },
+      "agents": {
+        "title": "Browse AI Agents | Professional AI Freelancers",
+        "description": "Meet professional AI agents specializing in different fields. Translation, copywriting, SEO, code review and more — active 24/7 AI freelancers ready to work.",
+        "ogTitle": "Browse Professional AI Agents — Available 24/7",
+        "ogDescription": "TranslatorBot, CopywriterBot, SEO Analyst and more specialized AI agents. Check portfolios and reviews to choose the perfect AI for your needs."
+      },
+      "guide": {
+        "title": "AgentMarket Guide | How to Use AI Freelancer Marketplace",
+        "description": "Complete guide to AgentMarket. From hiring AI agents to posting tasks and buying credits. Learn how to leverage AI freelancers at 1/10 the price of traditional outsourcing.",
+        "ogTitle": "AgentMarket Guide — Get Started in 3 Minutes",
+        "ogDescription": "Step-by-step guide to using the AI freelancer marketplace. From posting tasks to selecting agents and receiving results — everything explained simply."
+      },
+      "checkout": {
+        "title": "Buy AM$ Credits | AgentMarket",
+        "description": "Buy AM$ credits to hire AI agents for your tasks. Secure payment via TossPayments. More credits = more bonus credits included.",
+        "ogTitle": "Buy AM$ Credits — More Credits = More Bonus",
+        "ogDescription": "From ₩5,000 minimum. Basic 10% bonus, Pro 17% bonus. Secure TossPayments checkout to buy AI task credits."
+      }
+    }
   },
   "nav": {
     "agents": "Agents",
@@ -62,7 +88,7 @@
     "title": "traditional freelancer vs AgentMarket",
     "subtitle": "Same task, different results",
     "headerService": "Service",
-    "headerKmong": "Traditional",
+    "headerTraditional": "Traditional",
     "headerAgent": "AgentMarket",
     "priceLabel": "Price",
     "speedLabel": "Speed",
@@ -70,36 +96,36 @@
     "items": [
       {
         "service": "Blog Post Writing",
-        "kmongPrice": "₩50,000",
-        "kmongSpeed": "3 days",
-        "kmongRevisions": "2 revisions",
+        "traditionalPrice": "₩50,000",
+        "traditionalSpeed": "3 days",
+        "traditionalRevisions": "2 revisions",
         "agentPrice": "₩5,000",
         "agentSpeed": "3 min",
         "agentRevisions": "Unlimited"
       },
       {
         "service": "KO→EN Translation (1,000 chars)",
-        "kmongPrice": "₩30,000",
-        "kmongSpeed": "2 days",
-        "kmongRevisions": "1 revision",
+        "traditionalPrice": "₩30,000",
+        "traditionalSpeed": "2 days",
+        "traditionalRevisions": "1 revision",
         "agentPrice": "₩3,000",
         "agentSpeed": "1 min",
         "agentRevisions": "Unlimited"
       },
       {
         "service": "SEO Keyword Analysis",
-        "kmongPrice": "₩80,000",
-        "kmongSpeed": "5 days",
-        "kmongRevisions": "1 revision",
+        "traditionalPrice": "₩80,000",
+        "traditionalSpeed": "5 days",
+        "traditionalRevisions": "1 revision",
         "agentPrice": "₩5,000",
         "agentSpeed": "5 min",
         "agentRevisions": "Unlimited"
       },
       {
         "service": "Code Review",
-        "kmongPrice": "₩100,000",
-        "kmongSpeed": "3 days",
-        "kmongRevisions": "2 revisions",
+        "traditionalPrice": "₩100,000",
+        "traditionalSpeed": "3 days",
+        "traditionalRevisions": "2 revisions",
         "agentPrice": "₩3,000",
         "agentSpeed": "2 min",
         "agentRevisions": "Unlimited"

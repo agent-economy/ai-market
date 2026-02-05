@@ -8,9 +8,9 @@ export default function Testimonials() {
 
   const rawItems = t.raw('items') as Array<{
     service: string;
-    kmongPrice: string;
-    kmongSpeed: string;
-    kmongRevisions: string;
+    traditionalPrice: string;
+    traditionalSpeed: string;
+    traditionalRevisions: string;
     agentPrice: string;
     agentSpeed: string;
     agentRevisions: string;
@@ -18,9 +18,9 @@ export default function Testimonials() {
 
   const items = (rawItems ?? []).map((_, i) => ({
     service: t(`items.${i}.service`),
-    kmongPrice: t(`items.${i}.kmongPrice`),
-    kmongSpeed: t(`items.${i}.kmongSpeed`),
-    kmongRevisions: t(`items.${i}.kmongRevisions`),
+    traditionalPrice: t(`items.${i}.traditionalPrice`),
+    traditionalSpeed: t(`items.${i}.traditionalSpeed`),
+    traditionalRevisions: t(`items.${i}.traditionalRevisions`),
     agentPrice: t(`items.${i}.agentPrice`),
     agentSpeed: t(`items.${i}.agentSpeed`),
     agentRevisions: t(`items.${i}.agentRevisions`),
@@ -66,7 +66,7 @@ export default function Testimonials() {
                     {t('headerService')}
                   </th>
                   <th className="text-center p-4 text-sm font-bold text-gray-400 dark:text-slate-500">
-                    {t('headerKmong')}
+                    {t('headerTraditional')}
                   </th>
                   <th className="text-center p-4 text-sm font-bold text-indigo-600 dark:text-indigo-400">
                     {t('headerAgent')} ✨
@@ -81,8 +81,8 @@ export default function Testimonials() {
                     </td>
                     <td className="p-4 text-center">
                       <div className="space-y-1">
-                        <div className="text-sm text-gray-400 line-through">{item.kmongPrice}</div>
-                        <div className="text-xs text-gray-400">{item.kmongSpeed} · {item.kmongRevisions}</div>
+                        <div className="text-sm text-gray-400 line-through">{item.traditionalPrice}</div>
+                        <div className="text-xs text-gray-400">{item.traditionalSpeed} · {item.traditionalRevisions}</div>
                       </div>
                     </td>
                     <td className="p-4 text-center bg-indigo-50/50 dark:bg-indigo-950/20">
@@ -113,12 +113,12 @@ export default function Testimonials() {
                 <span className="text-sm font-bold text-gray-900 dark:text-white">{item.service}</span>
               </div>
               <div className="grid grid-cols-2">
-                {/* Kmong side */}
+                {/* Traditional side */}
                 <div className="p-3 border-r border-gray-100 dark:border-slate-700/50">
-                  <div className="text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase mb-2">{t('headerKmong')}</div>
-                  <div className="text-sm text-gray-400 line-through mb-1">{item.kmongPrice}</div>
-                  <div className="text-xs text-gray-400">{item.kmongSpeed}</div>
-                  <div className="text-xs text-gray-400">{item.kmongRevisions}</div>
+                  <div className="text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase mb-2">{t('headerTraditional')}</div>
+                  <div className="text-sm text-gray-400 line-through mb-1">{item.traditionalPrice}</div>
+                  <div className="text-xs text-gray-400">{item.traditionalSpeed}</div>
+                  <div className="text-xs text-gray-400">{item.traditionalRevisions}</div>
                 </div>
                 {/* AgentMarket side */}
                 <div className="p-3 bg-indigo-50/50 dark:bg-indigo-950/20">

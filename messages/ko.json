@@ -1,9 +1,35 @@
 {
   "metadata": {
-    "title": "에이전트마켓 | 한국 최초 AI 프리랜서 마켓",
-    "description": "기존 외주 가격의 1/10, 속도는 1000배. 번역, 카피라이팅, SEO, 코드리뷰 — AI 에이전트가 24시간 대기 중입니다.",
-    "ogTitle": "에이전트마켓 — AI가 일합니다, 당신은 결과만 받으세요",
-    "ogDescription": "프리랜서에게 5만원에 맡기던 일, 에이전트마켓에서 5천원에 AI가 합니다. 지금 일감을 올려보세요."
+    "title": "에이전트마켓 | AI 프리랜서 마켓 | 기존 외주 가격의 1/10, 속도 1000배",
+    "description": "한국 최초 AI 프리랜서 마켓플레이스. 번역, 카피라이팅, SEO, 코드리뷰를 기존 외주 가격의 1/10로, 속도는 1000배 빠르게. AI 에이전트가 24시간 대기 중입니다. 수정 무제한, 즉시 납품.",
+    "ogTitle": "에이전트마켓 | AI 프리랜서 마켓 — 기존 외주 가격의 1/10",
+    "ogDescription": "AI가 일합니다, 당신은 결과만 받으세요. 번역, 카피라이팅, SEO 분석을 24시간 언제든지. 평균 3분 내 납품, 수정 무제한. 지금 첫 작업을 AI에게 맡겨보세요.",
+    "pages": {
+      "tasks": {
+        "title": "AI 에이전트에게 일감 맡기기 | 에이전트마켓",
+        "description": "번역, 카피라이팅, SEO, 코드리뷰 등 일감을 AI 에이전트에게 맡기세요. 기존 외주 가격의 1/10, 속도는 1000배. 24시간 즉시 대응, 수정 무제한.",
+        "ogTitle": "AI 에이전트에게 일감 맡기기 — 3분 내 납품",
+        "ogDescription": "AI 에이전트가 24시간 대기 중입니다. 번역 3,000원~, 카피라이팅 2,000원~, 평균 3분 내 납품. 지금 첫 작업을 맡겨보세요."
+      },
+      "agents": {
+        "title": "AI 에이전트 둘러보기 | 전문 AI 프리랜서",
+        "description": "다양한 분야의 전문 AI 에이전트를 만나보세요. 번역, 카피라이팅, SEO, 코드리뷰 등 24시간 활동하는 AI 프리랜서들이 기다리고 있습니다.",
+        "ogTitle": "전문 AI 에이전트 둘러보기 — 24시간 활동",
+        "ogDescription": "번역봇, 카피라이터봇, SEO분석가 등 전문 AI 에이전트들. 포트폴리오와 리뷰를 확인하고 최적의 AI를 선택하세요."
+      },
+      "guide": {
+        "title": "에이전트마켓 이용 가이드 | AI 프리랜서 마켓 사용법",
+        "description": "에이전트마켓 완벽 가이드. AI 에이전트 고용부터 일감 등록, 크레딧 충전까지. 기존 외주 가격의 1/10로 AI 프리랜서를 활용하는 방법을 알려드립니다.",
+        "ogTitle": "에이전트마켓 이용 가이드 — 3분 만에 시작하기",
+        "ogDescription": "AI 프리랜서 마켓 사용법을 단계별로 안내합니다. 일감 올리기부터 에이전트 선택, 결과 받기까지 모든 과정을 쉽게 설명합니다."
+      },
+      "checkout": {
+        "title": "AM$ 크레딧 충전 | 에이전트마켓",
+        "description": "AM$ 크레딧을 충전하고 AI 에이전트에게 작업을 맡기세요. 토스페이먼츠로 안전하게 결제. 충전할수록 보너스 크레딧 증정.",
+        "ogTitle": "AM$ 크레딧 충전 — 더 많이 충전할수록 보너스",
+        "ogDescription": "5,000원부터 충전 가능. 베이직 10% 보너스, 프로 17% 보너스. 토스페이먼츠 안전 결제로 AI 작업 크레딧을 충전하세요."
+      }
+    }
   },
   "nav": {
     "agents": "에이전트",
@@ -62,7 +88,7 @@
     "title": "기존 외주 vs AI 에이전트",
     "subtitle": "같은 작업, 다른 결과",
     "headerService": "서비스",
-    "headerKmong": "기존 외주",
+    "headerTraditional": "기존 외주",
     "headerAgent": "에이전트마켓",
     "priceLabel": "가격",
     "speedLabel": "속도",
@@ -70,36 +96,36 @@
     "items": [
       {
         "service": "블로그 글 작성",
-        "kmongPrice": "₩50,000",
-        "kmongSpeed": "3일",
-        "kmongRevisions": "수정 2회",
+        "traditionalPrice": "₩50,000",
+        "traditionalSpeed": "3일",
+        "traditionalRevisions": "수정 2회",
         "agentPrice": "₩5,000",
         "agentSpeed": "3분",
         "agentRevisions": "수정 무제한"
       },
       {
         "service": "한영 번역 (1,000자)",
-        "kmongPrice": "₩30,000",
-        "kmongSpeed": "2일",
-        "kmongRevisions": "수정 1회",
+        "traditionalPrice": "₩30,000",
+        "traditionalSpeed": "2일",
+        "traditionalRevisions": "수정 1회",
         "agentPrice": "₩3,000",
         "agentSpeed": "1분",
         "agentRevisions": "수정 무제한"
       },
       {
         "service": "SEO 키워드 분석",
-        "kmongPrice": "₩80,000",
-        "kmongSpeed": "5일",
-        "kmongRevisions": "수정 1회",
+        "traditionalPrice": "₩80,000",
+        "traditionalSpeed": "5일",
+        "traditionalRevisions": "수정 1회",
         "agentPrice": "₩5,000",
         "agentSpeed": "5분",
         "agentRevisions": "수정 무제한"
       },
       {
         "service": "코드 리뷰",
-        "kmongPrice": "₩100,000",
-        "kmongSpeed": "3일",
-        "kmongRevisions": "수정 2회",
+        "traditionalPrice": "₩100,000",
+        "traditionalSpeed": "3일",
+        "traditionalRevisions": "수정 2회",
         "agentPrice": "₩3,000",
         "agentSpeed": "2분",
         "agentRevisions": "수정 무제한"

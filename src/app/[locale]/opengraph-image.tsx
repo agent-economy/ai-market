@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'AgentMarket — AI Economy City';
+export const alt = 'AgentMarket — AI 프리랜서 마켓';
 export const size = {
   width: 1200,
   height: 630,
@@ -14,7 +14,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%)',
+          background: 'linear-gradient(135deg, #3730a3 0%, #4338ca 50%, #5b21b6 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -26,7 +26,7 @@ export default async function Image() {
           position: 'relative',
         }}
       >
-        {/* Background grid */}
+        {/* Background pattern */}
         <div
           style={{
             position: 'absolute',
@@ -34,7 +34,7 @@ export default async function Image() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'radial-gradient(circle at 30% 20%, rgba(99,102,241,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(236,72,153,0.1) 0%, transparent 50%)',
+            background: 'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 40%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 40%)',
           }}
         />
 
@@ -50,63 +50,59 @@ export default async function Image() {
             padding: '0 60px',
           }}
         >
-          {/* Agent emojis row */}
+          {/* Service icons row */}
           <div
             style={{
               display: 'flex',
-              gap: '8px',
+              gap: '12px',
               marginBottom: '30px',
-              fontSize: '36px',
+              fontSize: '40px',
             }}
           >
+            <span>🔤</span>
+            <span>✍️</span>
+            <span>🔍</span>
+            <span>💻</span>
             <span>📊</span>
-            <span>💰</span>
-            <span>🎮</span>
-            <span>🔒</span>
-            <span>📈</span>
-            <span>🎨</span>
-            <span>⚡</span>
-            <span>🕵️</span>
-            <span>🏛️</span>
-            <span>💀</span>
+            <span>🛍️</span>
           </div>
 
-          {/* Title */}
+          {/* Brand title */}
           <div
             style={{
-              fontSize: '72px',
+              fontSize: '64px',
               fontWeight: 'bold',
-              background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
-              backgroundClip: 'text',
-              color: 'transparent',
-              marginBottom: '16px',
+              color: 'white',
+              marginBottom: '20px',
               lineHeight: '1.1',
             }}
           >
-            AI Economy City
+            에이전트마켓
           </div>
 
           {/* Subtitle */}
           <div
             style={{
-              fontSize: '32px',
-              color: '#94a3b8',
-              marginBottom: '40px',
-              lineHeight: '1.4',
+              fontSize: '28px',
+              color: '#e0e7ff',
+              marginBottom: '30px',
+              lineHeight: '1.3',
+              fontWeight: '500',
             }}
           >
-            20 AI agents. $100 each. Zero rules.
+            AI 프리랜서 마켓
             <br />
-            <span style={{ color: '#fbbf24' }}>Watch them trade, invest, and go bankrupt.</span>
+            기존 외주 가격의 1/10, 속도 1000배
           </div>
 
-          {/* Stats row */}
+          {/* Key stats row */}
           <div
             style={{
               display: 'flex',
-              gap: '24px',
+              gap: '20px',
               flexWrap: 'wrap',
               justifyContent: 'center',
+              marginBottom: '20px',
             }}
           >
             <div
@@ -114,64 +110,57 @@ export default async function Image() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: 'rgba(34, 197, 94, 0.15)',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
+                background: 'rgba(255, 255, 255, 0.15)',
                 borderRadius: '50px',
-                padding: '10px 20px',
-                fontSize: '18px',
-                fontWeight: '600',
-              }}
-            >
-              <span>🔴</span>
-              <span>LIVE NOW</span>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'rgba(99, 102, 241, 0.15)',
-                border: '1px solid rgba(99, 102, 241, 0.3)',
-                borderRadius: '50px',
-                padding: '10px 20px',
-                fontSize: '18px',
+                padding: '12px 24px',
+                fontSize: '20px',
                 fontWeight: '600',
               }}
             >
               <span>🤖</span>
-              <span>20 Agents</span>
+              <span>24시간 AI 대기</span>
             </div>
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: 'rgba(236, 72, 153, 0.15)',
-                border: '1px solid rgba(236, 72, 153, 0.3)',
+                background: 'rgba(34, 197, 94, 0.2)',
                 borderRadius: '50px',
-                padding: '10px 20px',
-                fontSize: '18px',
+                padding: '12px 24px',
+                fontSize: '20px',
                 fontWeight: '600',
               }}
             >
-              <span>💀</span>
-              <span>3 Bankrupt</span>
+              <span>⚡</span>
+              <span>평균 3분 납품</span>
             </div>
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: 'rgba(168, 85, 247, 0.15)',
-                border: '1px solid rgba(168, 85, 247, 0.3)',
+                background: 'rgba(249, 115, 22, 0.2)',
                 borderRadius: '50px',
-                padding: '10px 20px',
-                fontSize: '18px',
+                padding: '12px 24px',
+                fontSize: '20px',
                 fontWeight: '600',
               }}
             >
-              <span>⛓️</span>
+              <span>💰</span>
+              <span>1/10 가격</span>
             </div>
+          </div>
+
+          {/* Price examples */}
+          <div
+            style={{
+              fontSize: '18px',
+              color: '#c7d2fe',
+              lineHeight: '1.4',
+            }}
+          >
+            번역 ₩3,000~ • 카피라이팅 ₩2,000~ • SEO 분석 ₩5,000~
           </div>
         </div>
 
@@ -181,7 +170,7 @@ export default async function Image() {
             position: 'absolute',
             bottom: '30px',
             fontSize: '20px',
-            color: '#64748b',
+            color: '#c7d2fe',
             fontWeight: '500',
           }}
         >
