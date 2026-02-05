@@ -14,6 +14,7 @@ interface ConnectionCard {
   connected: boolean;
   provider?: string;
   comingSoon?: boolean;
+  href?: string;
 }
 
 const connections: ConnectionCard[] = [
@@ -26,6 +27,7 @@ const connections: ConnectionCard[] = [
     descriptionKo: 'SEO 최적화 블로그 글 자동 발행',
     connected: false,
     provider: 'naver',
+    href: '/dashboard/blog',
   },
   {
     id: 'kakao-channel',
@@ -66,6 +68,12 @@ export default function DashboardPage() {
 
   const handleConnect = async (card: ConnectionCard) => {
     if (card.comingSoon) return;
+    
+    if (card.href) {
+      // Navigate to feature page
+      window.location.href = card.href;
+      return;
+    }
     
     if (card.provider) {
       // OAuth 연결
@@ -170,7 +178,7 @@ export default function DashboardPage() {
                           : 'bg-stone-900 text-white hover:bg-stone-800'
                     }`}
                   >
-                    {card.connected ? '연결됨 ✓' : card.comingSoon ? '준비중' : '연결하기'}
+                    {card.connected ? '연결됨 ✓' : card.comingSoon ? '준비중' : card.href ? '사용하기 →' : '연결하기'}
                   </button>
                 </div>
               </div>
