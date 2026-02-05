@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Edge runtime = 60s timeout on Pro plan
-export const runtime = 'edge';
+// Node.js runtime with 60s timeout (Pro plan)
 export const maxDuration = 60;
 
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
@@ -120,8 +119,8 @@ ${colorDesc}
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.8,
-        max_tokens: 8000,
+        temperature: 0.7,
+        max_tokens: 6000,
       }),
     });
 
