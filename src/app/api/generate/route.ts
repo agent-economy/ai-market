@@ -561,13 +561,25 @@ ${CONTENT_GENERATION_PROMPT}`;
 
   console.log('[generate] Template data prepared, loading components...');
 
+  // Variant selection based on style
+  const styleVariants: Record<string, Record<string, number>> = {
+    modern: { hero: 1, about: 1, menu: 1, reviews: 1, contact: 1, footer: 1 },
+    minimal: { hero: 2, about: 2, menu: 2, reviews: 2, contact: 2, footer: 2 },
+    vivid: { hero: 3, about: 1, menu: 3, reviews: 1, contact: 1, footer: 1 },
+    warm: { hero: 1, about: 2, menu: 2, reviews: 2, contact: 2, footer: 2 },
+  };
+  
+  const selectedStyle = data.style || 'modern';
+  const variantMap = styleVariants[selectedStyle] || styleVariants.modern;
+
   // Load and combine components
   const componentHtmlParts: string[] = [];
   
   for (const comp of selectedComponents) {
-    const template = await loadComponent(comp, 1);
+    const variant = variantMap[comp] || 1;
+    const template = await loadComponent(comp, variant);
     if (template) {
-      console.log(`[generate] Filling template: ${comp}`);
+      console.log(`[generate] Filling template: ${comp} (variant ${variant})`);
       const filledTemplate = fillTemplate(template, templateData);
       componentHtmlParts.push(filledTemplate);
     }
@@ -575,7 +587,8 @@ ${CONTENT_GENERATION_PROMPT}`;
 
   // Always add footer
   if (!selectedComponents.includes('footer')) {
-    const footerTemplate = await loadComponent('footer', 1);
+    const footerVariant = variantMap['footer'] || 1;
+    const footerTemplate = await loadComponent('footer', footerVariant);
     if (footerTemplate) {
       const filledFooter = fillTemplate(footerTemplate, templateData);
       componentHtmlParts.push(filledFooter);
