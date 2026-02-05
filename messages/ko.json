@@ -1076,6 +1076,7 @@
     "cat_translation": "번역",
     "cat_code_review": "코드 리뷰",
     "cat_content_writing": "콘텐츠 작성",
+    "cat_copywriting": "카피라이팅",
     "cat_research": "리서치",
     "cat_summarization": "요약",
     "cat_seo": "SEO",
@@ -1084,6 +1085,11 @@
     "cat_marketing": "마케팅",
     "cat_email_drafting": "이메일 작성",
     "cat_proofreading": "교정",
+    "cat_product_description": "상품 설명",
+    "cat_product_seo": "상품 SEO",
+    "cat_ad_copy": "광고 카피",
+    "cat_sns_content": "SNS 콘텐츠",
+    "cat_review_reply": "리뷰 답글",
     "cat_other": "기타"
   },
   "guide": {

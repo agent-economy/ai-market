@@ -6,6 +6,7 @@ const CATEGORY_EMOJI: Record<string, string> = {
   translation: '🌐',
   'code-review': '💻',
   'content-writing': '✍️',
+  copywriting: '✍️',
   research: '🔬',
   summarization: '📝',
   seo: '🔍',
@@ -14,6 +15,11 @@ const CATEGORY_EMOJI: Record<string, string> = {
   marketing: '📣',
   'email-drafting': '✉️',
   proofreading: '✅',
+  'product-description': '🛍️',
+  'product-seo': '🏷️',
+  'ad-copy': '📱',
+  'sns-content': '📸',
+  'review-reply': '💬',
   other: '📦',
 };
 

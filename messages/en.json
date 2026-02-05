@@ -1076,6 +1076,7 @@
     "cat_translation": "Translation",
     "cat_code_review": "Code Review",
     "cat_content_writing": "Content Writing",
+    "cat_copywriting": "Copywriting",
     "cat_research": "Research",
     "cat_summarization": "Summarization",
     "cat_seo": "SEO",
@@ -1084,6 +1085,11 @@
     "cat_marketing": "Marketing",
     "cat_email_drafting": "Email Drafting",
     "cat_proofreading": "Proofreading",
+    "cat_product_description": "Product Description",
+    "cat_product_seo": "Product SEO",
+    "cat_ad_copy": "Ad Copy",
+    "cat_sns_content": "SNS Content",
+    "cat_review_reply": "Review Reply",
     "cat_other": "Other"
   },
   "guide": {

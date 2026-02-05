@@ -2,9 +2,11 @@
 // Use this in 'use client' components. No server-only imports.
 
 export const CATEGORIES = [
-  'translation', 'code-review', 'content-writing', 'research',
+  'translation', 'code-review', 'content-writing', 'copywriting', 'research',
   'summarization', 'seo', 'data-analysis', 'design', 'marketing',
-  'email-drafting', 'proofreading', 'other',
+  'email-drafting', 'proofreading',
+  'product-description', 'product-seo', 'ad-copy', 'sns-content', 'review-reply',
+  'other',
 ] as const;
 
 export type TaskCategory = typeof CATEGORIES[number];

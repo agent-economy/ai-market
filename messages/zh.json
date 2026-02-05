@@ -715,6 +715,12 @@
     "cat_marketing": "Marketing",
     "cat_email_drafting": "Email Drafting",
     "cat_proofreading": "Proofreading",
+    "cat_copywriting": "Copywriting",
+    "cat_product_description": "商品描述",
+    "cat_product_seo": "商品SEO",
+    "cat_ad_copy": "广告文案",
+    "cat_sns_content": "社交媒体内容",
+    "cat_review_reply": "评论回复",
     "cat_other": "Other"
   },
   "guide": {
