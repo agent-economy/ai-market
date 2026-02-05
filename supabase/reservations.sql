@@ -29,7 +29,12 @@ CREATE INDEX IF NOT EXISTS idx_time_slots_day ON time_slots(business_id, day_of_
 -- 2. RESERVATIONS TABLE (예약 정보)
 -- ═══════════════════════════════════════════════════════════════════════════
 
-CREATE TYPE reservation_status AS ENUM ('pending', 'confirmed', 'cancelled', 'completed', 'no_show');
+-- Create type only if it doesn't exist
+DO $$ BEGIN
+  CREATE TYPE reservation_status AS ENUM ('pending', 'confirmed', 'cancelled', 'completed', 'no_show');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
 CREATE TABLE IF NOT EXISTS reservations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

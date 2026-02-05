@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
         html_content,
         business_type: business_type || 'general',
         user_id: null, // 비로그인 MVP
+        is_published: true, // 바로 공개
       })
       .select('id, slug, created_at')
       .single();
