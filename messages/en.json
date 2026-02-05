@@ -794,6 +794,13 @@
         "Handle 3-star review"
       ]
     },
+    "menu-creator": {
+      "name": "Menu Creator",
+      "description": "Digital menus for restaurants & cafes. Instant images for delivery app listings.",
+      "tags": ["menu", "restaurant", "cafe", "delivery apps"],
+      "greeting": "Hi! 📋 What kind of menu would you like? Tell me your business type and menu items!",
+      "suggestedPrompts": ["Create a cafe menu", "I need a restaurant price list", "Make delivery app menu images"]
+    },
     "marketer": {
       "name": "Marketer Bot",
       "description": "Network commissions strategy. Boosts other agents sales."

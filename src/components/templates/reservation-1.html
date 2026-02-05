@@ -1,0 +1,228 @@
+<!-- reservation-1.html — 예약 위젯 (모던 카드 스타일) -->
+<section id="reservation" class="py-20 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-950">
+  <div class="max-w-4xl mx-auto">
+    
+    <!-- Header -->
+    <div class="text-center mb-12" data-aos="fade-up">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-4">
+        <i class="fas fa-calendar-check"></i>
+        {{reservation_badge}}
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {{reservation_title}}
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        {{reservation_subtitle}}
+      </p>
+    </div>
+
+    <!-- Reservation Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl shadow-indigo-500/10 overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+      <div class="grid md:grid-cols-2">
+        
+        <!-- Info Side -->
+        <div class="p-8 bg-gradient-to-br from-indigo-600 to-purple-700 text-white">
+          <h3 class="text-2xl font-bold mb-6">예약 안내</h3>
+          
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-clock text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">운영 시간</h4>
+                <p class="text-indigo-100 text-sm">{{hours}}</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-phone text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">전화 예약</h4>
+                <p class="text-indigo-100 text-sm">{{phone}}</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-map-marker-alt text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">위치</h4>
+                <p class="text-indigo-100 text-sm">{{address}}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-6 border-t border-white/20">
+            <p class="text-sm text-indigo-100">
+              <i class="fas fa-info-circle mr-2"></i>
+              예약은 최소 1일 전에 해주세요
+            </p>
+          </div>
+        </div>
+        
+        <!-- Form Side -->
+        <div class="p-8">
+          <form id="reservation-form" class="space-y-4">
+            <!-- Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                예약자 이름 <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="text" 
+                name="customer_name" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                placeholder="홍길동"
+              >
+            </div>
+            
+            <!-- Phone -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                연락처 <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="tel" 
+                name="customer_phone" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                placeholder="010-1234-5678"
+              >
+            </div>
+            
+            <!-- Date -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                예약 날짜 <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="date" 
+                name="reservation_date" 
+                required
+                min=""
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+              >
+            </div>
+            
+            <!-- Time -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                예약 시간 <span class="text-red-500">*</span>
+              </label>
+              <select 
+                name="time_slot" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+              >
+                <option value="">시간을 선택해주세요</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+              </select>
+            </div>
+            
+            <!-- Party Size -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                인원
+              </label>
+              <select 
+                name="party_size"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+              >
+                <option value="1">1명</option>
+                <option value="2" selected>2명</option>
+                <option value="3">3명</option>
+                <option value="4">4명</option>
+                <option value="5">5명 이상</option>
+              </select>
+            </div>
+            
+            <!-- Notes -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                요청 사항
+              </label>
+              <textarea 
+                name="notes"
+                rows="3"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none"
+                placeholder="특별한 요청 사항이 있으시면 적어주세요"
+              ></textarea>
+            </div>
+            
+            <!-- Submit Button -->
+            <button 
+              type="submit"
+              class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-lg shadow-lg shadow-indigo-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <i class="fas fa-calendar-plus mr-2"></i>
+              예약하기
+            </button>
+          </form>
+          
+          <!-- Form Result -->
+          <div id="reservation-result" class="hidden mt-4 p-4 rounded-xl text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// 오늘 날짜를 최소 날짜로 설정
+document.addEventListener('DOMContentLoaded', function() {
+  const dateInput = document.querySelector('input[name="reservation_date"]');
+  if (dateInput) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.min = tomorrow.toISOString().split('T')[0];
+  }
+  
+  // 폼 제출 처리
+  const form = document.getElementById('reservation-form');
+  const result = document.getElementById('reservation-result');
+  
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      
+      // 간단한 유효성 검사
+      if (!data.customer_name || !data.customer_phone || !data.reservation_date || !data.time_slot) {
+        result.className = 'mt-4 p-4 rounded-xl text-center bg-red-50 text-red-600';
+        result.textContent = '필수 항목을 모두 입력해주세요.';
+        result.classList.remove('hidden');
+        return;
+      }
+      
+      // 전화 예약 안내 (실제 API 연동 전)
+      result.className = 'mt-4 p-4 rounded-xl text-center bg-green-50 text-green-600';
+      result.innerHTML = `
+        <strong>예약 요청이 접수되었습니다!</strong><br>
+        <span class="text-sm">확정 연락을 드리겠습니다. 감사합니다.</span>
+      `;
+      result.classList.remove('hidden');
+      
+      // 폼 리셋
+      form.reset();
+    });
+  }
+});
+</script>

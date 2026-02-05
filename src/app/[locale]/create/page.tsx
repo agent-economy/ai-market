@@ -34,6 +34,7 @@ interface ComponentSelection {
   reviews: boolean;
   contact: boolean;
   location: boolean;
+  reservation: boolean;
   cta: boolean;
 }
 
@@ -71,6 +72,7 @@ const COMPONENTS: { key: keyof ComponentSelection; emoji: string; label: string;
   { key: 'reviews', emoji: '⭐', label: '고객 리뷰', desc: '실제 고객 후기와 평점', recommended: ['cafe', 'restaurant', 'salon', 'fitness', 'clinic', 'shop'] },
   { key: 'contact', emoji: '📞', label: '연락처', desc: '전화, 이메일, SNS 정보', recommended: ['cafe', 'restaurant', 'salon', 'fitness', 'clinic', 'shop', 'other'] },
   { key: 'location', emoji: '📍', label: '위치/지도', desc: '오시는 길과 주차 정보', recommended: ['cafe', 'restaurant', 'salon', 'fitness', 'clinic', 'shop'] },
+  { key: 'reservation', emoji: '📅', label: '예약 위젯', desc: '온라인 예약 폼 (Pro 기능)', recommended: ['salon', 'fitness', 'clinic', 'restaurant'] },
   { key: 'cta', emoji: '🚀', label: 'CTA 섹션', desc: '예약/문의 유도 버튼', recommended: ['salon', 'fitness', 'clinic'] },
 ];
 
@@ -107,6 +109,7 @@ export default function CreateWizardPage() {
     reviews: true,
     contact: true,
     location: true,
+    reservation: false, // Pro 기능 - 기본 비활성화
     cta: false,
   });
   
@@ -139,6 +142,7 @@ export default function CreateWizardPage() {
         reviews: false,
         contact: true,
         location: false,
+        reservation: false,
         cta: false,
       };
       COMPONENTS.forEach(comp => {

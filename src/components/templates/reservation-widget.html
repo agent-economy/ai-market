@@ -1,0 +1,757 @@
+<!--
+  Component: reservation-widget
+  Description: 독립 실행 가능한 예약 위젯 (iframe embed용)
+  Placeholders:
+    {{business_name}} - 비즈니스 이름
+    {{business_phone}} - 연락처
+    {{primary_color}} - 메인 컬러 (indigo, rose, emerald, amber, slate)
+    {{start_hour}} - 시작 시간 (기본: 9)
+    {{end_hour}} - 종료 시간 (기본: 18)
+    {{interval}} - 시간 간격 (30 또는 60분)
+    {{unavailable_dates}} - 예약 불가 날짜 (JSON 배열)
+    {{unavailable_times}} - 예약 불가 시간 (JSON 배열)
+    {{webhook_url}} - 예약 데이터 전송 URL (선택)
+-->
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약하기 - {{business_name}}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 100, 100, 0.3) transparent;
+    }
+    
+    .input-glow:focus {
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 1; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+    
+    .pulse-ring::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 9999px;
+      border: 2px solid currentColor;
+      animation: pulse-ring 1.5s ease-out infinite;
+    }
+    
+    .step-active {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950/20 min-h-screen transition-colors duration-300">
+  
+  <div id="reservation-widget" class="max-w-2xl mx-auto px-4 py-8">
+    
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-4">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        온라인 예약
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        {{business_name}}
+      </h1>
+      <p class="text-gray-500 dark:text-gray-400">
+        원하시는 날짜와 시간을 선택해주세요
+      </p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="flex items-center justify-center gap-2 mb-8">
+      <div id="step-1-indicator" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full step-active text-white flex items-center justify-center text-sm font-bold">1</div>
+        <span class="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300">날짜</span>
+      </div>
+      <div class="w-8 h-px bg-gray-300 dark:bg-gray-600"></div>
+      <div id="step-2-indicator" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex items-center justify-center text-sm font-bold transition-all" id="step-2-circle">2</div>
+        <span class="hidden sm:inline text-sm font-medium text-gray-400 dark:text-gray-500" id="step-2-label">시간</span>
+      </div>
+      <div class="w-8 h-px bg-gray-300 dark:bg-gray-600"></div>
+      <div id="step-3-indicator" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex items-center justify-center text-sm font-bold transition-all" id="step-3-circle">3</div>
+        <span class="hidden sm:inline text-sm font-medium text-gray-400 dark:text-gray-500" id="step-3-label">정보</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Calendar -->
+    <div id="step-1" class="animate-fadeIn">
+      <div class="p-6 rounded-3xl bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-xl">
+        
+        <!-- Month Navigation -->
+        <div class="flex items-center justify-between mb-6">
+          <button onclick="prevMonth()" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-all" id="prev-month-btn">
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <h2 class="text-lg font-bold text-gray-900 dark:text-white" id="current-month"></h2>
+          <button onclick="nextMonth()" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-all">
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Weekday Headers -->
+        <div class="grid grid-cols-7 gap-1 mb-2">
+          <div class="text-center text-xs font-semibold py-2 text-red-500 dark:text-red-400">일</div>
+          <div class="text-center text-xs font-semibold py-2 text-gray-500 dark:text-gray-400">월</div>
+          <div class="text-center text-xs font-semibold py-2 text-gray-500 dark:text-gray-400">화</div>
+          <div class="text-center text-xs font-semibold py-2 text-gray-500 dark:text-gray-400">수</div>
+          <div class="text-center text-xs font-semibold py-2 text-gray-500 dark:text-gray-400">목</div>
+          <div class="text-center text-xs font-semibold py-2 text-gray-500 dark:text-gray-400">금</div>
+          <div class="text-center text-xs font-semibold py-2 text-blue-500 dark:text-blue-400">토</div>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="grid grid-cols-7 gap-1" id="calendar-grid"></div>
+
+        <!-- Legend -->
+        <div class="mt-6 pt-4 border-t border-gray-200/50 dark:border-white/10 flex items-center justify-center gap-6 text-xs text-gray-500 dark:text-gray-400">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600"></span>
+            <span>선택됨</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+            <span>예약 불가</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Time Slots -->
+    <div id="step-2" class="hidden">
+      <div class="p-6 rounded-3xl bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-xl animate-fadeIn">
+        
+        <!-- Selected Date Display -->
+        <div class="flex items-center justify-between mb-6">
+          <button onclick="goToStep(1)" class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            <span class="text-sm">날짜 변경</span>
+          </button>
+          <div class="px-4 py-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-semibold text-sm" id="selected-date-display"></div>
+        </div>
+
+        <!-- Time Slots Header -->
+        <div class="flex items-center gap-3 mb-6">
+          <div class="p-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/30">
+            <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 dark:text-white">시간 선택</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400" id="available-count"></p>
+          </div>
+        </div>
+
+        <!-- Morning Section -->
+        <div id="morning-section" class="mb-6">
+          <div class="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0-5a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1z"/>
+            </svg>
+            <span>오전</span>
+          </div>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="morning-slots"></div>
+        </div>
+
+        <!-- Afternoon Section -->
+        <div id="afternoon-section" class="mb-6">
+          <div class="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
+            </svg>
+            <span>오후</span>
+          </div>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="afternoon-slots"></div>
+        </div>
+
+        <!-- Evening Section -->
+        <div id="evening-section" class="hidden">
+          <div class="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+            </svg>
+            <span>저녁</span>
+          </div>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="evening-slots"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Reservation Form -->
+    <div id="step-3" class="hidden">
+      <div class="p-6 rounded-3xl bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-xl animate-fadeIn">
+        
+        <!-- Back & Summary -->
+        <div class="flex items-center justify-between mb-6">
+          <button onclick="goToStep(2)" class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            <span class="text-sm">시간 변경</span>
+          </button>
+        </div>
+
+        <!-- Selected Date & Time -->
+        <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-100 dark:border-indigo-800/30">
+          <div class="flex items-center gap-3">
+            <div class="p-2 rounded-xl bg-white dark:bg-gray-800 shadow-sm">
+              <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-gray-900 dark:text-white" id="summary-date"></p>
+              <p class="text-sm text-indigo-600 dark:text-indigo-400 font-medium" id="summary-time"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="reservation-form" onsubmit="submitReservation(event)" class="space-y-5">
+          
+          <!-- Name -->
+          <div>
+            <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              예약자 이름
+              <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="input-name"
+              placeholder="홍길동"
+              required
+              class="input-glow w-full px-4 py-3.5 rounded-2xl bg-white dark:bg-white/5 border border-gray-200/50 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none transition-all"
+            >
+            <p class="hidden mt-2 text-sm text-red-500" id="error-name"></p>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+              연락처
+              <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="tel"
+              id="input-phone"
+              placeholder="010-1234-5678"
+              maxlength="13"
+              required
+              oninput="formatPhone(this)"
+              class="input-glow w-full px-4 py-3.5 rounded-2xl bg-white dark:bg-white/5 border border-gray-200/50 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none transition-all"
+            >
+            <p class="hidden mt-2 text-sm text-red-500" id="error-phone"></p>
+          </div>
+
+          <!-- Memo -->
+          <div>
+            <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+              요청사항
+              <span class="text-gray-400 dark:text-gray-500 font-normal text-xs">(선택)</span>
+            </label>
+            <textarea
+              id="input-memo"
+              placeholder="요청사항이 있으시면 적어주세요"
+              rows="3"
+              class="w-full px-4 py-3.5 rounded-2xl bg-white dark:bg-white/5 border border-gray-200/50 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none resize-none transition-all"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full py-4 rounded-2xl font-bold text-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-xl shadow-indigo-300/30 dark:shadow-indigo-900/30 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            예약하기
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
+      <div class="relative bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-md w-full shadow-2xl animate-fadeIn">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+            <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">예약 완료!</h3>
+          <p class="text-gray-500 dark:text-gray-400 mb-6" id="success-message">
+            예약이 성공적으로 접수되었습니다.
+          </p>
+          <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-700/50 text-left mb-6">
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-500 dark:text-gray-400">날짜</span>
+                <span class="font-medium text-gray-900 dark:text-white" id="confirm-date"></span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500 dark:text-gray-400">시간</span>
+                <span class="font-medium text-gray-900 dark:text-white" id="confirm-time"></span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500 dark:text-gray-400">예약자</span>
+                <span class="font-medium text-gray-900 dark:text-white" id="confirm-name"></span>
+              </div>
+            </div>
+          </div>
+          <button
+            onclick="closeModal()"
+            class="w-full py-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+          >
+            확인
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-8 text-xs text-gray-400 dark:text-gray-500">
+      <p>문의: {{business_phone}}</p>
+    </div>
+  </div>
+
+  <script>
+    // ─── CONFIG ───
+    const CONFIG = {
+      businessName: '{{business_name}}',
+      businessPhone: '{{business_phone}}',
+      startHour: parseInt('{{start_hour}}') || 9,
+      endHour: parseInt('{{end_hour}}') || 18,
+      interval: parseInt('{{interval}}') || 30,
+      unavailableDates: JSON.parse('{{unavailable_dates}}' || '[]'),
+      unavailableTimes: JSON.parse('{{unavailable_times}}' || '[]'),
+      webhookUrl: '{{webhook_url}}' || null,
+    };
+
+    // ─── STATE ───
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let selectedDate = null;
+    let selectedTime = null;
+
+    // ─── HELPERS ───
+    function formatDateKo(date) {
+      const days = ['일', '월', '화', '수', '목', '금', '토'];
+      return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${days[date.getDay()]})`;
+    }
+
+    function formatTimeKo(time) {
+      const [hour, minute] = time.split(':').map(Number);
+      const period = hour < 12 ? '오전' : '오후';
+      const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+      return `${period} ${displayHour}:${minute.toString().padStart(2, '0')}`;
+    }
+
+    function isSameDay(d1, d2) {
+      return d1.getFullYear() === d2.getFullYear() &&
+             d1.getMonth() === d2.getMonth() &&
+             d1.getDate() === d2.getDate();
+    }
+
+    function isDateUnavailable(date) {
+      const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      return CONFIG.unavailableDates.includes(dateStr);
+    }
+
+    function formatPhone(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length <= 3) {
+        input.value = value;
+      } else if (value.length <= 7) {
+        input.value = `${value.slice(0, 3)}-${value.slice(3)}`;
+      } else {
+        input.value = `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7, 11)}`;
+      }
+    }
+
+    // ─── CALENDAR ───
+    function renderCalendar() {
+      const grid = document.getElementById('calendar-grid');
+      const monthLabel = document.getElementById('current-month');
+      
+      monthLabel.textContent = `${currentYear}년 ${currentMonth + 1}월`;
+      
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const today = new Date();
+      
+      grid.innerHTML = '';
+      
+      // Empty cells
+      for (let i = 0; i < firstDay; i++) {
+        grid.innerHTML += '<div class="aspect-square"></div>';
+      }
+      
+      // Days
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const isUnavailable = isPast || isDateUnavailable(date);
+        const isSelected = selectedDate && isSameDay(date, selectedDate);
+        const isToday = isSameDay(date, today);
+        const dayOfWeek = date.getDay();
+        
+        let classes = 'aspect-square flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 relative ';
+        
+        if (isSelected) {
+          classes += 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg scale-105';
+        } else if (isUnavailable) {
+          classes += 'text-gray-300 dark:text-gray-600 cursor-not-allowed';
+        } else {
+          classes += 'hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:scale-105 cursor-pointer ';
+          if (dayOfWeek === 0) classes += 'text-red-500 dark:text-red-400';
+          else if (dayOfWeek === 6) classes += 'text-blue-500 dark:text-blue-400';
+          else classes += 'text-gray-700 dark:text-gray-200';
+        }
+        
+        const todayDot = isToday && !isSelected ? '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-500"></span>' : '';
+        
+        grid.innerHTML += `
+          <button 
+            class="${classes}" 
+            ${isUnavailable ? 'disabled' : `onclick="selectDate(${currentYear}, ${currentMonth}, ${day})"`}
+          >
+            ${day}
+            ${todayDot}
+          </button>
+        `;
+      }
+      
+      // Disable prev button if current month
+      const prevBtn = document.getElementById('prev-month-btn');
+      if (currentYear === today.getFullYear() && currentMonth === today.getMonth()) {
+        prevBtn.classList.add('opacity-30', 'cursor-not-allowed');
+        prevBtn.disabled = true;
+      } else {
+        prevBtn.classList.remove('opacity-30', 'cursor-not-allowed');
+        prevBtn.disabled = false;
+      }
+    }
+
+    function prevMonth() {
+      if (currentMonth === 0) {
+        currentMonth = 11;
+        currentYear--;
+      } else {
+        currentMonth--;
+      }
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      if (currentMonth === 11) {
+        currentMonth = 0;
+        currentYear++;
+      } else {
+        currentMonth++;
+      }
+      renderCalendar();
+    }
+
+    function selectDate(year, month, day) {
+      selectedDate = new Date(year, month, day);
+      selectedTime = null;
+      renderCalendar();
+      goToStep(2);
+    }
+
+    // ─── TIME SLOTS ───
+    function renderTimeSlots() {
+      if (!selectedDate) return;
+      
+      document.getElementById('selected-date-display').textContent = formatDateKo(selectedDate);
+      
+      const morningSlots = document.getElementById('morning-slots');
+      const afternoonSlots = document.getElementById('afternoon-slots');
+      const eveningSlots = document.getElementById('evening-slots');
+      const eveningSection = document.getElementById('evening-section');
+      
+      morningSlots.innerHTML = '';
+      afternoonSlots.innerHTML = '';
+      eveningSlots.innerHTML = '';
+      
+      let availableCount = 0;
+      let hasEvening = false;
+      
+      for (let hour = CONFIG.startHour; hour < CONFIG.endHour; hour++) {
+        for (let minute = 0; minute < 60; minute += CONFIG.interval) {
+          const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+          const isUnavailable = CONFIG.unavailableTimes.includes(time);
+          const isSelected = selectedTime === time;
+          
+          if (!isUnavailable) availableCount++;
+          
+          let classes = 'relative px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ';
+          
+          if (isSelected) {
+            classes += 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg scale-105 ring-2 ring-indigo-300 dark:ring-indigo-600';
+          } else if (isUnavailable) {
+            classes += 'bg-gray-100 dark:bg-gray-800/50 text-gray-300 dark:text-gray-600 cursor-not-allowed line-through';
+          } else {
+            classes += 'bg-white/60 dark:bg-white/5 border border-gray-200/50 dark:border-white/10 text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:border-indigo-300 dark:hover:border-indigo-500 hover:scale-105';
+          }
+          
+          const checkmark = isSelected ? `
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+              <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+              </svg>
+            </span>
+          ` : '';
+          
+          const btn = `
+            <button 
+              class="${classes}" 
+              ${isUnavailable ? 'disabled' : `onclick="selectTime('${time}')"`}
+            >
+              ${formatTimeKo(time)}
+              ${checkmark}
+            </button>
+          `;
+          
+          if (hour < 12) {
+            morningSlots.innerHTML += btn;
+          } else if (hour < 18) {
+            afternoonSlots.innerHTML += btn;
+          } else {
+            eveningSlots.innerHTML += btn;
+            hasEvening = true;
+          }
+        }
+      }
+      
+      eveningSection.classList.toggle('hidden', !hasEvening);
+      document.getElementById('available-count').textContent = `${availableCount}개 시간대 예약 가능`;
+    }
+
+    function selectTime(time) {
+      selectedTime = time;
+      renderTimeSlots();
+      goToStep(3);
+    }
+
+    // ─── STEP NAVIGATION ───
+    function goToStep(step) {
+      // Hide all steps
+      document.getElementById('step-1').classList.add('hidden');
+      document.getElementById('step-2').classList.add('hidden');
+      document.getElementById('step-3').classList.add('hidden');
+      
+      // Reset step indicators
+      const steps = [1, 2, 3];
+      steps.forEach(s => {
+        const circle = document.getElementById(`step-${s}-circle`);
+        const label = document.getElementById(`step-${s}-label`);
+        if (circle) {
+          if (s < step) {
+            circle.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+            circle.classList.add('step-active', 'text-white');
+            circle.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+          } else if (s === step) {
+            circle.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+            circle.classList.add('step-active', 'text-white');
+            circle.innerHTML = s;
+          } else {
+            circle.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+            circle.classList.remove('step-active', 'text-white');
+            circle.innerHTML = s;
+          }
+        }
+        if (label) {
+          if (s <= step) {
+            label.classList.remove('text-gray-400', 'dark:text-gray-500');
+            label.classList.add('text-gray-700', 'dark:text-gray-300');
+          } else {
+            label.classList.add('text-gray-400', 'dark:text-gray-500');
+            label.classList.remove('text-gray-700', 'dark:text-gray-300');
+          }
+        }
+      });
+      
+      // Show target step
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+      
+      // Render step content
+      if (step === 2) {
+        renderTimeSlots();
+      } else if (step === 3) {
+        document.getElementById('summary-date').textContent = formatDateKo(selectedDate);
+        document.getElementById('summary-time').textContent = formatTimeKo(selectedTime);
+      }
+    }
+
+    // ─── FORM SUBMISSION ───
+    async function submitReservation(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('input-name').value.trim();
+      const phone = document.getElementById('input-phone').value.trim();
+      const memo = document.getElementById('input-memo').value.trim();
+      
+      // Validation
+      let hasError = false;
+      
+      if (!name || name.length < 2) {
+        document.getElementById('error-name').textContent = '이름을 2자 이상 입력해주세요';
+        document.getElementById('error-name').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('error-name').classList.add('hidden');
+      }
+      
+      if (!phone || phone.replace(/\D/g, '').length < 10) {
+        document.getElementById('error-phone').textContent = '올바른 연락처를 입력해주세요';
+        document.getElementById('error-phone').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('error-phone').classList.add('hidden');
+      }
+      
+      if (hasError) return;
+      
+      // Disable button
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        예약 중...
+      `;
+      
+      const reservationData = {
+        business: CONFIG.businessName,
+        date: selectedDate.toISOString().split('T')[0],
+        time: selectedTime,
+        name,
+        phone,
+        memo,
+        createdAt: new Date().toISOString(),
+      };
+      
+      // Send to webhook if configured
+      if (CONFIG.webhookUrl) {
+        try {
+          await fetch(CONFIG.webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reservationData),
+          });
+        } catch (err) {
+          console.error('Webhook error:', err);
+        }
+      }
+      
+      // Post message to parent (for iframe communication)
+      if (window.parent !== window) {
+        window.parent.postMessage({
+          type: 'reservation_complete',
+          data: reservationData,
+        }, '*');
+      }
+      
+      // Show success
+      document.getElementById('confirm-date').textContent = formatDateKo(selectedDate);
+      document.getElementById('confirm-time').textContent = formatTimeKo(selectedTime);
+      document.getElementById('confirm-name').textContent = name;
+      document.getElementById('success-modal').classList.remove('hidden');
+      
+      // Re-enable button
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        예약하기
+      `;
+    }
+
+    function closeModal() {
+      document.getElementById('success-modal').classList.add('hidden');
+      // Reset form
+      selectedDate = null;
+      selectedTime = null;
+      document.getElementById('input-name').value = '';
+      document.getElementById('input-phone').value = '';
+      document.getElementById('input-memo').value = '';
+      goToStep(1);
+      renderCalendar();
+    }
+
+    // ─── DARK MODE ───
+    function initDarkMode() {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    // ─── INIT ───
+    document.addEventListener('DOMContentLoaded', () => {
+      initDarkMode();
+      renderCalendar();
+    });
+  </script>
+</body>
+</html>

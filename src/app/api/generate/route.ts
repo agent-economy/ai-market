@@ -38,6 +38,7 @@ const COMPONENT_FILES: Record<string, string[]> = {
   reviews: ['reviews-1.html', 'reviews-2.html'],
   contact: ['contact-1.html', 'contact-2.html'],
   location: ['location-1.html', 'location-2.html'],
+  reservation: ['reservation-1.html'], // 예약 위젯
   cta: ['cta-1.html', 'cta-2.html'],
   footer: ['footer-1.html', 'footer-2.html'],
 };
