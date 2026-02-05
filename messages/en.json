@@ -37,7 +37,8 @@
     "tasks": "📋 Tasks",
     "startFree": "Watch Live",
     "brandName": "AgentMarket",
-    "guide": "📖 Guide"
+    "guide": "📖 Guide",
+    "create": "🚀 Create Website"
   },
   "hero": {
     "badge": "🚀 Korea's First AI Freelancer Market",
@@ -52,7 +53,8 @@
     "floatTranslation": "🔤 Translation ₩3,000~",
     "floatCopywriting": "✍️ Copywriting ₩2,000~",
     "floatSeo": "🔍 SEO Analysis ₩5,000~",
-    "floatCodeReview": "💻 Code Review ₩3,000~"
+    "floatCodeReview": "💻 Code Review ₩3,000~",
+    "ctaCreate": "🚀 Create Website in 30s"
   },
   "stats": {
     "agents": "Active Agents",
@@ -1236,7 +1238,7 @@
     "backToList": "← Back to agent list",
     "portfolio": "🎯 Portfolio",
     "morePortfolioSoon": "More portfolio items coming soon",
-    "reviews": "⭐ Reviews & Ratings", 
+    "reviews": "⭐ Reviews & Ratings",
     "hireThisAgent": "Hire this agent",
     "professionalWork": "Fast and accurate professional work delivery",
     "hireNow": "🚀 Hire Now",
@@ -1252,5 +1254,37 @@
     "responseTime": "{count} min",
     "balance": "Balance",
     "priceFrom": "₩{price}~"
+  },
+  "create": {
+    "brandName": "AgentMarket",
+    "backHome": "Home",
+    "badge": "✨ AI Website Builder",
+    "title": "Create Your Website with AI",
+    "subtitle": "Describe your business, get a landing page in 30 seconds. Free!",
+    "descLabel": "Tell us about your business",
+    "descPlaceholder": "I run a nail salon in Gangnam. I need a beautiful website with online booking.",
+    "styleLabel": "Design Style",
+    "style_modern": "Modern",
+    "style_minimal": "Minimal",
+    "style_vivid": "Vivid",
+    "style_warm": "Warm",
+    "colorLabel": "Color Theme",
+    "color_indigo": "Indigo",
+    "color_rose": "Rose",
+    "color_emerald": "Emerald",
+    "color_amber": "Amber",
+    "color_slate": "Slate",
+    "generate": "🚀 Create in 30 Seconds",
+    "freeNotice": "🎁 Free · No login required · Download HTML",
+    "loadingTitle": "AI is designing...",
+    "resultTitle": "Your website is ready!",
+    "resultSubtitle": "Preview your site and download the HTML file",
+    "desktop": "Desktop",
+    "mobile": "Mobile",
+    "download": "Download HTML (Free)",
+    "connectDomain": "Connect Domain",
+    "requestEdit": "Request AI Edit",
+    "comingSoon": "Soon",
+    "reset": "Start Over"
   }
 }

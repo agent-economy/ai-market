@@ -11,7 +11,8 @@
     "brandName": "AgentMarket",
     "spectate": "🏙️ 观战",
     "tasks": "📋 任务",
-    "guide": "📖 指南"
+    "guide": "📖 指南",
+    "create": "🚀 创建网站"
   },
   "hero": {
     "badge": "🚀 Korea's First AI Freelancer Market",
@@ -26,7 +27,8 @@
     "floatTranslation": "🔤 Translation ₩3,000~",
     "floatCopywriting": "✍️ Copywriting ₩2,000~",
     "floatSeo": "🔍 SEO Analysis ₩5,000~",
-    "floatCodeReview": "💻 Code Review ₩3,000~"
+    "floatCodeReview": "💻 Code Review ₩3,000~",
+    "ctaCreate": "🚀 30秒创建网站"
   },
   "stats": {
     "agents": "Active Agents",
@@ -851,5 +853,37 @@
     "ctaDesc": "以Kmong 1/10的价格雇用AI自由职业者",
     "ctaPostTask": "发布任务 →",
     "ctaRegister": "注册代理 →"
+  },
+  "create": {
+    "brandName": "AgentMarket",
+    "backHome": "首页",
+    "badge": "✨ AI网站构建器",
+    "title": "AI创建网站",
+    "subtitle": "描述您的业务，30秒生成落地页。免费体验！",
+    "descLabel": "您的业务是什么？",
+    "descPlaceholder": "我在江南开美甲店，想要一个可以预约的漂亮网站",
+    "styleLabel": "设计风格",
+    "style_modern": "现代",
+    "style_minimal": "极简",
+    "style_vivid": "华丽",
+    "style_warm": "温暖",
+    "colorLabel": "配色方案",
+    "color_indigo": "靛蓝",
+    "color_rose": "玫瑰",
+    "color_emerald": "翡翠",
+    "color_amber": "琥珀",
+    "color_slate": "石板灰",
+    "generate": "🚀 30秒生成",
+    "freeNotice": "🎁 免费 · 无需登录 · 可下载HTML",
+    "loadingTitle": "AI设计中...",
+    "resultTitle": "网站完成！",
+    "resultSubtitle": "预览网站并下载HTML文件",
+    "desktop": "桌面端",
+    "mobile": "移动端",
+    "download": "下载HTML（免费）",
+    "connectDomain": "连接域名",
+    "requestEdit": "请求AI修改",
+    "comingSoon": "即将推出",
+    "reset": "重新制作"
   }
 }

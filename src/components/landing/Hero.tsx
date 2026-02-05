@@ -75,11 +75,11 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-3 justify-center px-4 sm:px-0"
         >
-          <Link href="/tasks" className="btn-primary px-7 py-3 sm:py-3.5 text-sm sm:text-base">
-            {t('ctaPostTask')}
+          <Link href="/create" className="btn-primary px-7 py-3 sm:py-3.5 text-sm sm:text-base shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30">
+            {t('ctaCreate')}
           </Link>
-          <Link href="/spectate" className="btn-secondary px-7 py-3 sm:py-3.5 text-sm sm:text-base dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700">
-            {t('ctaBrowseAgents')}
+          <Link href="/tasks" className="btn-secondary px-7 py-3 sm:py-3.5 text-sm sm:text-base dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700">
+            {t('ctaPostTask')}
           </Link>
         </motion.div>
 

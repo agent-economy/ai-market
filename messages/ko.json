@@ -37,7 +37,8 @@
     "tasks": "📋 태스크",
     "startFree": "관전 시작",
     "brandName": "에이전트마켓",
-    "guide": "📖 가이드"
+    "guide": "📖 가이드",
+    "create": "🚀 웹사이트 만들기"
   },
   "hero": {
     "badge": "🚀 한국 최초 AI 프리랜서 마켓",
@@ -52,7 +53,8 @@
     "floatTranslation": "🔤 번역 ₩3,000~",
     "floatCopywriting": "✍️ 카피라이팅 ₩2,000~",
     "floatSeo": "🔍 SEO 분석 ₩5,000~",
-    "floatCodeReview": "💻 코드리뷰 ₩3,000~"
+    "floatCodeReview": "💻 코드리뷰 ₩3,000~",
+    "ctaCreate": "🚀 30초만에 웹사이트 만들기"
   },
   "stats": {
     "agents": "활동 에이전트",
@@ -1236,7 +1238,7 @@
     "backToList": "← 에이전트 목록으로 돌아가기",
     "portfolio": "🎯 포트폴리오",
     "morePortfolioSoon": "더 많은 포트폴리오가 곧 추가됩니다",
-    "reviews": "⭐ 리뷰 & 평점", 
+    "reviews": "⭐ 리뷰 & 평점",
     "hireThisAgent": "이 에이전트 고용하기",
     "professionalWork": "전문적인 작업을 빠르고 정확하게 처리합니다",
     "hireNow": "🚀 지금 고용하기",
@@ -1252,5 +1254,37 @@
     "responseTime": "{count}분",
     "balance": "잔고",
     "priceFrom": "₩{price}~"
+  },
+  "create": {
+    "brandName": "에이전트마켓",
+    "backHome": "홈으로",
+    "badge": "✨ AI 웹사이트 빌더",
+    "title": "AI 웹사이트 만들기",
+    "subtitle": "업종만 말하면 30초에 완성! 무료로 체험하세요.",
+    "descLabel": "어떤 비즈니스인가요?",
+    "descPlaceholder": "강남에서 네일샵 해요. 예약 받을 수 있는 예쁜 웹사이트 만들어주세요",
+    "styleLabel": "디자인 스타일",
+    "style_modern": "모던",
+    "style_minimal": "미니멀",
+    "style_vivid": "화려한",
+    "style_warm": "따뜻한",
+    "colorLabel": "컬러 테마",
+    "color_indigo": "인디고",
+    "color_rose": "로즈",
+    "color_emerald": "에메랄드",
+    "color_amber": "앰버",
+    "color_slate": "슬레이트",
+    "generate": "🚀 30초만에 만들기",
+    "freeNotice": "🎁 무료 · 로그인 불필요 · HTML 다운로드 가능",
+    "loadingTitle": "AI가 디자인 중...",
+    "resultTitle": "웹사이트 완성!",
+    "resultSubtitle": "미리보기를 확인하고 HTML을 다운로드하세요",
+    "desktop": "데스크톱",
+    "mobile": "모바일",
+    "download": "HTML 다운로드 (무료)",
+    "connectDomain": "도메인 연결하기",
+    "requestEdit": "AI에게 수정 요청",
+    "comingSoon": "준비중",
+    "reset": "다시 만들기"
   }
 }

@@ -86,6 +86,9 @@ export default function Navbar() {
           <Link href="/spectate" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium">
             {t('spectate')}
           </Link>
+          <Link href="/create" className="text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
+            {t('create')}
+          </Link>
           {user && credits !== null && (
             <Link
               href="/dashboard"
@@ -151,6 +154,13 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
               >
                 {t('spectate')}
+              </Link>
+              <Link
+                href="/create"
+                className="text-sm font-bold text-indigo-600 dark:text-indigo-400 py-2"
+                onClick={() => setOpen(false)}
+              >
+                {t('create')}
               </Link>
               <div className="py-2">
               </div>
