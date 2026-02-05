@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
+import { checkAndIncrementEditCount } from '@/lib/edit-limits';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,6 +15,9 @@ const GROQ_MODEL = 'llama-3.3-70b-versatile';
 const OPENAI_MODEL = 'gpt-4o-mini';
 
 export const maxDuration = 60;
+
+// Skip limit check in development
+const SKIP_LIMIT_CHECK = process.env.NODE_ENV === 'development';
 
 const EDIT_SYSTEM_PROMPT = `당신은 웹 페이지 HTML 수정 전문가입니다.
 사용자의 수정 지시에 따라 기존 HTML을 정확하게 수정합니다.
@@ -32,6 +36,7 @@ interface EditRequestBody {
   html?: string; // Optional: client can send current HTML for preview-only mode
   instruction: string;
   imageBase64?: string;
+  sessionId?: string; // For anonymous edit tracking
 }
 
 // Upload image to Supabase Storage and return public URL
@@ -78,7 +83,7 @@ async function uploadImage(base64Data: string, slug: string): Promise<string | n
 export async function POST(req: NextRequest) {
   try {
     const body: EditRequestBody = await req.json();
-    const { slug, html: clientHtml, instruction, imageBase64 } = body;
+    const { slug, html: clientHtml, instruction, imageBase64, sessionId } = body;
 
     // 필수 필드 체크
     if (!slug || !instruction) {
@@ -93,6 +98,37 @@ export async function POST(req: NextRequest) {
         { error: '수정 지시는 2000자 이내로 입력해주세요.' },
         { status: 400 }
       );
+    }
+
+    // Get user ID from auth header if present
+    let userId: string | null = null;
+    const authHeader = req.headers.get('authorization');
+    if (authHeader?.startsWith('Bearer ')) {
+      const token = authHeader.slice(7);
+      const { data: { user } } = await supabase.auth.getUser(token);
+      userId = user?.id || null;
+    }
+
+    // Check edit limits (skip in development)
+    if (!SKIP_LIMIT_CHECK) {
+      const limitResult = await checkAndIncrementEditCount(
+        userId,
+        sessionId || 'anonymous',
+        slug
+      );
+
+      if (!limitResult.canEdit) {
+        return NextResponse.json(
+          { 
+            error: limitResult.message || '이번 달 편집 횟수를 모두 사용했어요.',
+            limitReached: true,
+            currentCount: limitResult.currentCount,
+            limitCount: limitResult.limitCount,
+            planName: limitResult.planName,
+          },
+          { status: 429 }
+        );
+      }
     }
 
     // Get current HTML from client or database
@@ -263,6 +299,8 @@ export async function POST(req: NextRequest) {
       url: `https://agentmarket.kr/s/${slug}`,
       message: imageUrl ? '이미지와 함께 수정 완료!' : '수정 완료!',
       imageUrl: imageUrl || undefined,
+      // Include a hint about limits (actual count is tracked server-side)
+      hint: SKIP_LIMIT_CHECK ? undefined : '편집 1회 사용',
     });
   } catch (err) {
     console.error('[hosting/edit] Unexpected error:', err);
