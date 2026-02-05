@@ -1,4 +1,26 @@
-<!-- hero-2.html — 분할 레이아웃 (좌: 텍스트, 우: 이미지) -->
+<!--
+  Component: hero-2
+  Description: 분할 레이아웃 (좌: 텍스트, 우: 이미지)
+  Placeholders:
+    {{tagline}} - 뱃지 텍스트
+    {{headline_prefix}} - 제목 앞부분 (예: "혁신적인")
+    {{business_name}} - 비즈니스 이름
+    {{headline_suffix}} - 제목 뒷부분 (예: "의 새로운 시작")
+    {{description}} - 설명 텍스트
+    {{feature_1}} - 특징 1 텍스트
+    {{feature_2}} - 특징 2 텍스트
+    {{feature_3}} - 특징 3 텍스트
+    {{feature_4}} - 특징 4 텍스트
+    {{cta_primary}} - 주요 CTA 텍스트
+    {{cta_secondary}} - 보조 CTA 텍스트
+    {{stat_1_value}} - 통계 1 값
+    {{stat_1_label}} - 통계 1 라벨
+    {{stat_2_value}} - 통계 2 값
+    {{stat_2_label}} - 통계 2 라벨
+    {{stat_3_value}} - 통계 3 값
+    {{stat_3_label}} - 통계 3 라벨
+    {{image_url}} - 히어로 이미지 URL
+-->
 <section class="relative min-h-screen flex items-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-950 dark:via-slate-900 dark:to-gray-900 overflow-hidden">
   
   <!-- Background Decorations -->
@@ -7,9 +29,9 @@
   <div class="absolute top-20 right-1/4 w-72 h-72 bg-gradient-to-bl from-purple-300/20 to-pink-300/20 rounded-full blur-3xl"></div>
   
   <!-- Geometric Shapes -->
-  <div class="absolute top-32 left-20 w-20 h-20 border-2 border-indigo-300/30 dark:border-indigo-500/20 rounded-2xl rotate-12 animate-pulse"></div>
+  <div class="absolute top-32 left-20 w-20 h-20 border-2 border-indigo-300/30 dark:border-indigo-500/20 rounded-2xl rotate-12"></div>
   <div class="absolute bottom-40 left-1/3 w-16 h-16 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-xl rotate-45"></div>
-  <div class="absolute top-1/2 right-20 w-8 h-8 bg-indigo-400/30 rounded-full animate-bounce" style="animation-duration: 3s;"></div>
+  <div class="absolute top-1/2 right-20 w-8 h-8 bg-indigo-400/30 rounded-full"></div>
   
   <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -27,16 +49,15 @@
         
         <!-- Title -->
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6" data-aos="fade-right" data-aos-delay="100">
-          <span class="text-gray-900 dark:text-white">혁신적인 </span>
+          <span class="text-gray-900 dark:text-white">{{headline_prefix}} </span>
           <span class="relative">
             <span class="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent">{{business_name}}</span>
             <svg class="absolute -bottom-2 left-0 w-full h-3 text-indigo-400/30" viewBox="0 0 200 12" preserveAspectRatio="none">
               <path d="M0,8 Q50,0 100,8 T200,8" stroke="currentColor" stroke-width="4" fill="none"/>
             </svg>
           </span>
-          <span class="text-gray-900 dark:text-white">의</span>
           <br/>
-          <span class="text-gray-900 dark:text-white">새로운 시작</span>
+          <span class="text-gray-900 dark:text-white">{{headline_suffix}}</span>
         </h1>
         
         <!-- Description -->
@@ -52,7 +73,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <span class="text-gray-700 dark:text-gray-200 font-medium">빠른 시작</span>
+            <span class="text-gray-700 dark:text-gray-200 font-medium">{{feature_1}}</span>
           </div>
           <div class="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
             <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
@@ -60,7 +81,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </div>
-            <span class="text-gray-700 dark:text-gray-200 font-medium">강력한 성능</span>
+            <span class="text-gray-700 dark:text-gray-200 font-medium">{{feature_2}}</span>
           </div>
           <div class="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
             <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
@@ -68,7 +89,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
               </svg>
             </div>
-            <span class="text-gray-700 dark:text-gray-200 font-medium">보안 우선</span>
+            <span class="text-gray-700 dark:text-gray-200 font-medium">{{feature_3}}</span>
           </div>
           <div class="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
             <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
@@ -76,36 +97,36 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
             </div>
-            <span class="text-gray-700 dark:text-gray-200 font-medium">24/7 지원</span>
+            <span class="text-gray-700 dark:text-gray-200 font-medium">{{feature_4}}</span>
           </div>
         </div>
         
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-right" data-aos-delay="400">
-          <a href="#" class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all duration-300 hover:scale-105">
-            무료로 시작하기
+          <a href="{{cta_primary_url}}" class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all duration-300 hover:scale-105">
+            {{cta_primary}}
             <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
             </svg>
           </a>
-          <a href="#" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-700 dark:text-gray-200 rounded-2xl border-2 border-gray-300 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all duration-300">
-            더 알아보기
+          <a href="{{cta_secondary_url}}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-700 dark:text-gray-200 rounded-2xl border-2 border-gray-300 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all duration-300">
+            {{cta_secondary}}
           </a>
         </div>
         
         <!-- Stats -->
         <div class="flex flex-wrap justify-center lg:justify-start gap-8 mt-12 pt-8 border-t border-gray-200/50 dark:border-gray-700/50" data-aos="fade-up" data-aos-delay="500">
           <div class="text-center">
-            <div class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">10K+</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">Active Users</div>
+            <div class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">{{stat_1_value}}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{stat_1_label}}</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">99.9%</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">Uptime</div>
+            <div class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">{{stat_2_value}}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{stat_2_label}}</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">4.9★</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">Rating</div>
+            <div class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">{{stat_3_value}}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{stat_3_label}}</div>
           </div>
         </div>
       </div>
@@ -115,7 +136,7 @@
         <!-- Main Image Container -->
         <div class="relative">
           <!-- Glow Effect -->
-          <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
+          <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-20"></div>
           
           <!-- Image Card -->
           <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/20 dark:border-gray-700/30">
@@ -134,8 +155,8 @@
                 </svg>
               </div>
               <div>
-                <div class="text-2xl font-bold text-gray-900 dark:text-white">+127%</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Growth</div>
+                <div class="text-2xl font-bold text-gray-900 dark:text-white">{{floating_stat_value}}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">{{floating_stat_label}}</div>
               </div>
             </div>
           </div>
@@ -148,7 +169,7 @@
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 border-2 border-white dark:border-gray-800"></div>
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-white dark:border-gray-800"></div>
               </div>
-              <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">+2.5k joined</span>
+              <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">{{floating_users}}</span>
             </div>
           </div>
         </div>
