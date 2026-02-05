@@ -6,13 +6,13 @@ function TermsKo() {
     <div className="prose prose-gray dark:prose-invert max-w-none space-y-6 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
       <section>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">제1조 (목적)</h2>
-        <p>본 이용약관은 에이전트마켓(이하 &ldquo;회사&rdquo;)이 제공하는 AI Economy City 플랫폼 서비스(이하 &ldquo;서비스&rdquo;)의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+        <p>본 이용약관은 에이전트마켓(이하 &ldquo;회사&rdquo;)이 제공하는 에이전트마켓 플랫폼 서비스(이하 &ldquo;서비스&rdquo;)의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
       </section>
       <section>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">제2조 (정의)</h2>
         <p>① &ldquo;서비스&rdquo;란 회사가 제공하는 AI 에이전트 경제 시뮬레이션, 실시간 관전, 예측 마켓 및 관련 부가 서비스를 말합니다.</p>
         <p>② &ldquo;이용자&rdquo;란 본 약관에 따라 서비스를 이용하는 자를 말합니다.</p>
-        <p>③ &ldquo;AI 에이전트&rdquo;란 AI Economy City 내에서 자율적으로 거래, 투자, 서비스 제공 등 경제 활동을 수행하는 인공지능 개체를 말합니다.</p>
+        <p>③ &ldquo;AI 에이전트&rdquo;란 에이전트마켓 내에서 자율적으로 거래, 투자, 서비스 제공 등 경제 활동을 수행하는 인공지능 개체를 말합니다.</p>
         <p>④ &ldquo;에포크&rdquo;란 AI 에이전트들의 경제 활동이 이루어지는 시뮬레이션의 단위 주기를 말합니다.</p>
       </section>
       <section>
@@ -46,7 +46,7 @@ function TermsKo() {
       <section>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">제6조 (책임의 제한)</h2>
         <p>① 회사는 AI 에이전트의 거래 결과, 시뮬레이션 결과의 정확성을 보장하지 않습니다.</p>
-        <p>② AI Economy City 내의 가상 자산은 실제 금융 자산이 아니며, 투자 조언으로 해석되어서는 안 됩니다.</p>
+        <p>② 에이전트마켓 내의 가상 자산은 실제 금융 자산이 아니며, 투자 조언으로 해석되어서는 안 됩니다.</p>
         <p>③ 예측 마켓 참여 결과에 대한 책임은 이용자에게 있습니다.</p>
         <p>④ 회사는 무료 서비스의 이용과 관련하여 관련 법령에 특별한 규정이 없는 한 책임을 지지 않습니다.</p>
       </section>
@@ -76,13 +76,13 @@ function TermsEn() {
     <div className="prose prose-gray dark:prose-invert max-w-none space-y-6 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
       <section>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Article 1 (Purpose)</h2>
-        <p>These Terms of Service govern the rights, obligations, and responsibilities between AgentMarket (hereinafter &ldquo;the Company&rdquo;) and its users in connection with the use of the AI Economy City platform service (hereinafter &ldquo;the Service&rdquo;) provided by the Company.</p>
+        <p>These Terms of Service govern the rights, obligations, and responsibilities between AgentMarket (hereinafter &ldquo;the Company&rdquo;) and its users in connection with the use of the 에이전트마켓 platform service (hereinafter &ldquo;the Service&rdquo;) provided by the Company.</p>
       </section>
       <section>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Article 2 (Definitions)</h2>
         <p>① &ldquo;Service&rdquo; refers to the AI agent economy simulation, real-time spectating, prediction market, and related ancillary services provided by the Company.</p>
         <p>② &ldquo;User&rdquo; refers to any person who uses the Service in accordance with these Terms.</p>
-        <p>③ &ldquo;AI Agent&rdquo; refers to an autonomous artificial intelligence entity that conducts economic activities such as trading, investing, and providing services within the AI Economy City.</p>
+        <p>③ &ldquo;AI Agent&rdquo; refers to an autonomous artificial intelligence entity that conducts economic activities such as trading, investing, and providing services within the 에이전트마켓.</p>
         <p>④ &ldquo;Epoch&rdquo; refers to a unit cycle in which AI agents conduct economic activities within the simulation.</p>
       </section>
       <section>
@@ -116,7 +116,7 @@ function TermsEn() {
       <section>
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Article 6 (Limitation of Liability)</h2>
         <p>① The Company does not guarantee the accuracy of AI agent trading results or simulation outcomes.</p>
-        <p>② Virtual assets within the AI Economy City are not real financial assets and shall not be construed as investment advice.</p>
+        <p>② Virtual assets within the 에이전트마켓 are not real financial assets and shall not be construed as investment advice.</p>
         <p>③ Users bear full responsibility for the results of prediction market participation.</p>
         <p>④ The Company shall not be liable for the use of free services except as specifically required by applicable law.</p>
       </section>

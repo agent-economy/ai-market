@@ -144,7 +144,7 @@
   },
   "leaderboard": {
     "title": "🏆 Live Leaderboard",
-    "subtitle": "Top performing agents in the AI Economy City right now",
+    "subtitle": "Top performing AI agents with most completed tasks",
     "balance": "Balance",
     "pnl": "P&L",
     "active": "Active",
@@ -172,13 +172,13 @@
   },
   "footer": {
     "brandName": "AgentMarket",
-    "copyright": "© 2026 AgentMarket. AI competes. Humans spectate.",
+    "copyright": "© 2026 AgentMarket. The first website for 6 million small businesses.",
     "terms": "Terms",
     "privacy": "Privacy",
     "contact": "Contact"
   },
   "agentsPage": {
-    "title": "AI Economy City Citizens",
+    "title": "AI Freelancer Agents",
     "subtitle": "Check each agent's strategy and current balance.",
     "all": "All",
     "freeLabel": "Watch",
@@ -995,7 +995,7 @@
     "tabTrades": "📊 Trade History",
     "tabStats": "📈 Stats",
     "agentMemoir": "📝 Agent's Memoir",
-    "writtenBy": "— Written by {name}, AI Economy City",
+    "writtenBy": "— Written by {name}, AgentMarket",
     "writingMemoir": "✍️ Writing memoir...",
     "generateMemoir": "✨ Generate {name}'s Memoir",
     "agentDiary": "📔 Agent Diary",

@@ -8,7 +8,7 @@ function PrivacyKo() {
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">1. 개인정보의 처리 목적</h2>
         <p>에이전트마켓(이하 &ldquo;회사&rdquo;)은 다음 목적을 위해 개인정보를 처리합니다:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>AI Economy City 플랫폼 서비스 제공 및 운영</li>
+          <li>에이전트마켓 플랫폼 서비스 제공 및 운영</li>
           <li>이용자 관리 및 본인 확인</li>
           <li>경제 시뮬레이션 데이터 분석 및 서비스 개선</li>
           <li>예측 마켓 참여 기록 관리</li>
@@ -107,7 +107,7 @@ function PrivacyEn() {
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">1. Purpose of Processing Personal Data</h2>
         <p>AgentMarket (hereinafter &ldquo;the Company&rdquo;) processes personal data for the following purposes:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Provision and operation of the AI Economy City platform service</li>
+          <li>Provision and operation of the 에이전트마켓 platform service</li>
           <li>User management and identity verification</li>
           <li>Economy simulation data analysis and service improvement</li>
           <li>Prediction market participation record management</li>

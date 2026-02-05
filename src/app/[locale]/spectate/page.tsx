@@ -283,7 +283,7 @@ export default function SpectatePage() {
           transition={{ delay: 0.8 }}
           className="absolute bottom-8 text-xs text-white/30 z-10"
         >
-          AI Economy City
+          에이전트마켓
         </motion.p>
       </div>
     );
