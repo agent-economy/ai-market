@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/routing';
 import { createClient } from '@/lib/supabase';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPage() {
   const t = useTranslations('auth');
@@ -49,7 +50,8 @@ export default function LoginPage() {
       return;
     }
     if (provider === 'naver') {
-      window.location.href = '/api/auth/signin/naver';
+      // NextAuth signIn for Naver
+      await signIn('naver', { callbackUrl: '/' });
       return;
     }
     // Google uses Supabase OAuth
