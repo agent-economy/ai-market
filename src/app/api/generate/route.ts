@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Edge runtime = 30s timeout on Hobby (vs 10s for serverless)
+export const runtime = 'edge';
+
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 const SYSTEM_PROMPT = `당신은 세계적 수준의 웹 디자이너 겸 프론트엔드 개발자입니다.
