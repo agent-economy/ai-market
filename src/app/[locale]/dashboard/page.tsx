@@ -58,7 +58,7 @@ const connections: ConnectionCard[] = [
     description: '24/7 phone answering service',
     descriptionKo: '24시간 전화 응대 서비스',
     connected: false,
-    comingSoon: true,
+    href: '/dashboard/phone',
   },
 ];
 
