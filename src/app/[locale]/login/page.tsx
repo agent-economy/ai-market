@@ -43,9 +43,13 @@ export default function LoginPage() {
     }
   };
 
-  const handleOAuthLogin = async (provider: 'kakao' | 'google') => {
+  const handleOAuthLogin = async (provider: 'kakao' | 'google' | 'naver') => {
     if (provider === 'kakao') {
       window.location.href = '/api/auth/kakao';
+      return;
+    }
+    if (provider === 'naver') {
+      window.location.href = '/api/auth/signin/naver';
       return;
     }
     // Google uses Supabase OAuth
@@ -98,6 +102,16 @@ export default function LoginPage() {
                 />
               </svg>
               {t('kakaoLogin')}
+            </button>
+
+            <button
+              onClick={() => handleOAuthLogin('naver')}
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[#03C75A] hover:bg-[#02B350] text-white font-medium text-sm transition-colors"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M12.22 9.47L5.5 1H1v16h4.78V9.53L12.5 18H17V1h-4.78v8.47z" fill="white" />
+              </svg>
+              {t('naverLogin') || '네이버로 로그인'}
             </button>
 
             <button
