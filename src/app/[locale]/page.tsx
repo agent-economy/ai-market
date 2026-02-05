@@ -7,6 +7,7 @@ import AIServices from '@/components/landing/AIServices';
 import CompetitorComparison from '@/components/landing/CompetitorComparison';
 import Pricing from '@/components/landing/Pricing';
 import Testimonials from '@/components/landing/Testimonials';
+import FAQ from '@/components/landing/FAQ';
 import CTA from '@/components/landing/CTA';
 import Footer from '@/components/landing/Footer';
 
@@ -28,6 +29,7 @@ export default async function Home({
       <Pricing />
       <Stats />
       <Testimonials />
+      <FAQ />
       <CTA />
       <Footer />
     </>
