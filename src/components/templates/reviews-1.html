@@ -1,101 +1,68 @@
-<!--
-  Component: reviews-1
-  Description: 카드 그리드 리뷰 (별점 + 프로필)
-  Placeholders: 
-    {{section_badge}} - 섹션 뱃지 텍스트 (예: "고객 리뷰")
-    {{section_title}} - 섹션 제목 (예: "고객님들의 생생한 후기")
-    {{section_subtitle}} - 섹션 부제목
-    {{reviews}} - 리뷰 배열 (AI가 생성)
-    {{stats_rating}} - 평균 평점
-    {{stats_count}} - 총 리뷰 수
-    {{stats_satisfaction}} - 만족도
-    {{stats_revisit}} - 재방문율
--->
-
-<!-- Reviews Section: Card Grid -->
-<section class="relative py-20 md:py-32 overflow-hidden">
-  <!-- Background Gradient Orbs -->
-  <div class="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/20 dark:bg-purple-500/10 rounded-full blur-3xl"></div>
-  <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
-  
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- reviews-1.html — 한국형 리뷰 섹션 -->
+<section class="py-20 bg-stone-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
     <!-- Section Header -->
-    <div class="text-center mb-16" data-aos="fade-up">
-      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 dark:from-purple-500/20 dark:to-blue-500/20 border border-purple-500/20 dark:border-purple-500/30 text-purple-600 dark:text-purple-400 text-sm font-medium mb-6">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+    <div class="text-center mb-12" data-aos="fade-up">
+      <span class="inline-block px-4 py-1.5 mb-4 text-sm font-medium text-stone-500 bg-white rounded-full border border-stone-200">
+        고객 후기
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-stone-800 mb-4">
+        손님들의 이야기
+      </h2>
+      <div class="flex items-center justify-center gap-2 text-amber-500">
+        {{#stars}}
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
         </svg>
-        {{section_badge}}
-      </span>
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-        {{section_title}}
-      </h2>
-      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        {{section_subtitle}}
-      </p>
-    </div>
-    
-    <!-- Reviews Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {{reviews}}
-    </div>
-    
-    <!-- Stats Bar -->
-    <div class="mt-16 p-6 md:p-8 rounded-3xl bg-gradient-to-r from-purple-600 to-blue-600 shadow-2xl shadow-purple-500/25" data-aos="fade-up" data-aos-delay="600">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-        <div>
-          <div class="text-3xl md:text-4xl font-bold text-white mb-2">{{stats_rating}}</div>
-          <div class="text-purple-200 text-sm md:text-base">{{stats_rating_label}}</div>
-        </div>
-        <div>
-          <div class="text-3xl md:text-4xl font-bold text-white mb-2">{{stats_count}}</div>
-          <div class="text-purple-200 text-sm md:text-base">{{stats_count_label}}</div>
-        </div>
-        <div>
-          <div class="text-3xl md:text-4xl font-bold text-white mb-2">{{stats_satisfaction}}</div>
-          <div class="text-purple-200 text-sm md:text-base">{{stats_satisfaction_label}}</div>
-        </div>
-        <div>
-          <div class="text-3xl md:text-4xl font-bold text-white mb-2">{{stats_revisit}}</div>
-          <div class="text-purple-200 text-sm md:text-base">{{stats_revisit_label}}</div>
-        </div>
+        {{/stars}}
+        <span class="ml-2 text-stone-600 font-medium">{{average_rating}} ({{review_count}}개 리뷰)</span>
       </div>
     </div>
+
+    <!-- Reviews Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{#reviews}}
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-100" data-aos="fade-up" data-aos-delay="{{delay}}">
+        
+        <!-- Header -->
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-stone-600 font-semibold">
+            {{initial}}
+          </div>
+          <div>
+            <p class="font-medium text-stone-800">{{name}}</p>
+            <p class="text-sm text-stone-400">{{date}}</p>
+          </div>
+        </div>
+        
+        <!-- Stars -->
+        <div class="flex gap-1 mb-3 text-amber-400">
+          {{#rating_stars}}
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+          {{/rating_stars}}
+        </div>
+        
+        <!-- Content -->
+        <p class="text-stone-600 leading-relaxed">
+          "{{content}}"
+        </p>
+        
+      </div>
+      {{/reviews}}
+    </div>
+    
+    <!-- CTA -->
+    <div class="text-center mt-10" data-aos="fade-up">
+      <a href="#" class="inline-flex items-center gap-2 text-stone-600 font-medium hover:text-stone-800 transition-colors">
+        네이버에서 더 많은 리뷰 보기
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        </svg>
+      </a>
+    </div>
+    
   </div>
 </section>
-
-<!-- 
-  Review Card Template (for {{reviews}} placeholder):
-  
-  <div class="group" data-aos="fade-up" data-aos-delay="0">
-    <div class="relative h-full p-6 md:p-8 rounded-3xl bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none hover:shadow-2xl hover:shadow-purple-500/10 dark:hover:shadow-purple-500/5 transition-all duration-500 hover:-translate-y-2">
-      <div class="absolute top-6 right-6 w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 dark:from-purple-500/20 dark:to-blue-500/20 flex items-center justify-center">
-        <svg class="w-6 h-6 text-purple-500 dark:text-purple-400" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-        </svg>
-      </div>
-      <div class="flex gap-1 mb-4">
-        [STARS HERE - 5 filled or partial based on rating]
-      </div>
-      <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-6">
-        "[REVIEW_TEXT]"
-      </p>
-      <div class="flex items-center gap-4 pt-6 border-t border-gray-200/50 dark:border-white/10">
-        <div class="relative">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg">
-            [INITIAL]
-          </div>
-          <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-green-500 border-2 border-white dark:border-gray-900 flex items-center justify-center">
-            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-            </svg>
-          </div>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-gray-900 dark:text-white">[AUTHOR_NAME]</h4>
-          <p class="text-sm text-gray-500 dark:text-gray-400">[ROLE] · [DATE]</p>
-        </div>
-      </div>
-    </div>
-  </div>
--->

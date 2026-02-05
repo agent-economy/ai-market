@@ -1,154 +1,90 @@
-<!-- about-1.html — 2컬럼 (이미지 + 텍스트) -->
-<section class="relative py-24 lg:py-32 bg-gradient-to-b from-white via-slate-50 to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-950 overflow-hidden">
+<!-- about-1.html — 한국형 2컬럼 (이미지 + 텍스트) -->
+<section class="relative py-20 lg:py-28 bg-white overflow-hidden">
   
-  <!-- Background Decorations -->
-  <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
-    <div class="absolute top-20 left-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-cyan-200/20 dark:from-blue-900/10 dark:to-cyan-900/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-0 w-80 h-80 bg-gradient-to-tl from-purple-200/20 to-pink-200/20 dark:from-purple-900/10 dark:to-pink-900/10 rounded-full blur-3xl"></div>
-    
-    <!-- Subtle Pattern -->
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxjaXJjbGUgY3g9IjMwIiBjeT0iMzAiIHI9IjEiIGZpbGw9IiM5Y2EzYWYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9nPjwvc3ZnPg==')] opacity-50 dark:opacity-30"></div>
-  </div>
+  <!-- Subtle Background -->
+  <div class="absolute inset-0 bg-gradient-to-b from-stone-50/30 to-white pointer-events-none"></div>
   
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header -->
-    <div class="text-center mb-16 lg:mb-20" data-aos="fade-up">
-      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 text-sm font-semibold mb-4">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        About Us
+    <div class="text-center mb-14" data-aos="fade-up">
+      <span class="inline-block px-4 py-1.5 mb-4 text-sm font-medium text-stone-500 bg-stone-100 rounded-full">
+        소개
       </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-        <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{{business_name}}</span>을 소개합니다
+      <h2 class="text-3xl md:text-4xl font-bold text-stone-800">
+        {{business_name}} 이야기
       </h2>
     </div>
     
     <!-- Main Content Grid -->
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       
-      <!-- Left: Image Section -->
-      <div class="relative" data-aos="fade-right" data-aos-duration="1000">
-        <!-- Main Image -->
-        <div class="relative rounded-3xl overflow-hidden shadow-2xl">
-          <img src="{{image_url}}" alt="{{business_name}} 소개" class="w-full h-auto object-cover aspect-[4/3]" onerror="this.src='https://placehold.co/800x600/3b82f6/ffffff?text=About+Us'"/>
-          
-          <!-- Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-transparent"></div>
+      <!-- Left: Image -->
+      <div class="relative" data-aos="fade-right" data-aos-duration="700">
+        <div class="relative rounded-2xl overflow-hidden shadow-lg">
+          <img 
+            src="{{image_url}}" 
+            alt="{{business_name}} 소개" 
+            class="w-full h-auto object-cover aspect-[4/3]" 
+            onerror="this.src='https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=600&fit=crop'"
+          />
         </div>
         
-        <!-- Floating Elements -->
-        <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl shadow-lg rotate-6 flex items-center justify-center" data-aos="zoom-in" data-aos-delay="200">
-          <span class="text-3xl font-bold text-white">10+</span>
-        </div>
-        
-        <div class="absolute -bottom-4 -left-4 backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 rounded-2xl p-4 shadow-xl border border-white/50 dark:border-gray-700/50" data-aos="zoom-in" data-aos-delay="400">
+        <!-- Floating Badge -->
+        <div class="absolute -bottom-4 -right-4 bg-white rounded-xl shadow-lg p-4 border border-stone-100" data-aos="fade-up" data-aos-delay="200">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
             <div>
-              <div class="font-bold text-gray-900 dark:text-white">검증된 품질</div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">ISO 9001 인증</div>
+              <p class="text-sm text-stone-500">영업시간</p>
+              <p class="font-semibold text-stone-800">{{hours}}</p>
             </div>
           </div>
         </div>
-        
-        <!-- Decorative Shape -->
-        <div class="absolute -z-10 -bottom-8 -right-8 w-full h-full rounded-3xl bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-900/30 dark:to-purple-900/30"></div>
       </div>
       
-      <!-- Right: Text Content -->
-      <div class="lg:pl-8" data-aos="fade-left" data-aos-duration="1000">
+      <!-- Right: Content -->
+      <div class="lg:pl-4" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
         
-        <!-- Tagline -->
-        <p class="text-lg text-blue-600 dark:text-blue-400 font-semibold mb-4">{{tagline}}</p>
-        
-        <!-- Title -->
-        <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-          혁신과 신뢰로<br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">더 나은 미래</span>를 만들어갑니다
+        <h3 class="text-2xl font-bold text-stone-800 mb-6 leading-snug">
+          {{headline}}
         </h3>
         
-        <!-- Description -->
-        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+        <p class="text-stone-600 leading-relaxed mb-6">
           {{description}}
         </p>
         
-        <!-- Features -->
-        <div class="space-y-4 mb-10">
-          <div class="flex items-start gap-4 p-4 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="100">
-            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+        <p class="text-stone-500 leading-relaxed mb-8">
+          {{additional_info}}
+        </p>
+        
+        <!-- Features List -->
+        <ul class="space-y-3 mb-8">
+          {{#features}}
+          <li class="flex items-center gap-3 text-stone-600">
+            <span class="w-5 h-5 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
               </svg>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">혁신적인 기술</h4>
-              <p class="text-gray-600 dark:text-gray-400">최신 AI 기술을 활용한 솔루션으로 비즈니스 혁신을 이끕니다.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-4 p-4 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="200">
-            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              </svg>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">전문가 팀</h4>
-              <p class="text-gray-600 dark:text-gray-400">업계 최고의 전문가들이 함께합니다.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-4 p-4 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="300">
-            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">합리적인 가격</h4>
-              <p class="text-gray-600 dark:text-gray-400">최고의 가치를 합리적인 가격으로 제공합니다.</p>
-            </div>
-          </div>
-        </div>
+            </span>
+            {{.}}
+          </li>
+          {{/features}}
+        </ul>
         
         <!-- CTA -->
-        <a href="#" class="group inline-flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="400">
-          더 알아보기
-          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 bg-stone-800 text-white font-medium rounded-xl hover:bg-stone-900 transition-colors duration-300">
+          문의하기
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </a>
+        
       </div>
-    </div>
-    
-    <!-- Stats Section -->
-    <div class="mt-20 lg:mt-28" data-aos="fade-up">
-      <div class="backdrop-blur-xl bg-white/60 dark:bg-gray-800/60 rounded-3xl p-8 lg:p-12 shadow-xl border border-gray-100 dark:border-gray-700/50">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          <div class="text-center">
-            <div class="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-2">10+</div>
-            <div class="text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">500+</div>
-            <div class="text-gray-600 dark:text-gray-400 font-medium">Happy Clients</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 mb-2">1,200+</div>
-            <div class="text-gray-600 dark:text-gray-400 font-medium">Projects Done</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600 mb-2">50+</div>
-            <div class="text-gray-600 dark:text-gray-400 font-medium">Team Members</div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section>
