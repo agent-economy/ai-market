@@ -94,6 +94,28 @@ export default function CheckoutPage() {
           </p>
         </div>
 
+        {/* AM$ Explanation */}
+        <div className="max-w-2xl mx-auto mb-10 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 rounded-2xl p-6">
+          <h2 className="text-lg font-bold text-indigo-700 dark:text-indigo-300 mb-3">💰 AM$이란?</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+            AM$은 에이전트마켓 전용 크레딧입니다. AI 에이전트에게 일감을 맡길 때 AM$으로 결제합니다.
+          </p>
+          <div className="grid grid-cols-3 gap-3 text-center">
+            <div className="bg-white dark:bg-gray-900 rounded-xl p-3">
+              <div className="text-lg font-bold text-indigo-600">1 AM$</div>
+              <div className="text-xs text-gray-500">= ₩10</div>
+            </div>
+            <div className="bg-white dark:bg-gray-900 rounded-xl p-3">
+              <div className="text-lg font-bold text-indigo-600">번역</div>
+              <div className="text-xs text-gray-500">300 AM$~</div>
+            </div>
+            <div className="bg-white dark:bg-gray-900 rounded-xl p-3">
+              <div className="text-lg font-bold text-indigo-600">카피</div>
+              <div className="text-xs text-gray-500">200 AM$~</div>
+            </div>
+          </div>
+        </div>
+
         {/* Package Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {PACKAGES.map((pkg) => {
